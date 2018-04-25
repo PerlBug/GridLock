@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 
 public class GridLock extends Application {
-	private ArrayList<Square> grid = new ArrayList<Square>();
+	private Grid grid = new Grid();
 
     public static void main(String[] args) {
         launch(args);
@@ -23,22 +23,9 @@ public class GridLock extends Application {
         Group root = new Group();
         Scene scene = new Scene(root, 600, 600, Color.WHITE);
         
-        
-        //populating grid array with squares
-        for(int i = 0; i < 6; i++) {
-        	for(int j = 0; j < 6; j++) {
-        		Square square = new Square(j*100,i*100 , 100);
-                square.setFill(Color.TRANSPARENT);
-                square.setStroke(Color.BLACK);
-                grid.add(square);
-        	}
-        	
-        }
-        
-        
-      
+  
          //adding arraylist of grid to the window
-        root.getChildren().addAll(grid);
+        root.getChildren().addAll(grid.getListOfSquares());
  
         primaryStage.setTitle("GridLock");
         primaryStage.setScene(scene);
