@@ -3,4 +3,4 @@ GridLock game in Java.
 
 
 The grid has a positioning system starting from the top left.
-For example, the top left square would have position (0,0) and the bottom right would have (6,6)
+For example, the top left square would have position (0,0) and the bottom right would have (5,5)

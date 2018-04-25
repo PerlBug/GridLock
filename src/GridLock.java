@@ -21,7 +21,7 @@ public class GridLock extends Application {
     public void start(Stage primaryStage) {
     	
         Group root = new Group();
-        Scene scene = new Scene(root, 600, 600, Color.WHITE);
+        Scene scene = new Scene(root, 600, 600, Color.GREY);
         
   
          //adding arraylist of grid to the window
