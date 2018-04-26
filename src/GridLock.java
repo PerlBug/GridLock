@@ -2,6 +2,8 @@
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -15,15 +17,22 @@ public class GridLock extends Application {
     
     @Override
     public void start(Stage primaryStage) {
+    	Group root = new Group();
+    	Scene scene = new Scene(root);
+    	primaryStage.setTitle("GridLock");
+    	primaryStage.setScene(scene);
+    	Canvas canvas = new Canvas(600,600);
+    	GraphicsContext gc = canvas.getGraphicsContext2D();
+    	root.getChildren().add(canvas);
+    	root.getChildren().addAll(grid.getListOfSquares());
     	
-        Group root = new Group();
-        Scene scene = new Scene(root, 600, 600, Color.GREY);
-        
-         //adding arraylist of grid to the window
-        root.getChildren().addAll(grid.getListOfSquares());
- 
-        primaryStage.setTitle("GridLock");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+    	Sprite block = new Sprite("file:playercar.png",300, 300, 3);
+    	block.setSize(2);
+    	block.setPosition(400, 400);
+       	block.render(gc);
+    	
+    	primaryStage.show();
+    	
+    	
     }
 }
