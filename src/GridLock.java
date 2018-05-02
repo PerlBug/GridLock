@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 public class GridLock extends Application {
 	private Grid grid = new Grid();
-
+	
     public static void main(String[] args) {
         launch(args);
     }
@@ -26,11 +26,10 @@ public class GridLock extends Application {
     	root.getChildren().add(canvas);
     	root.getChildren().addAll(grid.getListOfSquares());
     	
-    	Sprite block = new Sprite("file:sprites/playercar.png",300, 300, 3);
+    	Sprite block = new Sprite("file:sprites/black.png",300, 300, 3, Sprite.Direction.HORIZONTAL );
     	block.setSize(2);
-    	block.setPosition(400, 400);
+    	block.setPosition(400, 400); 
        	block.render(gc);
-    	
     	primaryStage.show();
     	
     	

@@ -11,7 +11,7 @@ public class Grid {
 		listOfSquares = new ArrayList<Square>();
 		//populating grid array with squares
 		for(int i = 0; i < 6; i++) {
-        	for(int j = 0; j < 6; j++) {
+        	for(int j = 0; j < 6; j++) { //square coordinates go from (0,0) to (500,500)
         		Square square = new Square(j*100,i*100 , 100);
                 square.setFill(Color.TRANSPARENT);
                 square.setStroke(Color.BLACK);

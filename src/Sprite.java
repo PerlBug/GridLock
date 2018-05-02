@@ -1,9 +1,16 @@
+import com.sun.javafx.scene.traversal.Direction;
+
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class Sprite {
+	public enum Direction {
+		HORIZONTAL,
+		VERTICAL
+	}
+	private Direction direction; //horizontal or vertical movement direction
 	private Image image;
 	private String imageURL;
     private double xPos;
@@ -11,12 +18,21 @@ public class Sprite {
     private double width;
     private double height;
     
-    public Sprite(String imageURL, double x, double y, int size) {
+    /**
+     * 
+     * @param imageURL
+     * @param x
+     * @param y
+     * @param size
+     * @param direction
+     */
+    public Sprite(String imageURL, double x, double y, int size, Direction dir) {
     	this.imageURL = imageURL;
     	xPos = x;
     	yPos = y;
     	width = size*100;
     	height = 100;
+    	direction=dir;
     	image = new Image(imageURL, width, height, false, false);    	
     }
     
@@ -45,6 +61,7 @@ public class Sprite {
     	
     	image = new Image(imageURL, width, height, false, false);
     }
+   
     
     public void render(GraphicsContext gc)
     {
