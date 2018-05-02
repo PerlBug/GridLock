@@ -26,7 +26,7 @@ public class GridLock extends Application {
     	root.getChildren().add(canvas);
     	root.getChildren().addAll(grid.getListOfSquares());
     	
-    	Sprite block = new Sprite("file:sprites/black.png",300, 300, 3, Sprite.Direction.HORIZONTAL );
+    	Sprite block = new Sprite("file:sprites/playercar.png",300, 300, 3, Sprite.Direction.HORIZONTAL );
     	block.setSize(2);
     	block.setPosition(400, 400); 
        	block.render(gc);

@@ -4,8 +4,13 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
+/**
+ * A  class to represent Sprites (cars and trucks)
+ * @author team name?
+ *
+ */
 public class Sprite {
+	
 	public enum Direction {
 		HORIZONTAL,
 		VERTICAL
@@ -19,12 +24,12 @@ public class Sprite {
     private double height;
     
     /**
-     * 
-     * @param imageURL
-     * @param x
-     * @param y
-     * @param size
-     * @param direction
+     * Constructor for Sprite object.
+     * @param imageURL is the icon for the Sprite
+     * @param x is the x-coordinate of the Sprite on the grid
+     * @param y is the y-coordinate of the Sprite on the grid
+     * @param size is the number of grid squares the Sprite occupies
+     * @param direction is the direction of movement of the Spirte.
      */
     public Sprite(String imageURL, double x, double y, int size, Direction dir) {
     	this.imageURL = imageURL;
@@ -36,6 +41,10 @@ public class Sprite {
     	image = new Image(imageURL, width, height, false, false);    	
     }
     
+    /**
+     * 
+     * @param size
+     */
     public void setSize(int size) {
     	width = size*100;
     	height = 100;
