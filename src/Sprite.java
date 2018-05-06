@@ -1,25 +1,34 @@
 import com.sun.javafx.scene.traversal.Direction;
-
+import javafx.*;
+import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Rectangle;
 /**
  * A  class to represent Sprites (cars and trucks)
- * @author team name?
+ * @author 
  *
  */
-public class Sprite {
-	
+public class Sprite extends StackPane {
+	 
+    private double mouseX, mouseY;
+    private double Xcoord, Ycoord;
 	public enum Direction {
-		HORIZONTAL,
-		VERTICAL
+		HORIZONTAL,VERTICAL
 	}
 	private Direction direction; //horizontal or vertical movement direction
 	private Image image;
-	private String imageURL;
-    private double xPos;
-    private double yPos;    
+	private String imageURL;   
     private double width;
     private double height;
     
@@ -31,61 +40,59 @@ public class Sprite {
      * @param size is the number of grid squares the Sprite occupies
      * @param direction is the direction of movement of the Spirte.
      */
-    public Sprite(String imageURL, double x, double y, int size, Direction dir) {
-    	this.imageURL = imageURL;
-    	xPos = x;
-    	yPos = y;
-    	width = size*100;
-    	height = 100;
-    	direction=dir;
-    	image = new Image(imageURL, width, height, false, false);    	
+    public Sprite( Direction dir, int x, int y) {
+    	
+    	//image = new Image(imageURL, width, height, false, false); 
+    	   
+    	this.direction=dir;
+    	this.Xcoord=x;
+    	this.Ycoord=y;
+        move(x, y);
+        Rectangle r = new Rectangle(GridLock.SQUARE_SIZE ,GridLock.SQUARE_SIZE);
+        
+        r.setStroke(Color.BLACK);
+        r.setStrokeWidth(GridLock.SQUARE_SIZE * 0.03);
+        r.setFill(Color.GREEN);
+        getChildren().addAll( r);
+
+        setOnMousePressed(e -> {
+            mouseX = e.getSceneX();
+            mouseY = e.getSceneY();
+        });
+
+        setOnMouseDragged(e -> {
+            relocate(e.getSceneX() - mouseX + Xcoord, e.getSceneY() - mouseY + Ycoord);
+        });
     }
-    
+
+    public void move(int x, int y) {
+    	
+    	
+        Xcoord = x * GridLock.SQUARE_SIZE;
+        Ycoord = y * GridLock.SQUARE_SIZE;
+       /* System.out.println(Xcoord);
+    	System.out.println(Ycoord);*/
+        relocate(Xcoord, Ycoord);
+    }
+
     /**
-     * 
-     * @param size
+     * Aborts a move request by relocating the sprite back to its original position.
      */
-    public void setSize(int size) {
-    	width = size*100;
-    	height = 100;
-    	image = new Image(imageURL, width, height, false, false); 
-    	
+    public void stopMove() {
+        relocate(Xcoord, Ycoord);
     }
     
-    
-    
-    public void setPosition(double x, double y) {
-    	xPos = x;
-    	yPos = y;
+
+    public Direction getDirection() {
+        return direction;
     }
-    
-    public void setImage(String imageURL, double w, double h) {
-    	image = new Image(imageURL, w, h, false, false);
+
+    public double getXcoord() {
+        return Xcoord;
     }
-    
-    public void rotateSprite() {
-    	double temp = height; 
-    	height = width;
-    	width = temp;
-    	
-    	image = new Image(imageURL, width, height, false, false);
+
+    public double getYcoord() {
+        return Ycoord;
     }
    
-    
-    public void render(GraphicsContext gc)
-    {
-        gc.drawImage( image, xPos, yPos );
-    }
- 
-    public Rectangle2D getBoundary()
-    {
-        return new Rectangle2D(xPos,yPos,width,height);
-    }
- 
-    public boolean intersects(Sprite s)
-    {
-        return s.getBoundary().intersects(this.getBoundary());
-    }
-    
-    
 }
