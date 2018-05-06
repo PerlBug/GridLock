@@ -1,37 +1,143 @@
 
 import javafx.application.Application;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class GridLock extends Application {
-	private Grid grid = new Grid();
 	
-    public static void main(String[] args) {
-        launch(args);
-    }
-    
-    @Override
-    public void start(Stage primaryStage) {
-    	Group root = new Group();
-    	Scene scene = new Scene(root);
-    	primaryStage.setTitle("GridLock");
-    	primaryStage.setScene(scene);
-    	Canvas canvas = new Canvas(600,600);
-    	GraphicsContext gc = canvas.getGraphicsContext2D();
-    	root.getChildren().add(canvas);
-    	root.getChildren().addAll(grid.getListOfSquares());
-    	
-    	Sprite block = new Sprite("file:sprites/playercar.png",300, 300, 3, Sprite.Direction.HORIZONTAL );
-    	block.setSize(2);
-    	block.setPosition(400, 400); 
-       	block.render(gc);
-    	primaryStage.show();
-    	
-    	
-    }
+	    public static final int SQUARE_SIZE = 100;
+	    public static final int WIDTH = 6;
+	    public static final int HEIGHT = 6;
+
+	    private Square[][] grid = new Square[WIDTH][HEIGHT];
+
+	    private Group SquareGroup = new Group();
+	    private Group spriteGroup = new Group();
+	    
+	    public static void main(String[] args) {
+	        launch(args);
+	    }
+
+	    @Override
+	    public void start(Stage primaryStage) {
+	        Scene scene = new Scene(createContent());
+	        primaryStage.setTitle("Gridlock");
+	        primaryStage.setScene(scene);
+	        primaryStage.show();
+	    }
+
+	    private Parent createContent() {
+	        Pane root = new Pane();
+	        root.setPrefSize(WIDTH * SQUARE_SIZE, HEIGHT * SQUARE_SIZE);
+	        root.getChildren().addAll(SquareGroup, spriteGroup);
+
+	        for (int y = 0; y < HEIGHT; y++) {
+	            for (int x = 0; x < WIDTH; x++) {
+	            	Square Square;
+	            	/*if(y==0) {
+		                 Square = new Square(x, y, SQUARE_SIZE, 2*SQUARE_SIZE); //big Square for trucks
+		                grid[x][y] = Square;
+	            	}else {*/
+	            		 Square = new Square(x, y, SQUARE_SIZE, SQUARE_SIZE); 
+	 	                grid[x][y] = Square;
+	            		
+	            	//}
+
+	                SquareGroup.getChildren().add(Square);
+
+	                Sprite sprite = null;
+	                if(x%5==0) { //replace with random number generator?
+	                	
+		                sprite= makeSprite(Sprite.Direction.HORIZONTAL,x,y);	
+		               // System.out.println("set direction to.." + sprite.getDirection());
+		                spriteGroup.getChildren().add(sprite);
+		              
+	                }
+	                Square.setSprite(sprite);
+	                }
+	            }
+	        
+
+	        return root;
+	    }
+	    /**
+	     * Calculates if moving the Sprite object @param sprite to the new x coordinate @param newX and y coordinate
+	     * @param newY is valid. 
+	     * @return true if the move is in the correct direction for the sprite and the new position is free 
+	     * and on the grid. False otherwise
+	     */
+	    private boolean tryMove(Sprite sprite, int newX, int newY) {
+	    	
+	        if (grid[newX][newY].hasSprite() || newX <0 || newX>=6 || newY<0 || newY >=6) {
+	            return false;
+	        }if(sprite.getDirection()==Sprite.Direction.HORIZONTAL) {
+	        	if(toGrid(sprite.getYcoord())!=newY) {
+	        		System.out.println("new " + newY + "old " +toGrid(sprite.getYcoord()));
+	        		return false;
+	        	}
+	        }else{
+	        	if(toGrid(sprite.getXcoord())!=newX) {
+	        	
+	        		return false;
+	        	}
+	        }
+	        return true;
+	    }
+
+    	/**
+    	 * Convert pixel/position on the main panel to a grid square index
+    	 * @param pixel is the coordinate of an object on the primary stage
+    	 * @return
+    	 */
+	    private int toGrid(double pixel) {
+	    	 return (int)(pixel + SQUARE_SIZE / 2) / SQUARE_SIZE; 
+	     
+	    }
+
+	   
+	    /**
+	     * Create a sprite object and add event listeners for drag and drop
+	     * @param dir
+	     * @param x
+	     * @param y
+	     * @return
+	     */
+	    private Sprite makeSprite(Sprite.Direction dir, int x, int y) {
+	        	Sprite s = new Sprite(dir, x, y);
+
+	        	s.setOnMouseReleased(e -> {
+		            int newX = toGrid(s.getLayoutX());
+		            int newY = toGrid(s.getLayoutY());
+	
+		            boolean result;
+	
+		            if (newX < 0 || newY < 0 || newX >= WIDTH || newY >= HEIGHT) {
+		            	
+		                result = false;
+		            } else {
+		                result = tryMove(s, newX, newY);
+		            }
+	
+		            int xCoord = toGrid(s.getXcoord());
+		            int yCoord = toGrid(s.getYcoord());
+	
+		            if(result==false) {   	
+		                    s.stopMove();
+		            }else {
+	                    s.move(newX, newY); //issue is newX new Y are the wrong coords
+	                    grid[xCoord][yCoord].setSprite(null);
+	                    grid[newX][newY].setSprite(s);
+		            }
+	               
+	        });
+
+	        return s;
+	    }
+
+	   
+		
+
 }
