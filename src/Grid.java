@@ -12,9 +12,9 @@ public class Grid {
 		//populating grid array with squares
 		for(int i = 0; i < 6; i++) {
         	for(int j = 0; j < 6; j++) { //square coordinates go from (0,0) to (500,500)
-        		Square square = new Square(j*100,i*100 , 100);
+        		Square square = new Square(i,j,i*GridLock.SQUARE_SIZE, j*GridLock.SQUARE_SIZE);
                 square.setFill(Color.TRANSPARENT);
-                square.setStroke(Color.BLACK);
+                square.setStroke(Color.BLACK);      
                 grid[i][j] = square;
                 listOfSquares.add(square);
         	}

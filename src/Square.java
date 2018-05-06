@@ -1,22 +1,33 @@
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Square extends Rectangle{
-	private double squareSize;
-	private boolean occupied;
-	
-	public Square(double x, double y, double size) {
-		super(x, y,size, size);
-		occupied = false; 
-		squareSize = size;
-	}
-	
-	public double getSquareSize(){
-		return squareSize;
-	}
-	
-	public boolean isOccupied() {
-		return occupied;
-	}
-	
-	
+
+    private Sprite sprite;
+    
+    public Square( int x, int y, int height, int width) { 
+        setWidth(width);
+        setHeight(height);
+
+        relocate(x * width, y * height);
+
+        setFill(Color.WHITE);
+        setStroke(Color.BLACK);
+    }
+
+    public boolean hasSprite() {
+        return sprite != null;
+    }
+
+    public Sprite getSprite() {
+        return sprite;
+    }
+
+    public void setSprite(Sprite sprite) {
+        this.sprite = sprite;
+    }
+
+   
+
 }
+
