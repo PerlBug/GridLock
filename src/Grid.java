@@ -4,6 +4,8 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 
 public class Grid {
+	
+	
 	private Square grid[][] = new Square[GridLock.WIDTH][GridLock.HEIGHT];
 	private ArrayList<Square> listOfSquares;
 	
@@ -54,13 +56,13 @@ public class Grid {
 		int id=s.getID();
 		if(s.getDirection()==Sprite.Direction.HORIZONTAL) {
 			
-			for(i=0; i<s.getWidthSquareSize(); i++) {
+			for(i=0; i<s.getSize(); i++) {
 				//set square[x+i][y] to sprite id to signal that its occupied
 				grid[x+i][y].setSpriteID(id);
 			}
 			
 		}else { //vertical
-			for(i=0; i<s.getHeightSquareSize(); i++) {
+			for(i=0; i<s.getSize(); i++) {
 
 				grid[x][y+i].setSpriteID(id);
 			}
@@ -68,9 +70,7 @@ public class Grid {
 		
 	}
 
-	//check if we can move a sprite s to starting grid square (x,y,) and have no
-	//collisions for the length of the sprite
-	//remember if vertical block at (0,0) start pos is (0,0) end pos is (0,2)
+	
 	/**
 	 * if there is any other sprite on the path from old (x,y) position to new (x,y) position
 	 * return false
@@ -86,12 +86,12 @@ public class Grid {
 		 
 		if(s.getDirection()==Sprite.Direction.HORIZONTAL) {
 			//make sure we move in the right direction and we don't go over the edge of the board
-			if(oldY!=newY || newX>GridLock.WIDTH-s.getWidthSquareSize()) return false;
+			if(oldY!=newY || newX>GridLock.WIDTH-s.getSize()) return false;
 			
 			int i=(oldX < newX )? oldX: newX;
 			int j= (i==oldX)? newX: oldX;
 			for(int x=i; x<=j; x++) {
-				//if the square has a different id /occupied by different sprite we can't move our sprite
+				//if a square has a different id /occupied by different sprite we can't move our sprite
 				//the full length of it.
 				
 				if(grid[x][oldY].getSpriteID()!=id && grid[x][oldY].getSpriteID()!=-1 ) return false;
@@ -100,7 +100,7 @@ public class Grid {
 		}else { 
 		
 			//make sure we move in the right direction and we don't go over the edge of the board
-			if(oldX!=newX || newY > GridLock.HEIGHT - s.getHeightSquareSize()) return false; 
+			if(oldX!=newX || newY > GridLock.HEIGHT - s.getSize()) return false; 
 			int i=(oldY < newY )? oldY: newY;
 			int j= (i==oldY)? newY: oldY;
 			for(int y=i; y<= j; y++) {
@@ -130,13 +130,13 @@ public class Grid {
 		int id=-1;
 		if(s.getDirection()==Sprite.Direction.HORIZONTAL) {
 			
-			for(i=0; i<s.getWidthSquareSize(); i++) {
+			for(i=0; i<s.getSize(); i++) {
 				//set square[x+i][y] to sprite id -1 to signal that its gone
 				grid[x+i][y].setSpriteID(id);
 			}
 			
 		}else { //vertical
-			for(i=0; i<s.getHeightSquareSize(); i++) {
+			for(i=0; i<s.getSize(); i++) {
 
 				grid[x][y+i].setSpriteID(id);
 			}

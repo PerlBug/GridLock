@@ -16,8 +16,8 @@ import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 /**
- * A  class to represent Sprites (cars and trucks)
- * @author 
+ * A  class to represent Sprites (cars and trucks).
+ * A car has size 2, truck size 3.
  *
  */
 public class Sprite extends StackPane {
@@ -32,27 +32,27 @@ public class Sprite extends StackPane {
 	private String imageURL;   
     private double width;
     private double height;
-    private static int classId=0; //unique for every sprite created first sprite created has id 0
-    private int id;
-   
+    private static int classId=0; 
+    private int id; //unique for every sprite created first sprite created has id 0
+    private int size; //length of the block (width if horizontal, height if vertical)
     /**
      * Constructor for Sprite object.
      * @param imageURL is the icon for the Sprite
-     * @param x is the x-coordinate of the Sprite on the grid
+     * @param x is the x-coordinate of the first square containing the sprite on the grid
      * @param y is the y-coordinate of the Sprite on the grid
      * @param size is the number of grid squares the Sprite occupies
      * @param direction is the direction of movement of the Spirte.
      */
-    public Sprite( Direction dir, int x, int y) {
+    public Sprite( Direction dir, int x, int y, int size) {
     	
     	//image = new Image(imageURL, width, height, false, false); 
     	this.id=classId++;
     	System.out.println("sprite id is " + id);
     	this.direction=dir;
         move(x, y); //sets up xCoord, yCoord
-    	this.width=2*GridLock.SQUARE_SIZE; // 2 for cars, 3 for truck
+    	this.width=size*GridLock.SQUARE_SIZE; // 2 for cars, 3 for truck
     	this.height=GridLock.SQUARE_SIZE;
-
+    	this.size=size;
        
         Rectangle r = new Rectangle(width,height);
         if(dir==Direction.VERTICAL) {
@@ -101,11 +101,10 @@ public class Sprite extends StackPane {
     
     /**
      * 
-     * @return the factor by which the width of the sprite is . e.g. 3 * square size is a truck, 2* square size is
-     * a car.
+     * @return the length of the sprite.
      */
-    public int getWidthSquareSize() {
-    	return (int)width/GridLock.SQUARE_SIZE;
+    public int getSize() {
+    	return size;
     }
 
     public Direction getDirection() {
@@ -120,9 +119,7 @@ public class Sprite extends StackPane {
         return Ycoord;
     }
 
-	public int getHeightSquareSize() {		
-		return (int)width/GridLock.SQUARE_SIZE; //width->height when rotate vertical sprite
-	}
+	
 	
 	
 

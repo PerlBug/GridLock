@@ -10,6 +10,8 @@ public class GridLock extends Application {
 	    public static final int SQUARE_SIZE = 100;
 	    public static final int WIDTH = 6;
 	    public static final int HEIGHT = 6;
+	    public static final int CAR_SIZE=2;
+	    public static final int TRUCK_SIZE=3;
 
 	
 	    private Grid grid;
@@ -35,22 +37,20 @@ public class GridLock extends Application {
 	        grid=new Grid();
 	        SquareGroup.getChildren().addAll(grid.getListOfSquares());
 
-            Sprite s= makeSprite(Sprite.Direction.VERTICAL,1,3);
+            Sprite s= makeSprite(Sprite.Direction.VERTICAL,1,3,CAR_SIZE);
             grid.setSpriteOnGrid(s,1, 3);
             
             spriteGroup.getChildren().add(s); 
             
-            Sprite horz= makeSprite(Sprite.Direction.HORIZONTAL,1,1);
-            grid.setSpriteOnGrid(horz,1, 1);
+            Sprite horz= makeSprite(Sprite.Direction.HORIZONTAL,1,1,CAR_SIZE);
+        
             spriteGroup.getChildren().add(horz);
             
-            Sprite s3= makeSprite(Sprite.Direction.HORIZONTAL,2,2);
-            grid.setSpriteOnGrid(s3,2, 2);
+            Sprite s3= makeSprite(Sprite.Direction.HORIZONTAL,2,2,TRUCK_SIZE);
             spriteGroup.getChildren().add(s3);
           
             if(grid.checkSetSpriteOnGrid(1,3)) {
-            	Sprite s2= makeSprite(Sprite.Direction.VERTICAL,1,3);
-            	grid.setSpriteOnGrid(s2,1, 3); 
+            	Sprite s2= makeSprite(Sprite.Direction.VERTICAL,1,3,TRUCK_SIZE);
             	spriteGroup.getChildren().add(s2);
             }
            
@@ -58,28 +58,23 @@ public class GridLock extends Application {
 	        return root;
 	    }
 	    /**
-	     * Calculates if moving the Sprite object @param sprite to the new x coordinate @param newX and y coordinate
+	     * Determines if moving the Sprite object @param sprite to the new x coordinate @param newX and y coordinate
 	     * @param newY is valid. 
 	     * @return true if the move is in the correct direction for the sprite and the new position is free 
 	     * and on the grid. False otherwise
 	     */
 	    private boolean tryMove(Sprite sprite, int newX, int newY) {
 	    	
-	    	//Prevent the sprite going out of bounds, or moving into an already occupied square
+	    	//Prevent the sprite going out of bounds
 	   
 	        if (newX<0 || newY <0 || newY>=6 || newX >=6) {
 	        	return false;
 	        }
-	     	System.out.println("new grid squares id is " + grid.getSquareAtPosition(newX, newY).getSpriteID());
-	     	
-	     	/*if(grid.getSquareAtPosition(newX, newY).getSprite()!=null && sprite.checkShapeIntersection(sprite.getRect(), 
-	     			grid.getSquareAtPosition(newX, newY).getSprite().getRect())) {
-	     		return false;
-	     	}*/
-	     	
-	     	//TODO: need to check the whole length of the object's id!!!!
+	  //   	System.out.println("new grid squares id is " + grid.getSquareAtPosition(newX, newY).getSpriteID());
+
+	        //make sure there are no other sprites in the move path
 	     	if( !(grid.checkMoveToGrid(sprite, toGrid(sprite.getXcoord()), toGrid(sprite.getYcoord()),newX, newY))) {
-	        	System.out.println("here, occupeid");
+	        	
 	        	return false;
 	        }
 	        return true;
@@ -88,7 +83,7 @@ public class GridLock extends Application {
     	/**
     	 * Convert pixel/position on the main panel to a grid square index
     	 * @param pixel is the coordinate of an object on the primary stage
-    	 * @return
+    	 * @return the corresponding grid square coordinate the pixel is in.
     	 */
 	    private int toGrid(double pixel) {
 	    	 return (int)(pixel + SQUARE_SIZE / 2) / SQUARE_SIZE; 
@@ -96,15 +91,18 @@ public class GridLock extends Application {
 	    }
 
 	   
-	    /**
-	     * Create a sprite object and add event listeners for drag and drop
-	     * @param dir
-	     * @param x
-	     * @param y
-	     * @return
-	     */
-	    private Sprite makeSprite(Sprite.Direction dir, int x, int y) {
-	        	Sprite s = new Sprite(dir, x, y);
+	   /**
+	    * Create a new sprite object with event listeners for drag and drop.
+	    * @param dir is the direction the sprite can move in.
+	    * @param x is the x-coordinate of the first square containing the sprite.
+	    * @param y is the y-coordinate of the first square containing the sprite.
+	    * @param size is the length of the sprite (2 for cars, 3 for trucks)
+	    * @return a new Sprite object with the above properties.
+	    * 
+	    * @Postcondition: A new sprite object is created and placed on the game board at position (x,y).
+	    */
+	    private Sprite makeSprite(Sprite.Direction dir, int x, int y,int size) {
+	        	Sprite s = new Sprite(dir, x, y,size);
 	        	 grid.setSpriteOnGrid(s,x, y);
 
 	        	s.setOnMouseReleased(e -> {
@@ -123,21 +121,15 @@ public class GridLock extends Application {
 		            if(result==false) {   	
 		                    s.stopMove();
 		            }else {
-		            	
-	                    
 	                   grid.removeSpriteOnGrid(s, xCoord, yCoord); 
-	                   // grid.getSquareAtPosition(xCoord,yCoord).setSprite(null);
 	                   s.move(newX, newY); 
 	                   grid.setSpriteOnGrid(s,newX, newY);
-	                  //  grid.getSquareAtPosition(newX,newY).setSprite(s);
+	                  
 		            }
 	               
 	        });
 
 	        return s;
 	    }
-
-	   
-		
 
 }
