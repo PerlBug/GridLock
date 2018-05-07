@@ -62,7 +62,7 @@ public class Sprite extends StackPane {
         if(dir==Direction.VERTICAL) {
           	 this.r = new Rectangle(height,width); //rotate sprite
         }
-        r.setStroke(Color.BLACK);
+       // r.setStroke(Color.BLACK);
         r.setStrokeWidth(GridLock.SQUARE_SIZE * 0.03);
         r.setFill(Color.GREEN);
         r.setFill(new ImagePattern(image));

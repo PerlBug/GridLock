@@ -57,7 +57,7 @@ public class GridLock extends Application {
             spriteGroup.getChildren().add(s3);
 
             
-            UserCar redCar = makeUserCar(Sprite.Direction.HORIZONTAL,1,2,CAR_SIZE);
+            UserCar redCar = makeUserCar(Sprite.Direction.HORIZONTAL,1,2,CAR_SIZE, "file:sprites/redcar.png");
             spriteGroup.getChildren().add((Sprite)redCar);
             
             if(grid.checkSetSpriteOnGrid(1,3)) {
@@ -119,8 +119,8 @@ public class GridLock extends Application {
 	        return s;
 	    }
 	    
-	    private UserCar makeUserCar(Sprite.Direction dir, int x, int y,int size) {
-        	 UserCar s = new UserCar(dir);
+	    private UserCar makeUserCar(Sprite.Direction dir, int x, int y,int size, String url) {
+        	 UserCar s = new UserCar(dir, url);
         	 grid.setSpriteOnGrid(s,x, y);
 
         	s.setOnMouseReleased(e -> {

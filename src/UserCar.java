@@ -1,4 +1,6 @@
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.*;
 /**
@@ -8,14 +10,9 @@ import javafx.*;
  */
 public class UserCar extends Sprite {
 
-	public UserCar(Direction dir) {
+	public UserCar(Direction dir, String url) {
 		
-		super(dir, 1, 2, 2,"file:sprites/playercar.png"); 
-        Rectangle r = super.getRectangle();
-        r.setStroke(Color.BLACK);
-        r.setStrokeWidth(GridLock.SQUARE_SIZE * 0.03);
-        r.setFill(Color.RED);
-		
+		super(dir, 1, 2, 2, url); 
 		
 	}
 
