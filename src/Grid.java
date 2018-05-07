@@ -71,26 +71,41 @@ public class Grid {
 	//check if we can move a sprite s to starting grid square (x,y,) and have no
 	//collisions for the length of the sprite
 	//remember if vertical block at (0,0) start pos is (0,0) end pos is (0,2)
-	public boolean checkMoveToGrid(Sprite s, int x, int y) {
+	/**
+	 * if there is any other sprite on the path from old (x,y) position to new (x,y) position
+	 * return false
+	 * @param s
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public boolean checkMoveToGrid(Sprite s, int oldX, int oldY, int newX, int newY) {
 		
-		//if the starting positions mean we go off the grid , its impossible regardless of collisions
-		if( x>GridLock.WIDTH-s.getWidthSquareSize() || y > GridLock.HEIGHT - s.getHeightSquareSize()){
-			return false;
-		}
-		int i;
+		
 		int id=s.getID();
+		 
 		if(s.getDirection()==Sprite.Direction.HORIZONTAL) {
+			//make sure we move in the right direction and we don't go over the edge of the board
+			if(oldY!=newY || newX>GridLock.WIDTH-s.getWidthSquareSize()) return false;
 			
-			for(i=0; i<s.getWidthSquareSize(); i++) {
-				//if the square has a different id /occupied by different sprite we cant move our sprite
-				//the full length.
+			int i=(oldX < newX )? oldX: newX;
+			int j= (i==oldX)? newX: oldX;
+			for(int x=i; x<=j; x++) {
+				//if the square has a different id /occupied by different sprite we can't move our sprite
+				//the full length of it.
 				
-				if(grid[x+i][y].getSpriteID()!=id && grid[x+i][y].getSpriteID()!=-1 ) return false;
+				if(grid[x][oldY].getSpriteID()!=id && grid[x][oldY].getSpriteID()!=-1 ) return false;
 			}
 			
-		}else { //vertical
-			for(i=0; i<s.getHeightSquareSize(); i++) {
-				if(grid[x][y+i].getSpriteID()!=id  && grid[x][y+i].getSpriteID()!=-1) return false;
+		}else { 
+		
+			//make sure we move in the right direction and we don't go over the edge of the board
+			if(oldX!=newX || newY > GridLock.HEIGHT - s.getHeightSquareSize()) return false; 
+			int i=(oldY < newY )? oldY: newY;
+			int j= (i==oldY)? newY: oldY;
+			for(int y=i; y<= j; y++) {
+				
+				if(grid[oldX][y].getSpriteID()!=id  && grid[oldX][y].getSpriteID()!=-1) return false;
 				
 			}
 		}

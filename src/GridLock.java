@@ -11,7 +11,7 @@ public class GridLock extends Application {
 	    public static final int WIDTH = 6;
 	    public static final int HEIGHT = 6;
 
-	//    private Square[][] grid = new Square[WIDTH][HEIGHT];
+	
 	    private Grid grid;
 	    private Group SquareGroup = new Group();
 	    private Group spriteGroup = new Group();
@@ -44,7 +44,9 @@ public class GridLock extends Application {
             grid.setSpriteOnGrid(horz,1, 1);
             spriteGroup.getChildren().add(horz);
             
-            
+            Sprite s3= makeSprite(Sprite.Direction.HORIZONTAL,2,2);
+            grid.setSpriteOnGrid(s3,2, 2);
+            spriteGroup.getChildren().add(s3);
           
             if(grid.checkSetSpriteOnGrid(1,3)) {
             	Sprite s2= makeSprite(Sprite.Direction.VERTICAL,1,3);
@@ -76,23 +78,9 @@ public class GridLock extends Application {
 	     	}*/
 	     	
 	     	//TODO: need to check the whole length of the object's id!!!!
-	     	if( !(grid.checkMoveToGrid(sprite, newX, newY))) {
+	     	if( !(grid.checkMoveToGrid(sprite, toGrid(sprite.getXcoord()), toGrid(sprite.getYcoord()),newX, newY))) {
 	        	System.out.println("here, occupeid");
 	        	return false;
-	        }else if(sprite.getDirection()==Sprite.Direction.HORIZONTAL && ( newX>WIDTH-sprite.getWidthSquareSize())){
-	        	return false;
-	        }else if(sprite.getDirection()==Sprite.Direction.VERTICAL && (  newY >HEIGHT-sprite.getHeightSquareSize())) {
-	            return false;
-	        }else if(sprite.getDirection()==Sprite.Direction.HORIZONTAL) {
-	        	if(toGrid(sprite.getYcoord())!=newY) {
-	        		System.out.println("new " + newY + "old " +toGrid(sprite.getYcoord()));
-	        		return false;
-	        	}
-	        }else{
-	        	if(toGrid(sprite.getXcoord())!=newX) {
-	        	
-	        		return false;
-	        	}
 	        }
 	        return true;
 	    }
