@@ -68,6 +68,34 @@ public class Grid {
 		
 	}
 
+	//check if we can move a sprite s to starting grid square (x,y,) and have no
+	//collisions for the length of the sprite
+	//remember if vertical block at (0,0) start pos is (0,0) end pos is (0,2)
+	public boolean checkMoveToGrid(Sprite s, int x, int y) {
+		
+		//if the starting positions mean we go off the grid , its impossible regardless of collisions
+		if( x>GridLock.WIDTH-s.getWidthSquareSize() || y > GridLock.HEIGHT - s.getHeightSquareSize()){
+			return false;
+		}
+		int i;
+		int id=s.getID();
+		if(s.getDirection()==Sprite.Direction.HORIZONTAL) {
+			
+			for(i=0; i<s.getWidthSquareSize(); i++) {
+				//if the square has a different id /occupied by different sprite we cant move our sprite
+				//the full length.
+				
+				if(grid[x+i][y].getSpriteID()!=id && grid[x+i][y].getSpriteID()!=-1 ) return false;
+			}
+			
+		}else { //vertical
+			for(i=0; i<s.getHeightSquareSize(); i++) {
+				if(grid[x][y+i].getSpriteID()!=id  && grid[x][y+i].getSpriteID()!=-1) return false;
+				
+			}
+		}
+		return true;
+	}
 	  
    
     /***
@@ -84,17 +112,18 @@ public class Grid {
 		// remove sprite from original square
 		grid[x][y].setSprite(null);
 		int i;
+		int id=-1;
 		if(s.getDirection()==Sprite.Direction.HORIZONTAL) {
 			
 			for(i=0; i<s.getWidthSquareSize(); i++) {
 				//set square[x+i][y] to sprite id -1 to signal that its gone
-				grid[x+i][y].setSpriteID(-1);
+				grid[x+i][y].setSpriteID(id);
 			}
 			
 		}else { //vertical
 			for(i=0; i<s.getHeightSquareSize(); i++) {
 
-				grid[x][y+i].setSpriteID(-1);
+				grid[x][y+i].setSpriteID(id);
 			}
 			
 		
@@ -116,8 +145,6 @@ public class Grid {
 	
 		return true;
 	}
-
-
 	
 	
 	

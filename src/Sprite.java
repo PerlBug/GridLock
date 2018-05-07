@@ -14,6 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 /**
  * A  class to represent Sprites (cars and trucks)
  * @author 
@@ -33,6 +34,7 @@ public class Sprite extends StackPane {
     private double height;
     private static int classId=0; //unique for every sprite created first sprite created has id 0
     private int id;
+   
     /**
      * Constructor for Sprite object.
      * @param imageURL is the icon for the Sprite
@@ -59,7 +61,7 @@ public class Sprite extends StackPane {
         r.setStroke(Color.BLACK);
         r.setStrokeWidth(GridLock.SQUARE_SIZE * 0.03);
         r.setFill(Color.GREEN);
-       
+      
         getChildren().addAll(r);
 
         
@@ -121,5 +123,7 @@ public class Sprite extends StackPane {
 	public int getHeightSquareSize() {		
 		return (int)width/GridLock.SQUARE_SIZE; //width->height when rotate vertical sprite
 	}
-   
+	
+	
+
 }

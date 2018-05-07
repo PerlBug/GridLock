@@ -22,7 +22,7 @@ public class Square extends Rectangle{
     }
 
     public boolean hasSprite() {
-        return sprite != null && spriteID >=0 ;
+        return spriteID >=0 ;
     	
     }
 

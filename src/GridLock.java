@@ -37,7 +37,14 @@ public class GridLock extends Application {
 
             Sprite s= makeSprite(Sprite.Direction.VERTICAL,1,3);
             grid.setSpriteOnGrid(s,1, 3);
-            spriteGroup.getChildren().add(s);
+            
+            spriteGroup.getChildren().add(s); 
+            
+            Sprite horz= makeSprite(Sprite.Direction.HORIZONTAL,1,1);
+            grid.setSpriteOnGrid(horz,1, 1);
+            spriteGroup.getChildren().add(horz);
+            
+            
           
             if(grid.checkSetSpriteOnGrid(1,3)) {
             	Sprite s2= makeSprite(Sprite.Direction.VERTICAL,1,3);
@@ -62,8 +69,14 @@ public class GridLock extends Application {
 	        	return false;
 	        }
 	     	System.out.println("new grid squares id is " + grid.getSquareAtPosition(newX, newY).getSpriteID());
-	        if ( grid.getSquareAtPosition(newX, newY).getSpriteID() >= 0 && 
-	        		grid.getSquareAtPosition(newX, newY).getSpriteID()!=sprite.getID() ) {
+	     	
+	     	/*if(grid.getSquareAtPosition(newX, newY).getSprite()!=null && sprite.checkShapeIntersection(sprite.getRect(), 
+	     			grid.getSquareAtPosition(newX, newY).getSprite().getRect())) {
+	     		return false;
+	     	}*/
+	     	
+	     	//TODO: need to check the whole length of the object's id!!!!
+	     	if( !(grid.checkMoveToGrid(sprite, newX, newY))) {
 	        	System.out.println("here, occupeid");
 	        	return false;
 	        }else if(sprite.getDirection()==Sprite.Direction.HORIZONTAL && ( newX>WIDTH-sprite.getWidthSquareSize())){
@@ -112,9 +125,7 @@ public class GridLock extends Application {
 		           // System.out.println("new x is " + newX + "new y is "+newY);
 	
 		            boolean result;
-		           
 	
-		          
 		            result = tryMove(s, newX, newY);
 		            
 	
@@ -125,9 +136,10 @@ public class GridLock extends Application {
 		                    s.stopMove();
 		            }else {
 		            	
-	                    s.move(newX, newY); 
+	                    
 	                   grid.removeSpriteOnGrid(s, xCoord, yCoord); 
 	                   // grid.getSquareAtPosition(xCoord,yCoord).setSprite(null);
+	                   s.move(newX, newY); 
 	                   grid.setSpriteOnGrid(s,newX, newY);
 	                  //  grid.getSquareAtPosition(newX,newY).setSprite(s);
 		            }
