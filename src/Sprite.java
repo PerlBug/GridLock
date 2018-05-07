@@ -31,8 +31,8 @@ public class Sprite extends StackPane {
 	private String imageURL;   
     private double width;
     private double height;
-    private static int id=0; //unique for every sprite created first sprite created has id 0
-    
+    private static int classId=0; //unique for every sprite created first sprite created has id 0
+    private int id;
     /**
      * Constructor for Sprite object.
      * @param imageURL is the icon for the Sprite
@@ -44,7 +44,7 @@ public class Sprite extends StackPane {
     public Sprite( Direction dir, int x, int y) {
     	
     	//image = new Image(imageURL, width, height, false, false); 
-    	this.id=id++;
+    	this.id=classId++;
     	System.out.println("sprite id is " + id);
     	this.direction=dir;
         move(x, y); //sets up xCoord, yCoord

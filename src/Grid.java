@@ -17,9 +17,6 @@ public class Grid {
     	            	Square square;	
     					square = new Square(x, y, GridLock.SQUARE_SIZE, GridLock.SQUARE_SIZE); 
     					grid[x][y] = square;
-    					
-    					Sprite sprite = null;
-    					square.setSprite(sprite);
     					listOfSquares.add(square);
     					
         		}
@@ -44,7 +41,12 @@ public class Grid {
 	
 	
 	public void setSpriteOnGrid(Sprite s, int x, int y) {
-		
+		/*if(grid[x][y].getSprite()!=null) { //if this square already has a sprite we ignore the request
+			//and remove it from the grid displ
+			//removeSpriteOnGrid(s,x,y);
+			
+			return; 
+		}*/
 		grid[x][y].setSprite(s); //place actual sprite on first grid square
 		//set sprite id of the other squares taken up by the sprite to signal they are also
 		//occupied by the sprite

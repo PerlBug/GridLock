@@ -14,7 +14,7 @@ public class Square extends Rectangle{
         this.x=x;
         this.y=y;
         this.spriteID=-1; //default value
-
+        this.sprite=null; //default
         relocate(x * width, y * height);
 
         setFill(Color.WHITE);
@@ -22,8 +22,8 @@ public class Square extends Rectangle{
     }
 
     public boolean hasSprite() {
-        return sprite != null;
-    	//return spriteID < 0;
+        return sprite != null && spriteID >=0 ;
+    	
     }
 
     public Sprite getSprite() {
@@ -39,10 +39,13 @@ public class Square extends Rectangle{
     }
 
 	public void setSpriteID(int i) {
-		// TODO Auto-generated method stub
+		this.spriteID=i;
 		
 	}
 
+	public int getSpriteID() {
+		return spriteID;
+	}
    
 
 }

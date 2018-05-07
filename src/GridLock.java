@@ -38,10 +38,10 @@ public class GridLock extends Application {
             Sprite s= makeSprite(Sprite.Direction.VERTICAL,1,3);
             grid.setSpriteOnGrid(s,1, 3);
             Sprite s2= makeSprite(Sprite.Direction.VERTICAL,1,3);
-            grid.setSpriteOnGrid(s2,1, 3);
+            grid.setSpriteOnGrid(s2,1, 3); //doesn't do anything because already a sprite in that starting position
 
             spriteGroup.getChildren().add(s);
-           // spriteGroup.getChildren().add(s2);
+            spriteGroup.getChildren().add(s2);
 	        return root;
 	    }
 	    /**
@@ -53,14 +53,17 @@ public class GridLock extends Application {
 	    private boolean tryMove(Sprite sprite, int newX, int newY) {
 	    	
 	    	//Prevent the sprite going out of bounds, or moving into an already occupied square
-	        if (grid.getSquareAtPosition(newX, newY).hasSprite() || newX<0 || newY <0 || newY>6 || newX >6) {
+	        if (newX<0 || newY <0 || newY>=6 || newX >=6) {
+	        	return false;
+	        }
+	        else if ( grid.getSquareAtPosition(newX, newY).getSpriteID() >= 0 ) {
 	        	System.out.println("here, occupeid");
 	        	return false;
-	        } if(sprite.getDirection()==Sprite.Direction.HORIZONTAL && ( newX>WIDTH-sprite.getWidthSquareSize())){
+	        }else if(sprite.getDirection()==Sprite.Direction.HORIZONTAL && ( newX>WIDTH-sprite.getWidthSquareSize())){
 	        	return false;
-	        }if(sprite.getDirection()==Sprite.Direction.VERTICAL && (  newY >HEIGHT-sprite.getHeightSquareSize())) {
+	        }else if(sprite.getDirection()==Sprite.Direction.VERTICAL && (  newY >HEIGHT-sprite.getHeightSquareSize())) {
 	            return false;
-	        }if(sprite.getDirection()==Sprite.Direction.HORIZONTAL) {
+	        }else if(sprite.getDirection()==Sprite.Direction.HORIZONTAL) {
 	        	if(toGrid(sprite.getYcoord())!=newY) {
 	        		System.out.println("new " + newY + "old " +toGrid(sprite.getYcoord()));
 	        		return false;
@@ -94,6 +97,7 @@ public class GridLock extends Application {
 	     */
 	    private Sprite makeSprite(Sprite.Direction dir, int x, int y) {
 	        	Sprite s = new Sprite(dir, x, y);
+	        	 grid.setSpriteOnGrid(s,x, y);
 
 	        	s.setOnMouseReleased(e -> {
 		            int newX = toGrid(s.getLayoutX());
@@ -101,10 +105,7 @@ public class GridLock extends Application {
 		           // System.out.println("new x is " + newX + "new y is "+newY);
 	
 		            boolean result;
-		           /* if(newX < 0) newX=0;
-		            if(newY<0) newY=0;
-		            if(newX > WIDTH) newX=WIDTH;
-		            if(newY > HEIGHT) newY=HEIGHT;*/
+		           
 	
 		          
 		            result = tryMove(s, newX, newY);
