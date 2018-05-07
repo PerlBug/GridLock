@@ -51,10 +51,16 @@ public class GridLock extends Application {
         
             spriteGroup.getChildren().add(horz);
             
-            Sprite s3= makeSprite(Sprite.Direction.HORIZONTAL,2,2,TRUCK_SIZE, "file:sprites/playercar.png");
+
+            Sprite s3= makeSprite(Sprite.Direction.HORIZONTAL,3,2,TRUCK_SIZE, "file:sprites/playercar.png");
+
             spriteGroup.getChildren().add(s3);
-          
-            if(grid.checkSetSpriteOnGrid(1,3)) { //fails
+
+            
+            UserCar redCar = makeUserCar(Sprite.Direction.HORIZONTAL,1,2,CAR_SIZE);
+            spriteGroup.getChildren().add((Sprite)redCar);
+            
+            if(grid.checkSetSpriteOnGrid(1,3)) {
             	Sprite s2= makeSprite(Sprite.Direction.VERTICAL,1,3,TRUCK_SIZE,"file:sprites/playercar.png");
             	spriteGroup.getChildren().add(s2);
             }
@@ -112,5 +118,36 @@ public class GridLock extends Application {
 
 	        return s;
 	    }
+	    
+	    private UserCar makeUserCar(Sprite.Direction dir, int x, int y,int size) {
+        	 UserCar s = new UserCar(dir);
+        	 grid.setSpriteOnGrid(s,x, y);
+
+        	s.setOnMouseReleased(e -> {
+	            int newX = toGrid(s.getLayoutX());
+	            int newY = toGrid(s.getLayoutY());
+	           // System.out.println("new x is " + newX + "new y is "+newY);
+
+	            int xCoord = toGrid(s.getXcoord());
+	            int yCoord = toGrid(s.getYcoord());
+	            boolean result;
+
+	            result = grid.checkMoveToGrid(s,xCoord,yCoord, newX, newY);
+	            
+
+
+	            if(result==false) {   	
+	                    s.stopMove();
+	            }else {
+                   grid.removeSpriteOnGrid(s, xCoord, yCoord); 
+                   s.move(newX, newY); 
+                   grid.setSpriteOnGrid(s,newX, newY);
+                  
+	            }
+               
+        });
+
+        return s;
+    }
 
 }

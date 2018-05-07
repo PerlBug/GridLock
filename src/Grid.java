@@ -4,7 +4,7 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 /**
  * A class representing the Game Board Grid.
- * 
+ *
  *
  */
 public class Grid {

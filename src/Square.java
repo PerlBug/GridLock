@@ -3,7 +3,7 @@ import javafx.scene.shape.Rectangle;
 /**
  * Class representing grid squares.
  * Each grid Square can contain part of a sprite object.
- * @author becca
+ * 
  *
  */
 public class Square extends Rectangle{
