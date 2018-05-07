@@ -1,4 +1,3 @@
-
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Parent;
@@ -23,13 +22,13 @@ public class GridLock extends Application {
 
 	    @Override
 	    public void start(Stage primaryStage) {
-	        Scene scene = new Scene(createContent());
+	        Scene scene = new Scene(createGameBoard());
 	        primaryStage.setTitle("Gridlock");
 	        primaryStage.setScene(scene);
 	        primaryStage.show();
 	    }
 
-	    private Parent createContent() {
+	    private Parent createGameBoard() {
 	        Pane root = new Pane();
 	        root.setPrefSize(WIDTH * SQUARE_SIZE, HEIGHT * SQUARE_SIZE);
 	        root.getChildren().addAll(SquareGroup, spriteGroup);
@@ -41,6 +40,7 @@ public class GridLock extends Application {
 		                 Square = new Square(x, y, SQUARE_SIZE, 2*SQUARE_SIZE); //big Square for trucks
 		                grid[x][y] = Square;
 	            	}else {*/
+	            		
 	            		 Square = new Square(x, y, SQUARE_SIZE, SQUARE_SIZE); 
 	 	                grid[x][y] = Square;
 	            		
@@ -50,12 +50,21 @@ public class GridLock extends Application {
 
 	                Sprite sprite = null;
 	                if(x%5==0) { //replace with random number generator?
-	                	
+	                	if(x!=WIDTH-1) { //if all sprites are width 2*SQUARESIZE the last xcoord is width-2
+	            		
+	            			
+	            		
 		                sprite= makeSprite(Sprite.Direction.HORIZONTAL,x,y);	
 		               // System.out.println("set direction to.." + sprite.getDirection());
 		                spriteGroup.getChildren().add(sprite);
-		              
-	                }
+	                	}
+	                } 
+	               /* }else if (y%3==0) {
+	                	  sprite= makeSprite(Sprite.Direction.VERTICAL,x,y);	
+			               // System.out.println("set direction to.." + sprite.getDirection());
+			                spriteGroup.getChildren().add(sprite);
+	                	
+	                }*/
 	                Square.setSprite(sprite);
 	                }
 	            }
@@ -71,7 +80,8 @@ public class GridLock extends Application {
 	     */
 	    private boolean tryMove(Sprite sprite, int newX, int newY) {
 	    	
-	        if (grid[newX][newY].hasSprite() || newX <0 || newX>=6 || newY<0 || newY >=6) {
+	    	//Prevent the sprite going out of bounds, or moving into an already occupied square
+	        if (grid[newX][newY].hasSprite() || newX <0 || newX>WIDTH-sprite.getWidthSquareSize() || newY<0 || newY >=6) {
 	            return false;
 	        }if(sprite.getDirection()==Sprite.Direction.HORIZONTAL) {
 	        	if(toGrid(sprite.getYcoord())!=newY) {

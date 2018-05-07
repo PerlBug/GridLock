@@ -47,14 +47,17 @@ public class Sprite extends StackPane {
     	this.direction=dir;
     	this.Xcoord=x;
     	this.Ycoord=y;
+    	this.width=2*GridLock.SQUARE_SIZE; // 2 for cars, 3 for truck
+    	this.height=GridLock.SQUARE_SIZE;
         move(x, y);
-        Rectangle r = new Rectangle(GridLock.SQUARE_SIZE ,GridLock.SQUARE_SIZE);
+        Rectangle r = new Rectangle(width,height);
         
         r.setStroke(Color.BLACK);
         r.setStrokeWidth(GridLock.SQUARE_SIZE * 0.03);
         r.setFill(Color.GREEN);
-        getChildren().addAll( r);
+        getChildren().addAll(r);
 
+        
         setOnMousePressed(e -> {
             mouseX = e.getSceneX();
             mouseY = e.getSceneY();
@@ -63,6 +66,7 @@ public class Sprite extends StackPane {
         setOnMouseDragged(e -> {
             relocate(e.getSceneX() - mouseX + Xcoord, e.getSceneY() - mouseY + Ycoord);
         });
+        
     }
 
     public void move(int x, int y) {
@@ -82,6 +86,14 @@ public class Sprite extends StackPane {
         relocate(Xcoord, Ycoord);
     }
     
+    /**
+     * 
+     * @return the factor by which the width of the sprite is . e.g. 2 * square size is a truck, 1.5* square size is
+     * a car.
+     */
+    public int getWidthSquareSize() {
+    	return (int)width/GridLock.SQUARE_SIZE;
+    }
 
     public Direction getDirection() {
         return direction;
