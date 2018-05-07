@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -45,9 +46,10 @@ public class Sprite extends StackPane {
      * @param size is the number of grid squares the Sprite occupies
      * @param direction is the direction of movement of the Sprite.
      */
-    public Sprite( Direction dir, int x, int y, int size) {
+    public Sprite( Direction dir, int x, int y, int size, String imageURL) {
+    	//StackPane p= new StackPane();
     	
-    	//image = new Image(imageURL, width, height, false, false); 
+    	Image image = new Image(imageURL, width, height, false, false); 
     	this.id=classId++;
     	System.out.println("sprite id is " + id);
     	this.direction=dir;
@@ -63,7 +65,8 @@ public class Sprite extends StackPane {
         r.setStroke(Color.BLACK);
         r.setStrokeWidth(GridLock.SQUARE_SIZE * 0.03);
         r.setFill(Color.GREEN);
-      
+        r.setFill(new ImagePattern(image));
+       // p.add(r);
         getChildren().addAll(r);
 
         

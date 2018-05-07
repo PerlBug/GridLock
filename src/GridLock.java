@@ -42,20 +42,20 @@ public class GridLock extends Application {
 	        grid=new Grid();
 	        SquareGroup.getChildren().addAll(grid.getListOfSquares());
 
-            Sprite s= makeSprite(Sprite.Direction.VERTICAL,1,3,CAR_SIZE);
-            grid.setSpriteOnGrid(s,1, 3);
+            Sprite s= makeSprite(Sprite.Direction.VERTICAL,1,3,CAR_SIZE, "file:sprites/playercar.png");
+ 
             
             spriteGroup.getChildren().add(s); 
             
-            Sprite horz= makeSprite(Sprite.Direction.HORIZONTAL,1,1,CAR_SIZE);
+            Sprite horz= makeSprite(Sprite.Direction.HORIZONTAL,1,1,CAR_SIZE,"file:sprites/playercar.png");
         
             spriteGroup.getChildren().add(horz);
             
-            Sprite s3= makeSprite(Sprite.Direction.HORIZONTAL,2,2,TRUCK_SIZE);
+            Sprite s3= makeSprite(Sprite.Direction.HORIZONTAL,2,2,TRUCK_SIZE, "file:sprites/playercar.png");
             spriteGroup.getChildren().add(s3);
           
-            if(grid.checkSetSpriteOnGrid(1,3)) {
-            	Sprite s2= makeSprite(Sprite.Direction.VERTICAL,1,3,TRUCK_SIZE);
+            if(grid.checkSetSpriteOnGrid(1,3)) { //fails
+            	Sprite s2= makeSprite(Sprite.Direction.VERTICAL,1,3,TRUCK_SIZE,"file:sprites/playercar.png");
             	spriteGroup.getChildren().add(s2);
             }
            
@@ -85,8 +85,8 @@ public class GridLock extends Application {
 	    * 
 	    * @Postcondition: A new sprite object is created and placed on the game board at position (x,y).
 	    */
-	    private Sprite makeSprite(Sprite.Direction dir, int x, int y,int size) {
-	        	Sprite s = new Sprite(dir, x, y,size);
+	    private Sprite makeSprite(Sprite.Direction dir, int x, int y,int size, String imageURL) {
+	        	Sprite s = new Sprite(dir, x, y,size, imageURL);
 	        	 grid.setSpriteOnGrid(s,x, y);
 
 	        	s.setOnMouseReleased(e -> {
@@ -99,9 +99,6 @@ public class GridLock extends Application {
 		            boolean result;
 	
 		            result = grid.checkMoveToGrid(s,xCoord,yCoord, newX, newY);
-		            
-	
-	
 		            if(result==false) {   	
 		                    s.stopMove();
 		            }else {
