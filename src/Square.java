@@ -4,6 +4,7 @@ import javafx.scene.shape.Rectangle;
 public class Square extends Rectangle{
 
     private Sprite sprite;
+    private int spriteID; //Id of the sprite occupying the square.
     
     public Square( int x, int y, int height, int width) { 
         setWidth(width);
@@ -17,6 +18,7 @@ public class Square extends Rectangle{
 
     public boolean hasSprite() {
         return sprite != null;
+    	//return spriteID < 0;
     }
 
     public Sprite getSprite() {

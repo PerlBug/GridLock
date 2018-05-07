@@ -35,40 +35,22 @@ public class GridLock extends Application {
 
 	        for (int y = 0; y < HEIGHT; y++) {
 	            for (int x = 0; x < WIDTH; x++) {
-	            	Square Square;
-	            	/*if(y==0) {
-		                 Square = new Square(x, y, SQUARE_SIZE, 2*SQUARE_SIZE); //big Square for trucks
-		                grid[x][y] = Square;
-	            	}else {*/
-	            		
-	            		 Square = new Square(x, y, SQUARE_SIZE, SQUARE_SIZE); 
-	 	                grid[x][y] = Square;
-	            		
-	            	//}
-
-	                SquareGroup.getChildren().add(Square);
-
-	                Sprite sprite = null;
-	                if(x%5==0) { //replace with random number generator?
-	                	if(x!=WIDTH-1) { //if all sprites are width 2*SQUARESIZE the last xcoord is width-2
-	            		
-	            			
-	            		
-		                sprite= makeSprite(Sprite.Direction.HORIZONTAL,x,y);	
-		               // System.out.println("set direction to.." + sprite.getDirection());
-		                spriteGroup.getChildren().add(sprite);
-	                	}
-	                } 
-	               /* }else if (y%3==0) {
-	                	  sprite= makeSprite(Sprite.Direction.VERTICAL,x,y);	
-			               // System.out.println("set direction to.." + sprite.getDirection());
-			                spriteGroup.getChildren().add(sprite);
-	                	
-	                }*/
-	                Square.setSprite(sprite);
+	            	Square Square;	
+					Square = new Square(x, y, SQUARE_SIZE, SQUARE_SIZE); 
+					grid[x][y] = Square;
+					SquareGroup.getChildren().add(Square);
+					
+					Sprite sprite = null;
+					Square.setSprite(sprite);
 	                }
 	            }
-	        
+
+            Sprite s= makeSprite(Sprite.Direction.VERTICAL,1,1);
+            //this is where we need a method for a grid object to set multiple squares
+            // to one  sprite...
+            
+
+            spriteGroup.getChildren().add(s);
 
 	        return root;
 	    }
@@ -81,7 +63,7 @@ public class GridLock extends Application {
 	    private boolean tryMove(Sprite sprite, int newX, int newY) {
 	    	
 	    	//Prevent the sprite going out of bounds, or moving into an already occupied square
-	        if (grid[newX][newY].hasSprite() || newX <0 || newX>WIDTH-sprite.getWidthSquareSize() || newY<0 || newY >=6) {
+	        if (grid[newX][newY].hasSprite() || newX <0 || newX>WIDTH-sprite.getWidthSquareSize() || newY<0 || newY >HEIGHT-sprite.getHeightSquareSize()) {
 	            return false;
 	        }if(sprite.getDirection()==Sprite.Direction.HORIZONTAL) {
 	        	if(toGrid(sprite.getYcoord())!=newY) {
