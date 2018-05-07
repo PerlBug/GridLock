@@ -22,7 +22,7 @@ import javafx.scene.shape.Rectangle;
 public class Sprite extends StackPane {
 	 
     private double mouseX, mouseY;
-    private double Xcoord, Ycoord;
+    private double Xcoord, Ycoord; //pixel not grid square values
 	public enum Direction {
 		HORIZONTAL,VERTICAL
 	}
@@ -46,11 +46,10 @@ public class Sprite extends StackPane {
     	//image = new Image(imageURL, width, height, false, false); 
     	this.id=id++;
     	this.direction=dir;
-    	this.Xcoord=x;
-    	this.Ycoord=y;
+        move(x, y); //sets up xCoord, yCoord
     	this.width=2*GridLock.SQUARE_SIZE; // 2 for cars, 3 for truck
     	this.height=GridLock.SQUARE_SIZE;
-        move(x, y);
+
        
         Rectangle r = new Rectangle(width,height);
         if(dir==Direction.VERTICAL) {

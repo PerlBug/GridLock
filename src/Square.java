@@ -5,10 +5,14 @@ public class Square extends Rectangle{
 
     private Sprite sprite;
     private int spriteID; //Id of the sprite occupying the square.
+    private int x;
+    private int y;
     
     public Square( int x, int y, int height, int width) { 
         setWidth(width);
         setHeight(height);
+        this.x=x;
+        this.y=y;
 
         relocate(x * width, y * height);
 
@@ -26,6 +30,7 @@ public class Square extends Rectangle{
     }
 
     public void setSprite(Sprite sprite) {
+    	//System.out.println("setting sprite at " + x +" " + y +"to " + sprite);
         this.sprite = sprite;
     }
 
