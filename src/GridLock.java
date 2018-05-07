@@ -62,28 +62,7 @@ public class GridLock extends Application {
            
 	        return root;
 	    }
-	    /**
-	     * Determines if moving the Sprite object @param sprite to the new x coordinate @param newX and y coordinate
-	     * @param newY is valid. 
-	     * @return true if the move is in the correct direction for the sprite and there is enough space for the sprite
-	     *  False otherwise.
-	     */
-	    private boolean tryMove(Sprite sprite, int newX, int newY) {
-	    	
-	    	//Prevent the sprite going out of bounds
-	   
-	        if (newX<0 || newY <0 || newY>=6 || newX >=6) {
-	        	return false;
-	        }
-	  //   	System.out.println("new grid squares id is " + grid.getSquareAtPosition(newX, newY).getSpriteID());
-
-	        //make sure there are no other sprites in the move path
-	     	if( !(grid.checkMoveToGrid(sprite, toGrid(sprite.getXcoord()), toGrid(sprite.getYcoord()),newX, newY))) {
-	        	
-	        	return false;
-	        }
-	        return true;
-	    }
+	
 
     	/**
     	 * Convert pixel/position on the main panel to a grid square index
@@ -114,14 +93,14 @@ public class GridLock extends Application {
 		            int newX = toGrid(s.getLayoutX());
 		            int newY = toGrid(s.getLayoutY());
 		           // System.out.println("new x is " + newX + "new y is "+newY);
-	
-		            boolean result;
-	
-		            result = tryMove(s, newX, newY);
-		            
-	
+
 		            int xCoord = toGrid(s.getXcoord());
 		            int yCoord = toGrid(s.getYcoord());
+		            boolean result;
+	
+		            result = grid.checkMoveToGrid(s,xCoord,yCoord, newX, newY);
+		            
+	
 	
 		            if(result==false) {   	
 		                    s.stopMove();

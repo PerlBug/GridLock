@@ -84,7 +84,9 @@ public class Grid {
 	 */
 	public boolean checkMoveToGrid(Sprite s, int oldX, int oldY, int newX, int newY) {
 		
-		
+		 if (newX<0 || newY <0 || newY>=GridLock.HEIGHT || newX >=GridLock.WIDTH) {
+	        	return false;
+	        }
 		int id=s.getID();
 		 
 		if(s.getDirection()==Sprite.Direction.HORIZONTAL) {
