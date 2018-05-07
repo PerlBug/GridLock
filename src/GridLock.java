@@ -37,11 +37,15 @@ public class GridLock extends Application {
 
             Sprite s= makeSprite(Sprite.Direction.VERTICAL,1,3);
             grid.setSpriteOnGrid(s,1, 3);
-            Sprite s2= makeSprite(Sprite.Direction.VERTICAL,1,3);
-            grid.setSpriteOnGrid(s2,1, 3); //doesn't do anything because already a sprite in that starting position
-
             spriteGroup.getChildren().add(s);
-            spriteGroup.getChildren().add(s2);
+          
+            if(grid.checkSetSpriteOnGrid(1,3)) {
+            	Sprite s2= makeSprite(Sprite.Direction.VERTICAL,1,3);
+            	grid.setSpriteOnGrid(s2,1, 3); 
+            	spriteGroup.getChildren().add(s2);
+            }
+           
+           
 	        return root;
 	    }
 	    /**
@@ -53,10 +57,13 @@ public class GridLock extends Application {
 	    private boolean tryMove(Sprite sprite, int newX, int newY) {
 	    	
 	    	//Prevent the sprite going out of bounds, or moving into an already occupied square
+	   
 	        if (newX<0 || newY <0 || newY>=6 || newX >=6) {
 	        	return false;
 	        }
-	        else if ( grid.getSquareAtPosition(newX, newY).getSpriteID() >= 0 ) {
+	     	System.out.println("new grid squares id is " + grid.getSquareAtPosition(newX, newY).getSpriteID());
+	        if ( grid.getSquareAtPosition(newX, newY).getSpriteID() >= 0 && 
+	        		grid.getSquareAtPosition(newX, newY).getSpriteID()!=sprite.getID() ) {
 	        	System.out.println("here, occupeid");
 	        	return false;
 	        }else if(sprite.getDirection()==Sprite.Direction.HORIZONTAL && ( newX>WIDTH-sprite.getWidthSquareSize())){
