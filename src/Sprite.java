@@ -35,7 +35,7 @@ public class Sprite extends StackPane {
     private static int classId=0; 
     private int id; //unique for every sprite created first sprite created has id 0
     private int size; //length of the block (width if horizontal movement, height if vertical)
-    
+    private Rectangle r;
     
     /**
      * Constructor for Sprite object.
@@ -56,9 +56,9 @@ public class Sprite extends StackPane {
     	this.height=GridLock.SQUARE_SIZE;
     	this.size=size;
        
-        Rectangle r = new Rectangle(width,height);
+        this.r = new Rectangle(width,height);
         if(dir==Direction.VERTICAL) {
-          	 r = new Rectangle(height,width); //rotate sprite
+          	 this.r = new Rectangle(height,width); //rotate sprite
         }
         r.setStroke(Color.BLACK);
         r.setStrokeWidth(GridLock.SQUARE_SIZE * 0.03);
@@ -78,6 +78,14 @@ public class Sprite extends StackPane {
        
         
     }
+    
+    /**
+     * Getter method for the rectangle
+     */
+    public Rectangle getRectangle() {
+    	return this.r;
+    }
+    
     
     public int getID() {
     	
