@@ -34,14 +34,16 @@ public class Sprite extends StackPane {
     private double height;
     private static int classId=0; 
     private int id; //unique for every sprite created first sprite created has id 0
-    private int size; //length of the block (width if horizontal, height if vertical)
+    private int size; //length of the block (width if horizontal movement, height if vertical)
+    
+    
     /**
      * Constructor for Sprite object.
      * @param imageURL is the icon for the Sprite
      * @param x is the x-coordinate of the first square containing the sprite on the grid
-     * @param y is the y-coordinate of the Sprite on the grid
+     * @param y is the y-coordinate of the first square containing the Sprite on the grid
      * @param size is the number of grid squares the Sprite occupies
-     * @param direction is the direction of movement of the Spirte.
+     * @param direction is the direction of movement of the Sprite.
      */
     public Sprite( Direction dir, int x, int y, int size) {
     	
@@ -82,6 +84,10 @@ public class Sprite extends StackPane {
     	return this.id;
     }
     
+    /**
+     * Updates the position of the Sprite object to the grid square ( @param x, @param y).
+     * @postcondition: The Xcoord and Ycoord fields of this sprite object become x * GridLock.SQUARE_SIZE, y * GridLock.SQUARE_SIZE
+     */
     public void move(int x, int y) {
     	
     	
@@ -100,8 +106,8 @@ public class Sprite extends StackPane {
     }
     
     /**
-     * 
-     * @return the length of the sprite.
+     * Getter method for the number of grid squares the sprite takes up.
+     * @return size;
      */
     public int getSize() {
     	return size;

@@ -5,6 +5,11 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+/**
+ * Main class for the GridLock application
+ * 
+ *
+ */
 public class GridLock extends Application {
 	
 	    public static final int SQUARE_SIZE = 100;
@@ -60,8 +65,8 @@ public class GridLock extends Application {
 	    /**
 	     * Determines if moving the Sprite object @param sprite to the new x coordinate @param newX and y coordinate
 	     * @param newY is valid. 
-	     * @return true if the move is in the correct direction for the sprite and the new position is free 
-	     * and on the grid. False otherwise
+	     * @return true if the move is in the correct direction for the sprite and there is enough space for the sprite
+	     *  False otherwise.
 	     */
 	    private boolean tryMove(Sprite sprite, int newX, int newY) {
 	    	

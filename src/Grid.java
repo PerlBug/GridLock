@@ -2,7 +2,11 @@ import java.util.ArrayList;
 
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
-
+/**
+ * A class representing the Game Board Grid.
+ * 
+ *
+ */
 public class Grid {
 	
 	
@@ -14,18 +18,16 @@ public class Grid {
 		//populating grid array with squares
 		for(int y = 0; y < GridLock.HEIGHT; y++) {
         	for(int x = 0; x < GridLock.WIDTH; x++) { //square coordinates go from (0,0) to (5,5)
-
-    	    
-    	            	Square square;	
-    					square = new Square(x, y, GridLock.SQUARE_SIZE, GridLock.SQUARE_SIZE); 
-    					grid[x][y] = square;
-    					listOfSquares.add(square);
+            	Square square;	
+				square = new Square(x, y, GridLock.SQUARE_SIZE, GridLock.SQUARE_SIZE); 
+				grid[x][y] = square;
+				listOfSquares.add(square);
     					
-        		}
+    		}
     	            
-        	}
+    	}
         	
-        }
+    }
 	
 	
 	
@@ -42,10 +44,11 @@ public class Grid {
 	}
 	
 	/**
-	 * @precondition checkSpriteOnGrid(x,y, )==true
-	 * @param s
-	 * @param x
-	 * @param y
+	 * Reserves s.getSize() adjacent grid squares for the sprite @param s, starting from the grid
+	 * square ( @param x, @param y).
+	 * @precondition checkSpriteOnGrid(x,y)==true
+	 * @postcondition: all squares underneath the sprite object have s.getID() as their spriteID field
+	 * and grid[x][y].getSprite()==s.
 	 */
 	public void setSpriteOnGrid(Sprite s, int x, int y) {
 	
@@ -72,12 +75,12 @@ public class Grid {
 
 	
 	/**
-	 * if there is any other sprite on the path from old (x,y) position to new (x,y) position
-	 * return false
-	 * @param s
-	 * @param x
-	 * @param y
-	 * @return
+	 * Determines if it is possible to move the starting square of the Sprite @param s 
+	 *  from ( @param oldX, @param oldY) to ( @param x, @param y).
+	 * 
+	 * @return false if there is any other sprite on the path from the old (x,y) position to new (x,y) position or
+	 * there is not enough space to move the sprite or the direction of movement is incorrect.
+	 * else true.
 	 */
 	public boolean checkMoveToGrid(Sprite s, int oldX, int oldY, int newX, int newY) {
 		
@@ -93,7 +96,6 @@ public class Grid {
 			for(int x=i; x<=j; x++) {
 				//if a square has a different id /occupied by different sprite we can't move our sprite
 				//the full length of it.
-				
 				if(grid[x][oldY].getSpriteID()!=id && grid[x][oldY].getSpriteID()!=-1 ) return false;
 			}
 			
@@ -114,10 +116,12 @@ public class Grid {
 	  
    
     /***
-     * 
-     * @param s
-     * @param x
-     * @param y
+     * Remove a sprite from the grid by resetting the spriteID's of the squares it used to cover.
+     * @param s is the sprite to be removed.
+     * @param x is the x coordinate of the first grid square containing s
+     * @param y is the y coordinate of the first grid square containing s
+     * @postcondition: All squares that previously had spriteID s.getID() not have spriteID ==-1 AND
+     * grid[x][y].getSprite()==null
      */
        
 	public void removeSpriteOnGrid(Sprite s, int x, int y) {
@@ -149,9 +153,7 @@ public class Grid {
 
 
 	/**
-	 * Is it valid to set the sprite on the grid square with coordinates
-	 * @param x
-	 * @param y
+	 * Is it valid to set the sprite on the grid square with coordinates( @param x, @param y)
 	 * @return
 	 */
 	public boolean checkSetSpriteOnGrid(int x, int y) {
