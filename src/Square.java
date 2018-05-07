@@ -13,6 +13,7 @@ public class Square extends Rectangle{
         setHeight(height);
         this.x=x;
         this.y=y;
+        this.spriteID=-1; //default value
 
         relocate(x * width, y * height);
 
@@ -32,7 +33,15 @@ public class Square extends Rectangle{
     public void setSprite(Sprite sprite) {
     	//System.out.println("setting sprite at " + x +" " + y +"to " + sprite);
         this.sprite = sprite;
+        if(sprite!=null) {
+        	spriteID=sprite.getID();
+        } 
     }
+
+	public void setSpriteID(int i) {
+		// TODO Auto-generated method stub
+		
+	}
 
    
 

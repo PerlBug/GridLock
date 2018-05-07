@@ -31,7 +31,7 @@ public class Sprite extends StackPane {
 	private String imageURL;   
     private double width;
     private double height;
-    private static int id=0; //unique for every sprite created
+    private static int id=0; //unique for every sprite created first sprite created has id 0
     
     /**
      * Constructor for Sprite object.
@@ -45,6 +45,7 @@ public class Sprite extends StackPane {
     	
     	//image = new Image(imageURL, width, height, false, false); 
     	this.id=id++;
+    	System.out.println("sprite id is " + id);
     	this.direction=dir;
         move(x, y); //sets up xCoord, yCoord
     	this.width=2*GridLock.SQUARE_SIZE; // 2 for cars, 3 for truck
@@ -72,6 +73,11 @@ public class Sprite extends StackPane {
         });
        
         
+    }
+    
+    public int getID() {
+    	
+    	return this.id;
     }
     
     public void move(int x, int y) {

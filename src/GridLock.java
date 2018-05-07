@@ -35,14 +35,13 @@ public class GridLock extends Application {
 	        grid=new Grid();
 	        SquareGroup.getChildren().addAll(grid.getListOfSquares());
 
-            Sprite s= makeSprite(Sprite.Direction.HORIZONTAL,1,3);
-            grid.getSquareAtPosition(1, 3).setSprite(s);
-            //this is where we need a method for a grid object to set multiple squares
-            // to one  sprite...
-            
+            Sprite s= makeSprite(Sprite.Direction.VERTICAL,1,3);
+            grid.setSpriteOnGrid(s,1, 3);
+            Sprite s2= makeSprite(Sprite.Direction.VERTICAL,1,3);
+            grid.setSpriteOnGrid(s2,1, 3);
 
             spriteGroup.getChildren().add(s);
-
+           // spriteGroup.getChildren().add(s2);
 	        return root;
 	    }
 	    /**
@@ -119,9 +118,10 @@ public class GridLock extends Application {
 		            }else {
 		            	
 	                    s.move(newX, newY); 
-	                    
-	                    grid.getSquareAtPosition(xCoord,yCoord).setSprite(null);
-	                    grid.getSquareAtPosition(newX,newY).setSprite(s);
+	                   grid.removeSpriteOnGrid(s, xCoord, yCoord); 
+	                   // grid.getSquareAtPosition(xCoord,yCoord).setSprite(null);
+	                   grid.setSpriteOnGrid(s,newX, newY);
+	                  //  grid.getSquareAtPosition(newX,newY).setSprite(s);
 		            }
 	               
 	        });
