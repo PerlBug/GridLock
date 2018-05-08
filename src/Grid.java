@@ -58,11 +58,14 @@ public class Grid {
 		int i;
 		int id=s.getID();
 		if(s.getDirection()==Sprite.Direction.HORIZONTAL) {
+			//System.out.println("size of user car is " s.getSize());
 			
-			for(i=0; i<s.getSize(); i++) {
+			
+			for( i=0; i<s.getSize(); i++) {
 				//set square[x+i][y] to sprite id to signal that its occupied
 				grid[x+i][y].setSpriteID(id);
 			}
+	
 			
 		}else { //vertical
 			for(i=0; i<s.getSize(); i++) {
@@ -90,15 +93,20 @@ public class Grid {
 		int id=s.getID();
 		 
 		if(s.getDirection()==Sprite.Direction.HORIZONTAL) {
+			
 			//make sure we move in the right direction and we don't go over the edge of the board
 			if(oldY!=newY || newX>GridLock.WIDTH-s.getSize()) return false;
-			
+			System.out.println("here,old X is " + oldX +"new X is " + newX);
 			int i=(oldX < newX )? oldX: newX;
 			int j= (i==oldX)? newX: oldX;
 			for(int x=i; x<=j; x++) {
 				//if a square has a different id /occupied by different sprite we can't move our sprite
 				//the full length of it.
 				if(grid[x][oldY].getSpriteID()!=id && grid[x][oldY].getSpriteID()!=-1 ) return false;
+				//make sure for the length of the car no collisions
+				for(int k=0; k<s.getSize(); k++) {
+					if(grid[x+k][oldY].getSpriteID()!=id && grid[x+k][oldY].getSpriteID()!=-1 ) return false;
+				}
 			}
 			
 		}else { 
@@ -110,13 +118,26 @@ public class Grid {
 			for(int y=i; y<= j; y++) {
 				
 				if(grid[oldX][y].getSpriteID()!=id  && grid[oldX][y].getSpriteID()!=-1) return false;
+				for(int k=0; k<s.getSize(); k++) { //- or +? test
+					if(grid[oldX][y+k].getSpriteID()!=id && grid[oldX][y+k].getSpriteID()!=-1 ) return false;
+				}
 				
 			}
 		}
 		return true;
 	}
 	  
-   
+
+	/**
+	 * Convert pixel/position on the main panel to a grid square index
+	 * @param pixel is the coordinate of an object on the primary stage
+	 * @return the corresponding grid square coordinate the pixel is in.
+	 */
+    private int toGrid(double pixel) {
+    	 return (int)(pixel + GridLock.SQUARE_SIZE / 2) / GridLock.SQUARE_SIZE; 
+     
+    }
+
     /***
      * Remove a sprite from the grid by resetting the spriteID's of the squares it used to cover.
      * @param s is the sprite to be removed.

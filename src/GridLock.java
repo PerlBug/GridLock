@@ -42,6 +42,10 @@ public class GridLock extends Application {
 	        grid=new Grid();
 	        SquareGroup.getChildren().addAll(grid.getListOfSquares());
 
+	        //NOTE: vertical sprites cannot start past (X,3) if a truck or (X,4) if a car
+	        //And horizontal sprites cannot start past (3,Y) if truck or (4,Y) if a car
+	        //Also no collision detection when creating a sprite, only when moving sprites about
+	        //so make sure you create valid /no overlap starting positions for the sprites.
             Sprite s= makeSprite(Sprite.Direction.VERTICAL,1,3,CAR_SIZE, "file:sprites/playercar.png");
  
             
@@ -51,12 +55,11 @@ public class GridLock extends Application {
         
             spriteGroup.getChildren().add(horz);
             
-
             Sprite s3= makeSprite(Sprite.Direction.HORIZONTAL,3,2,TRUCK_SIZE, "file:sprites/playercar.png");
 
             spriteGroup.getChildren().add(s3);
-
-            
+           // Sprite fakeUser=makeSprite(Sprite.Direction.HORIZONTAL,1,2,CAR_SIZE, "file:sprites/playercar.png");
+            //spriteGroup.getChildren().add(fakeUser);
             UserCar redCar = makeUserCar(Sprite.Direction.HORIZONTAL,1,2,CAR_SIZE, "file:sprites/redcar.png");
             spriteGroup.getChildren().add((Sprite)redCar);
             
@@ -120,7 +123,7 @@ public class GridLock extends Application {
 	    }
 	    
 	    private UserCar makeUserCar(Sprite.Direction dir, int x, int y,int size, String url) {
-        	 UserCar s = new UserCar(dir, url);
+        	 UserCar s = new UserCar(dir, x, y, url);
         	 grid.setSpriteOnGrid(s,x, y);
 
         	s.setOnMouseReleased(e -> {

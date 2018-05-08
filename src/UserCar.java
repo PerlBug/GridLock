@@ -9,11 +9,12 @@ import javafx.*;
  *
  */
 public class UserCar extends Sprite {
-
-	public UserCar(Direction dir, String url) {
+	
+	
+	public UserCar(Direction dir, int x, int y, String url) {
 		
-		super(dir, 1, 2, 2, url); 
-		
+		 super(dir, x, y, GridLock.CAR_SIZE, url); 
+		 
 	}
 
 	/**
