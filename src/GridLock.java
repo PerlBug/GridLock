@@ -28,7 +28,6 @@ public class GridLock extends Application {
 	    public static final int HEIGHT = 6;
 	    public static final int CAR_SIZE=2;
 	    public static final int TRUCK_SIZE=3;
-	    public int moveCounter=0;
 	
 	    private Grid grid;
 	    private Group SquareGroup = new Group();
@@ -43,7 +42,7 @@ public class GridLock extends Application {
 
 	    @Override
 	    public void start(Stage primaryStage) {
-	    	moveCounter=0; //initialize move counter
+	    
 	        scene = new Scene(createGameBoard());
 	        scene1 = new Scene(startMenu(primaryStage));
 	        primaryStage.setTitle("Gridlock");
@@ -122,8 +121,9 @@ public class GridLock extends Application {
             spriteGroup.getChildren().add(s3);
            // Sprite fakeUser=makeSprite(Sprite.Direction.HORIZONTAL,1,2,CAR_SIZE, "file:sprites/playercar.png");
             //spriteGroup.getChildren().add(fakeUser);
-            UserCar redCar = makeUserCar(Sprite.Direction.HORIZONTAL,1,2,CAR_SIZE, "file:sprites/redcar.png");
+            UserCar redCar = makeUserCar(Sprite.Direction.HORIZONTAL,CAR_SIZE, "file:sprites/redcar.png");
             spriteGroup.getChildren().add((Sprite)redCar);
+           
             
             if(grid.checkSetSpriteOnGrid(1,3)) {
             	Sprite s2= makeSprite(Sprite.Direction.VERTICAL,1,3,TRUCK_SIZE,"file:sprites/playercar.png");
@@ -184,9 +184,9 @@ public class GridLock extends Application {
 	        return s;
 	    }
 	    
-	    private UserCar makeUserCar(Sprite.Direction dir, int x, int y,int size, String url) {
-        	 UserCar s = new UserCar(dir, x, y, url);
-        	 grid.setSpriteOnGrid(s,x, y);
+	    private UserCar makeUserCar(Sprite.Direction dir, int size, String url) {
+        	 UserCar s = new UserCar(dir, url);
+        	 grid.setSpriteOnGrid(s,0,2);
 
         	s.setOnMouseReleased(e -> {
 	            int newX = toGrid(s.getLayoutX());
@@ -207,6 +207,9 @@ public class GridLock extends Application {
                    grid.removeSpriteOnGrid(s, xCoord, yCoord); 
                    s.move(newX, newY); 
                    grid.setSpriteOnGrid(s,newX, newY);
+               
+                   s.incrementMoveCtr(); 
+                   System.out.println("move ctr is " + s.getMoveCtr());
                   
 	            }
                

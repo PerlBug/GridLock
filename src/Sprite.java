@@ -74,9 +74,13 @@ public class Sprite extends StackPane {
             mouseX = e.getSceneX();
             mouseY = e.getSceneY();
         });
-
+        //STRATEGY PATTERN: ?? 
         setOnMouseDragged(e -> {
-            relocate(e.getSceneX() - mouseX + Xcoord, e.getSceneY() - mouseY + Ycoord);
+        	if(direction==Direction.HORIZONTAL) {
+        		relocate(e.getSceneX() - mouseX + Xcoord,+ Ycoord);
+        	}else {
+        		relocate( Xcoord, e.getSceneY() - mouseY + Ycoord);
+        	}
         });
        
         

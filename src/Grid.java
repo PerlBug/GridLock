@@ -48,12 +48,11 @@ public class Grid {
 	 * square ( @param x, @param y).
 	 * @precondition checkSpriteOnGrid(x,y)==true
 	 * @postcondition: all squares underneath the sprite object have s.getID() as their spriteID field
-	 * and grid[x][y].getSprite()==s.
 	 */
 	public void setSpriteOnGrid(Sprite s, int x, int y) {
 	
-		//grid[x][y].setSprite(s); //place actual sprite on first grid square
-		//set sprite id of the other squares taken up by the sprite to signal they are also
+		
+		//set sprite id of squares taken up by the sprite to signal they are 
 		//occupied by the sprite
 		int i;
 		int id=s.getID();
@@ -83,7 +82,7 @@ public class Grid {
 	 * 
 	 * @return false if there is any other sprite on the path from the old (x,y) position to new (x,y) position or
 	 * there is not enough space to move the sprite or the direction of movement is incorrect.
-	 * else true.
+	 * Else true.
 	 */
 	public boolean checkMoveToGrid(Sprite s, int oldX, int oldY, int newX, int newY) {
 		
@@ -143,16 +142,14 @@ public class Grid {
      * @param s is the sprite to be removed.
      * @param x is the x coordinate of the first grid square containing s
      * @param y is the y coordinate of the first grid square containing s
-     * @postcondition: All squares that previously had spriteID s.getID() not have spriteID ==-1 AND
-     * grid[x][y].getSprite()==null
+     * @postcondition: All squares that previously had spriteID s.getID() now have spriteID ==-1 
      */
        
 	public void removeSpriteOnGrid(Sprite s, int x, int y) {
 		if(s==null) {
 			return;
 		}
-		// remove sprite from original square
-		//grid[x][y].setSprite(null);
+	
 		int i;
 		int id=-1;
 		if(s.getDirection()==Sprite.Direction.HORIZONTAL) {
