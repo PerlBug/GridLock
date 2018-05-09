@@ -8,7 +8,7 @@ import javafx.scene.shape.Rectangle;
  */
 public class Square extends Rectangle{
 
-    private Sprite sprite;
+ //   private Sprite sprite;
     private int spriteID; //Id of the sprite occupying the square.
     private int x;
     private int y;
@@ -19,7 +19,7 @@ public class Square extends Rectangle{
         this.x=x;
         this.y=y;
         this.spriteID=-1; //default value
-        this.sprite=null; //default
+      //  this.sprite=null; //default
         relocate(x * width, y * height);
 
         setFill(Color.WHITE);
@@ -31,17 +31,17 @@ public class Square extends Rectangle{
     	
     }
 
-    public Sprite getSprite() {
+  /*  public Sprite getSprite() {
         return sprite;
-    }
+    }*/
 
-    public void setSprite(Sprite sprite) {
+    /*public void setSprite(Sprite sprite) {
     	//System.out.println("setting sprite at " + x +" " + y +"to " + sprite);
         this.sprite = sprite;
         if(sprite!=null) {
         	spriteID=sprite.getID();
         } 
-    }
+    }*/
 
 	public void setSpriteID(int i) {
 		this.spriteID=i;

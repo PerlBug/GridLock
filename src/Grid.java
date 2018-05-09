@@ -52,7 +52,7 @@ public class Grid {
 	 */
 	public void setSpriteOnGrid(Sprite s, int x, int y) {
 	
-		grid[x][y].setSprite(s); //place actual sprite on first grid square
+		//grid[x][y].setSprite(s); //place actual sprite on first grid square
 		//set sprite id of the other squares taken up by the sprite to signal they are also
 		//occupied by the sprite
 		int i;
@@ -152,7 +152,7 @@ public class Grid {
 			return;
 		}
 		// remove sprite from original square
-		grid[x][y].setSprite(null);
+		//grid[x][y].setSprite(null);
 		int i;
 		int id=-1;
 		if(s.getDirection()==Sprite.Direction.HORIZONTAL) {

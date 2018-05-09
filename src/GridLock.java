@@ -28,7 +28,7 @@ public class GridLock extends Application {
 	    public static final int HEIGHT = 6;
 	    public static final int CAR_SIZE=2;
 	    public static final int TRUCK_SIZE=3;
-
+	    public int moveCounter=0;
 	
 	    private Grid grid;
 	    private Group SquareGroup = new Group();
@@ -43,6 +43,7 @@ public class GridLock extends Application {
 
 	    @Override
 	    public void start(Stage primaryStage) {
+	    	moveCounter=0; //initialize move counter
 	        scene = new Scene(createGameBoard());
 	        scene1 = new Scene(startMenu(primaryStage));
 	        primaryStage.setTitle("Gridlock");
