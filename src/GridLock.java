@@ -1,8 +1,19 @@
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
@@ -23,18 +34,68 @@ public class GridLock extends Application {
 	    private Group SquareGroup = new Group();
 	    private Group spriteGroup = new Group();
 	    
+	    Scene scene1, scene;
+	    
+	    
 	    public static void main(String[] args) {
 	        launch(args);
 	    }
 
 	    @Override
 	    public void start(Stage primaryStage) {
-	        Scene scene = new Scene(createGameBoard());
+	        scene = new Scene(createGameBoard());
+	        scene1 = new Scene(startMenu(primaryStage));
 	        primaryStage.setTitle("Gridlock");
-	        primaryStage.setScene(scene);
+	        primaryStage.setScene(scene1);
 	        primaryStage.show();
 	    }
 
+	    
+	    public GridPane startMenu(Stage window) {
+
+		     final Image titleScreen = new Image( "Title Page.png" ); //title screen image
+		     final Image playButton = new Image("Play.png", 150, 100, false, false); //the play button image
+		     final Image scoreButton = new Image("Score.png", 150, 100, false, false); //the score button image
+		     
+		     final ImageView flashScreen_node = new ImageView();
+		     flashScreen_node.setImage(titleScreen); //set the image of the title screen
+		     flashScreen_node.setPreserveRatio(true);
+		  
+		     final Button play_button  = new Button();
+		     final ImageView play_button_node = new ImageView(); 
+		      
+		     final Button score_button = new Button();
+		     final ImageView score_button_node = new ImageView(); 
+		     
+		     play_button_node.setImage(playButton); //set the image of the play button
+		     score_button_node.setImage(scoreButton); //set the image of the score button
+		      
+		     play_button.setGraphic(play_button_node);
+		     play_button.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY))); //this is to make the button background transparent
+		     play_button.setScaleShape(true);
+		     
+		     score_button.setGraphic(score_button_node);
+		     score_button.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
+		     play_button.setMaxWidth(Double.MAX_VALUE); //Ensures that both buttons are of the same size
+		     score_button.setMaxWidth(Double.MAX_VALUE);
+		     
+		     play_button.setOnAction(e -> window.setScene(scene));
+		     score_button.setOnAction(e -> window.setScene(scene));
+		     /*
+		      * create the container of those buttons in a horizontal box
+		      */
+		     final HBox buttonContainer = new HBox(1);
+		     buttonContainer.setAlignment(Pos.TOP_CENTER);
+		     Insets buttonContainerPadding = new Insets(400, 1, 1, 1); //Distance from the top center down
+		     buttonContainer.setPadding(buttonContainerPadding);
+		     buttonContainer.getChildren().addAll(play_button,score_button);
+		
+		     GridPane root = new GridPane();
+		      
+		     root.getChildren().addAll(flashScreen_node, buttonContainer); //add the title screen and button container to the stackpane
+		     
+		     return root;
+		}
 	    private Parent createGameBoard() {
 	        Pane root = new Pane();
 	        root.setPrefSize(WIDTH * SQUARE_SIZE, HEIGHT * SQUARE_SIZE);
@@ -55,7 +116,7 @@ public class GridLock extends Application {
         
             spriteGroup.getChildren().add(horz);
             
-            Sprite s3= makeSprite(Sprite.Direction.HORIZONTAL,3,2,TRUCK_SIZE, "file:sprites/playercar.png");
+            Sprite s3= makeSprite(Sprite.Direction.HORIZONTAL,3,3,TRUCK_SIZE, "file:sprites/playercar.png");
 
             spriteGroup.getChildren().add(s3);
            // Sprite fakeUser=makeSprite(Sprite.Direction.HORIZONTAL,1,2,CAR_SIZE, "file:sprites/playercar.png");
