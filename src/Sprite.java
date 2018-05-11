@@ -76,17 +76,21 @@ public class Sprite extends StackPane {
         });
         //STRATEGY PATTERN: ?? 
         setOnMouseDragged(e -> {
+        	
         	if(direction==Direction.HORIZONTAL) {
-        		relocate(e.getSceneX() - mouseX + Xcoord,+ Ycoord);
+        		
+        			relocate(e.getSceneX() - mouseX + Xcoord,+ Ycoord);
+        		
         	}else {
         		relocate( Xcoord, e.getSceneY() - mouseY + Ycoord);
         	}
         });
        
         
-    }
+	}
     
-    /**
+ 
+/**
      * Getter method for the rectangle
      */
     public Rectangle getRectangle() {
@@ -138,6 +142,17 @@ public class Sprite extends StackPane {
 
     public double getYcoord() {
         return Ycoord;
+    }
+    /**
+     * Getter method for the x coordinate of the last mouse click on the scene
+     * @return
+     */
+    public double getMouseX() {
+    	return mouseX;
+    	
+    }
+    public double getMouseY() {
+    	return mouseY;
     }
 
 	

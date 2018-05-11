@@ -1,3 +1,4 @@
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -28,6 +29,7 @@ public class GridLock extends Application {
 	    public static final int HEIGHT = 6;
 	    public static final int CAR_SIZE=2;
 	    public static final int TRUCK_SIZE=3;
+	    private double mouseX, mouseY;
 	
 	    private Grid grid;
 	    private Group SquareGroup = new Group();
@@ -159,7 +161,8 @@ public class GridLock extends Application {
 	    private Sprite makeSprite(Sprite.Direction dir, int x, int y,int size, String imageURL) {
 	        	Sprite s = new Sprite(dir, x, y,size, imageURL);
 	        	 grid.setSpriteOnGrid(s,x, y);
-
+	        	
+	        	s.setOnMouseDragged(new DragHandler(grid,s));
 	        	s.setOnMouseReleased(e -> {
 		            int newX = toGrid(s.getLayoutX());
 		            int newY = toGrid(s.getLayoutY());
@@ -180,6 +183,21 @@ public class GridLock extends Application {
 		            }
 	               
 	        });
+	        	
+	        	/* s.setOnMouseDragged(e -> {
+	             	if(grid.checkMoveToGrid(  s,toGrid(s.getXcoord()), toGrid(s.getYcoord()),toGrid(e.getSceneX()),
+	             			toGrid(e.getSceneY()) )  ){ //if there is a grid boundary or another obstacle in the way
+	     	    			//we do not want the user to be able to even try to drag past it, the request should be blocked.
+	     	        	if(s.getDirection()==Sprite.Direction.HORIZONTAL) {
+	     	        		
+	     	        			s.relocate(e.getSceneX() - mouseX + s.getXcoord(),+ s.getYcoord());
+	     	        		
+	     	        	}else {
+	     	        		s.relocate( s.getXcoord(), e.getSceneY() - mouseY + s.getYcoord());
+	     	        	}
+	             	
+	             	}
+	             });*/
 
 	        return s;
 	    }
@@ -187,7 +205,7 @@ public class GridLock extends Application {
 	    private UserCar makeUserCar(Sprite.Direction dir, int size, String url) {
         	 UserCar s = new UserCar(dir, url);
         	 grid.setSpriteOnGrid(s,0,2);
-
+        	 s.setOnMouseDragged(new DragHandler(grid,s));
         	s.setOnMouseReleased(e -> {
 	            int newX = toGrid(s.getLayoutX());
 	            int newY = toGrid(s.getLayoutY());

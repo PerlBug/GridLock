@@ -184,5 +184,40 @@ public class Grid {
 	}
 	
 	
+	/**
+	 * return x coord of furthest i can go towards newX before i bump into another object.
+	 * @param s
+	 * @param oldX
+	 * @param oldY
+	 * @param newX
+	 * @param newY
+	 * @return
+	 */
+	
+	/*public int furthestMoveXdirection(Sprite s, int oldX, int oldY, int newX, int newY) {
+		
+		int id=s.getID();
+		 
+		
+	
+			int i=(oldX < newX )? oldX: newX;
+			int j= (i==oldX)? newX: oldX;
+			for(int x=i; x<=j; x++) {
+				//if a square has a different id /occupied by different sprite we can't move our sprite
+				//the full length of it.
+				//if(grid[x][oldY].getSpriteID()!=id && grid[x][oldY].getSpriteID()!=-1 ) return false;
+				//make sure for the length of the car no collisions
+				for(int k=0; k<s.getSize(); k++) {
+					if(grid[x+k][oldY].getSpriteID()!=id && grid[x+k][oldY].getSpriteID()!=-1 ) {
+						return x-k;
+					}
+				}
+			}
+			
+		return newX;
+	
+
+	}*/
+
 	
 }
