@@ -75,7 +75,7 @@ public class Sprite extends StackPane {
             mouseY = e.getSceneY();
         });
         //STRATEGY PATTERN: ?? 
-        setOnMouseDragged(e -> {
+      /*  setOnMouseDragged(e -> {
         	
         	if(direction==Direction.HORIZONTAL) {
         		
@@ -84,7 +84,7 @@ public class Sprite extends StackPane {
         	}else {
         		relocate( Xcoord, e.getSceneY() - mouseY + Ycoord);
         	}
-        });
+        });*/
        
         
 	}
