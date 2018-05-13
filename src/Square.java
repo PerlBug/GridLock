@@ -12,6 +12,7 @@ public class Square extends Rectangle{
     private int x;
     private int y;
     
+
     /**
      * Create a grid square.
      * @param x is the x coordinate of the square
@@ -19,7 +20,7 @@ public class Square extends Rectangle{
      * @param height is the height of the square
      * @param width is the width of the square
      */
-    public Square( int x, int y, int height, int width) { 
+    public Square( int x, int y, double height, double width) { 
         setWidth(width);
         setHeight(height);
         this.x=x;
@@ -27,8 +28,8 @@ public class Square extends Rectangle{
         this.spriteID=-1; //default value
         relocate(x * width, y * height);
 
-        setFill(Color.WHITE);
-        setStroke(Color.BLACK);
+        setFill(Color.TRANSPARENT);
+        setStroke(Color.TRANSPARENT);
     }
     /**
      * Check if a square is occupied by a sprite. 

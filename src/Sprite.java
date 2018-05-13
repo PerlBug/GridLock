@@ -94,7 +94,7 @@ public class Sprite extends StackPane {
      * Getter method for the rectangle
      */
     public Rectangle getRectangle() {
-    	return this.r;
+    		return this.r;
     }
     
     
@@ -129,7 +129,7 @@ public class Sprite extends StackPane {
      * @return size;
      */
     public int getSize() {
-    	return size;
+    		return this.size;
     }
 
     public Direction getDirection() {
@@ -137,11 +137,11 @@ public class Sprite extends StackPane {
     }
 
     public double getXcoord() {
-        return Xcoord;
+        return this.Xcoord;
     }
 
     public double getYcoord() {
-        return Ycoord;
+        return this.Ycoord;
     }
     /**
      * Getter method for the x coordinate of the last mouse click on the scene

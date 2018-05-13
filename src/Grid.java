@@ -8,7 +8,8 @@ import javafx.scene.paint.Color;
  *
  */
 public class Grid {
-	
+	//WIDTH is the size of the grid required 6
+	//Height is the size of the grid required 6
 	
 	private Square grid[][] = new Square[GridLock.WIDTH][GridLock.HEIGHT];
 	private ArrayList<Square> listOfSquares;
@@ -17,30 +18,30 @@ public class Grid {
 		listOfSquares = new ArrayList<Square>();
 		//populating grid array with squares
 		for(int y = 0; y < GridLock.HEIGHT; y++) {
-        	for(int x = 0; x < GridLock.WIDTH; x++) { //square coordinates go from (0,0) to (5,5)
-            	Square square;	
-				square = new Square(x, y, GridLock.SQUARE_SIZE, GridLock.SQUARE_SIZE); 
-				grid[x][y] = square;
-				listOfSquares.add(square);
-    					
-    		}
-    	            
-    	}
+	        	for(int x = 0; x < GridLock.WIDTH; x++) { //square coordinates go from (0,0) to (5,5)
+	            	Square square;
+	            		//Setting up a square which has index values x,y and size of square.
+					square = new Square(x, y, GridLock.SQUARE_SIZE, GridLock.SQUARE_SIZE); 
+					grid[x][y] = square;
+					listOfSquares.add(square);
+	    					
+	    		}
+    	    	}
         	
     }
 	
 	
 	
 	public ArrayList<Square> getListOfSquares(){
-		return listOfSquares;
+		return this.listOfSquares;
 	}
 	
 	public Square[][] getGrid() {
-		return grid;
+		return this.grid;
 	}
 	
 	public Square getSquareAtPosition(int x, int y) {
-		return grid[x][y];
+		return this.grid[x][y];
 	}
 	
 	/**
@@ -95,7 +96,7 @@ public class Grid {
 			
 			//make sure we move in the right direction and we don't go over the edge of the board
 			if(oldY!=newY || newX>GridLock.WIDTH-s.getSize()) return false;
-			System.out.println("here,old X is " + oldX +"new X is " + newX);
+			System.out.println("here,old X is " + oldX +"new X is " + newX);			
 			int i=(oldX < newX )? oldX: newX;
 			int j= (i==oldX)? newX: oldX;
 			for(int x=i; x<=j; x++) {
@@ -133,7 +134,7 @@ public class Grid {
 	 * @return the corresponding grid square coordinate the pixel is in.
 	 */
     private int toGrid(double pixel) {
-    	 return (int)(pixel + GridLock.SQUARE_SIZE / 2) / GridLock.SQUARE_SIZE; 
+    	 return (int) ((pixel + GridLock.SQUARE_SIZE / 2) / GridLock.SQUARE_SIZE); 
      
     }
 

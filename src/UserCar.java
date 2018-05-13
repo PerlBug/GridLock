@@ -27,8 +27,8 @@ public class UserCar extends Sprite {
 	 * @param yPos
 	 * @return
 	 */
-	boolean isSolved () {
-		if (this.getXcoord() == 4 && this.getYcoord() ==2){
+	private boolean isSolved () {
+		if (this.getXcoord() == 4){
 			return true;
 		} else {
 			return false;
