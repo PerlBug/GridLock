@@ -22,7 +22,6 @@ import javafx.scene.shape.Shape;
  * 
  */
 public class Sprite extends StackPane {
-	 
     private double mouseX, mouseY;
     private double Xcoord, Ycoord; //pixel not grid square values
 	public enum Direction {
@@ -57,7 +56,6 @@ public class Sprite extends StackPane {
     	this.width=size*GridLock.SQUARE_SIZE; // 2 for cars, 3 for truck
     	this.height=GridLock.SQUARE_SIZE;
     	this.size=size;
-       
         this.r = new Rectangle(width,height);
         if(dir==Direction.VERTICAL) {
           	 this.r = new Rectangle(height,width); //rotate sprite
@@ -155,8 +153,7 @@ public class Sprite extends StackPane {
     	return mouseY;
     }
 
-	
-	
+
 	
 
 }

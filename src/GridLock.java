@@ -36,7 +36,7 @@ public class GridLock extends Application {
 	    public static final int HEIGHT = 6;
 	    public static final int CAR_SIZE=2;
 	    public static final int TRUCK_SIZE=3;
-
+	    private int moveCtr; //number of successful drags and drops during the duration of the game
 	    private Grid grid;
 	    private MenuBoard gameMenu;
 	    private Group SquareGroup = new Group(); //Used within Create Game Board
@@ -52,6 +52,7 @@ public class GridLock extends Application {
 	    @Override
 	    public void start(Stage primaryStage) {
 	    	t = new Timer();	
+	    	moveCtr=0;
 	        scene = new Scene(createGameBoard(primaryStage), CANVAS_HEIGHT, CANVAS_WIDTH);
 	        scene1 = new Scene(startMenu(primaryStage), CANVAS_HEIGHT, CANVAS_WIDTH);
 	        scene2 = new Scene(exitScreen(primaryStage), CANVAS_HEIGHT, CANVAS_WIDTH);
@@ -262,6 +263,8 @@ public class GridLock extends Application {
 	                   grid.removeSpriteOnGrid(s, xCoord, yCoord); 
 	                   s.move(newX, newY); 
 	                   grid.setSpriteOnGrid(s,newX, newY);
+	                   moveCtr++;
+	                   System.out.println("move ctr is " + moveCtr);
 	                  
 		            }
 	               
@@ -299,16 +302,6 @@ public class GridLock extends Application {
 	            boolean result;
 
 	            result = grid.checkMoveToGrid(s,xCoord,yCoord, newX, newY);
-	            if (newX == 4) {
-	            	//Get time taken to complete game and print 
-	            	double finishedTime = t.getTimeFromStart();
-	            	int seconds = t.getSeconds(finishedTime);
-	            	int minutes = t.getMinutes(finishedTime);
-	   		        System.out.println("Time taken " + minutes + " Minutes and " + seconds + " Seconds");
-	   		        t.resetTimer();
-	            	window.setScene(scene2); //Goes to exit screen.
-	            }
-
 
 	            if(result==false) {   	
 	                    s.stopMove();
@@ -316,12 +309,23 @@ public class GridLock extends Application {
                    grid.removeSpriteOnGrid(s, xCoord, yCoord); 
                    s.move(newX, newY); 
                    grid.setSpriteOnGrid(s,newX, newY);
-               
-                   s.incrementMoveCtr(); 
-                   System.out.println("move ctr is " + s.getMoveCtr());
-                   
+                   moveCtr++;
+                   if (newX == 4) {
+						 //Get time taken to complete game and print 
+						double finishedTime = t.getTimeFromStart();
+						int seconds = t.getSeconds(finishedTime);
+						int minutes = t.getMinutes(finishedTime);
+						System.out.println("Time taken " + minutes + " Minutes and " + seconds + " Seconds");
+						System.out.println("Moves taken " + moveCtr);
+						moveCtr=0; //reset ctr for next game
+						t.resetTimer();
+						window.setScene(scene2); //Goes to exit screen.
+                   }else {
+                	   
+                		System.out.println("move ctr is " + moveCtr);
+                   }
 	            }
-               
+	            
         });
 
         return s;
