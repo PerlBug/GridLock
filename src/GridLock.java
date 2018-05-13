@@ -1,5 +1,4 @@
 
-
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -8,6 +7,8 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -52,9 +53,6 @@ public class GridLock extends Application {
 	    public void start(Stage primaryStage) {
 	    	t = new Timer();	
 	        scene = new Scene(createGameBoard(primaryStage), CANVAS_HEIGHT, CANVAS_WIDTH);
-	        
-	        
-	        
 	        scene1 = new Scene(startMenu(primaryStage), CANVAS_HEIGHT, CANVAS_WIDTH);
 	        scene2 = new Scene(exitScreen(primaryStage), CANVAS_HEIGHT, CANVAS_WIDTH);
 	        
@@ -87,7 +85,11 @@ public class GridLock extends Application {
 	        
 	    }
 
-	    
+	    /**
+	     * Returns the pane for the start menu. Attaches the image to the game Menu (VBox)
+	     * @param window primaryStage
+	     * @return
+	     */
 	    public Pane startMenu(Stage window) {
 
 	    		Pane root = new Pane();
@@ -298,11 +300,12 @@ public class GridLock extends Application {
 
 	            result = grid.checkMoveToGrid(s,xCoord,yCoord, newX, newY);
 	            if (newX == 4) {
-	            	
+	            	//Get time taken to complete game and print 
 	            	double finishedTime = t.getTimeFromStart();
 	            	int seconds = t.getSeconds(finishedTime);
 	            	int minutes = t.getMinutes(finishedTime);
 	   		        System.out.println("Time taken " + minutes + " Minutes and " + seconds + " Seconds");
+	   		        t.resetTimer();
 	            	window.setScene(scene2); //Goes to exit screen.
 	            }
 

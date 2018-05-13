@@ -37,5 +37,9 @@ public class Timer {
 		return (int)(time/60);
 	}
 	
+	public void resetTimer() {
+		startingTime = System.currentTimeMillis();
+	}
+	
 	
 }
