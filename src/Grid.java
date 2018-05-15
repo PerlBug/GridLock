@@ -28,7 +28,7 @@ public class Grid {
 					listOfSquares.add(square);
 	    					
 	    		}
-    	    	}
+	    	}
         	
     }
 	
@@ -132,15 +132,16 @@ public class Grid {
 	}
 	  
 
+	
 	/**
-	 * Convert pixel/position on the main panel to a grid square index
-	 * @param pixel is the coordinate of an object on the primary stage
-	 * @return the corresponding grid square coordinate the pixel is in.
-	 */
-    private int toGrid(double pixel) {
-    	 return (int) ((pixel + GridLock.SQUARE_SIZE / 2) / GridLock.SQUARE_SIZE); 
-     
-    }
+    	 * Convert pixel/position on the main panel to a grid square index
+    	 * @param pixel is the coordinate of an object on the primary stage
+    	 * @return the corresponding grid square coordinate the pixel is in.
+    	 */
+	    public double toGrid(double pixel) {
+	    	 return (pixel + GridLock.SQUARE_SIZE / 2) / GridLock.SQUARE_SIZE; 
+	     
+	    }
 
     /***
      * Remove a sprite from the grid by resetting the spriteID's of the squares it used to cover.
@@ -190,39 +191,133 @@ public class Grid {
 	
 	
 	/**
-	 * return x coord of furthest i can go towards newX before i bump into another object.
-	 * @param s
-	 * @param oldX
-	 * @param oldY
-	 * @param newX
-	 * @param newY
+	 * return the X coord of the furthest the sprite @param s can go  (forwards or backwards)
+	 *  before it touches an obstacle.
+	 * @param oldX is the starting X position of the sprite before the drag event
+	 * @param oldY is the starting Y position of the sprite before the drag event
+	 * @param forwards: is the sprite moving to the right(forwards) or left/backwards?
 	 * @return
 	 */
 	
-	/*public int furthestMoveXdirection(Sprite s, int oldX, int oldY, int newX, int newY) {
-		
-		int id=s.getID();
-		 
-		
+	//return the square square index thats the last place we can relocate to before 
+	//bumping into something
+	//different depending on if moving backwards or forwards
 	
-			int i=(oldX < newX )? oldX: newX;
-			int j= (i==oldX)? newX: oldX;
-			for(int x=i; x<=j; x++) {
-				//if a square has a different id /occupied by different sprite we can't move our sprite
-				//the full length of it.
-				//if(grid[x][oldY].getSpriteID()!=id && grid[x][oldY].getSpriteID()!=-1 ) return false;
-				//make sure for the length of the car no collisions
+	public int furthestMoveXdirection(Sprite s, int oldX, int oldY,boolean forwards) {
+		
+		int id=s.getID(); //id of the sprite that is moving
+		int x;
+		if(forwards) {
+			//iterate from the sprites current position to the last possible X position it can take
+			for(x=oldX; x<=GridLock.WIDTH-s.getSize(); x++) {
+				//find where the front end of the sprite meets another sprite		
+				if(grid[x][oldY].getSpriteID()!=-1 &&grid[x][oldY].getSpriteID()!=id) {
+					System.out.println("forward:collision detected at x coord "+ x);
+					//return the Position for the first leftmost square of the sprite
+					return (x-s.getSize()) >=0? x-s.getSize(): 0; 
+				}
+				//check for the length of the sprite for a collision 
 				for(int k=0; k<s.getSize(); k++) {
 					if(grid[x+k][oldY].getSpriteID()!=id && grid[x+k][oldY].getSpriteID()!=-1 ) {
-						return x-k;
+						System.out.println("forwad k loop: collision detected at x coord "+ (x+k));
+						return ((x+k)-s.getSize()) >=0? ((x+k)-s.getSize()): 0;
 					}
+					
 				}
 			}
+			//if no obstacles in front of the sprite, return the furthest possible X starting position
+			return GridLock.WIDTH-s.getSize();
+		}else {
+			//going backwards
+			for(x=oldX; x>0; x--) {
+				//find where the front end of the sprite meets another sprite
+				if(grid[x][oldY].getSpriteID()!=-1 &&grid[x][oldY].getSpriteID()!=id) {
+					System.out.println("collision detected at x coord "+ x);
+					return (x+1); 
+				}
+				
+				//check one square ahead
+				if(grid[x-1][oldY].getSpriteID()!=id && grid[x-1][oldY].getSpriteID()!=-1 ) {
+					System.out.println("backward k loop: collision detected at x coord "+ (x-1));
+					return (x);
+				}
+				
+			}
 			
-		return newX;
+		
+			System.out.println("backwards, no collision detected returning 0");
+			return 0;
+		}
+		
+	}
+			
+			
 	
+		
 
-	}*/
+
+	/**
+	 * Compute the furthest away y coordinate that the sprite can move to before collision.
+	 * @param sprite
+	 * @param oldY
+	 * @param upwards --- is the sprite moving up or down?
+	 * @return
+	 */
+	public double furthestMoveYdirection(Sprite s, int oldX,int oldY, boolean upwards ) {
+		int id=s.getID(); //id of our sprite
+		int y;
+		
+		//moving up
+		if(upwards) {
+			for(y=oldY; y>=0; y--) { //going upwards, y coordinates decrease to 0
+				//find where the front end of the sprite meets another sprite		
+				if(grid[oldX][y].getSpriteID()!=-1 && grid[oldX][y].getSpriteID()!=id) {
+					System.out.println("upward detected at y coord "+ y);
+					return y+1; 
+				}
+				
+				
+			}
+			
+			return 0; //no collisions so the furthest position for the top of the sprite is y=0
+			
+			
+		}else {
+		
+			//moving downwards
+			
+			for(y=oldY; y<= GridLock.WIDTH- s.getSize(); y++) { //going downwards, y coordinates increase
+				//find where the tail end of the sprite meets another sprite
+				
+				
+				if(grid[oldX][y].getSpriteID()!=-1 &&grid[oldX][y].getSpriteID()!=id) {
+					System.out.println("downard collision detected at y coord "+ y);
+					return y-1; 
+				}
+				//check length of sprite after its first square
+				//to prevent dragging part-way over another sprite.
+			
+				for(int k=0; k<s.getSize(); k++) { 
+					if(grid[oldX][y+k].getSpriteID()!=id && grid[oldX][y+k].getSpriteID()!=-1 ) {
+						return (y+k)-s.getSize() < 0? 0: (y+k)-s.getSize();
+					}
+				}
+				
+				
+				
+				
+			}
+			
+			
+			//maximum y  position for the top/frist square of the sprite going downwards
+			return  GridLock.WIDTH- s.getSize(); 
+			
+		}
+
+	}
+		
+	
+		
 
 	
 }

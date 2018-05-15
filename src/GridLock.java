@@ -39,7 +39,7 @@ public class GridLock extends Application {
 	    private int moveCtr; //number of successful drags and drops during the duration of the game
 	    private Grid grid;
 	    private MenuBoard gameMenu;
-	    private Group SquareGroup = new Group(); //Used within Create Game Board
+	    private Group squareGroup = new Group(); //Used within Create Game Board
 	    private Group spriteGroup = new Group(); // Used within create game board
 	    public static Counter counter;
 	    
@@ -182,12 +182,12 @@ public class GridLock extends Application {
 		    counter.setTranslateY(20);
 	        
 	        grid=new Grid();
-	        SquareGroup.getChildren().addAll(grid.getListOfSquares());
+	        squareGroup.getChildren().addAll(grid.getListOfSquares());
 	        
 	        double left_offset = (CANVAS_WIDTH - (WIDTH*SQUARE_SIZE))/2;
 	        //Insets gridContainerPadding = new Insets(CANVAS_HEIGHT*150/800,left_offset, left_offset,1);
-	        SquareGroup.setLayoutX(left_offset);
-	        SquareGroup.setLayoutY(CANVAS_HEIGHT*150/800+left_offset);
+	        squareGroup.setLayoutX(left_offset);
+	        squareGroup.setLayoutY(CANVAS_HEIGHT*150/800+left_offset);
 	        
 	        //layout of sprites must match that of the grid always
 	        spriteGroup.setLayoutX(left_offset);
@@ -225,7 +225,7 @@ public class GridLock extends Application {
             	spriteGroup.getChildren().add(s2);
             }
             
-            root.getChildren().addAll(gameScreen_node, counter, SquareGroup, spriteGroup);
+            root.getChildren().addAll(gameScreen_node, counter, squareGroup, spriteGroup);
             root.setStyle("-fx-border-color: black");
             
             
