@@ -42,6 +42,7 @@ public class GridLock extends Application {
 	    private Group squareGroup = new Group(); //Used within Create Game Board
 	    private Group spriteGroup = new Group(); // Used within create game board
 	    public static Counter counter;
+	    public static TimerPane clock; 
 	    
 	    
 	    Scene scene1, scene, scene2;
@@ -57,7 +58,7 @@ public class GridLock extends Application {
 	    	moveCtr=0;
 	        scene = new Scene(createGameBoard(primaryStage), CANVAS_HEIGHT, CANVAS_WIDTH);
 	        scene1 = new Scene(startMenu(primaryStage), CANVAS_HEIGHT, CANVAS_WIDTH);
-	        scene2 = new Scene(exitScreen(primaryStage), CANVAS_HEIGHT, CANVAS_WIDTH);
+	        //scene2 = new Scene(exitScreen(primaryStage), CANVAS_HEIGHT, CANVAS_WIDTH);
 	        
 	        primaryStage.setTitle("Gridlock");
 	        primaryStage.setScene(scene1);
@@ -116,19 +117,25 @@ public class GridLock extends Application {
 	    		return this.scene;
 	    }
 	    
-	    public GridPane exitScreen(Stage window) {
+	    private GridPane exitScreen(Stage window, int seconds, int minutes, int c) {
 
 	    	 final Image titleScreen = new Image( "file:src/exitscreen.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false); //title screen image
 		     final Image replayButton = new Image("file:src/replay.png", 150, 100, false, false); //the play button image
-		     final Image homeButton = new Image("file:src/home-button-round-blue.png", 150, 100, false, false); //the score button image
-		     
-		     
-		     
+		     final Image homeButton = new Image("file:src/home-button-round-blue.png", 150, 100, false, false); //the score button image	     
 		     
 		     final ImageView flashScreen_node = new ImageView();
 		     flashScreen_node.setImage(titleScreen); //set the image of the title screen
 		     flashScreen_node.setPreserveRatio(true);
-		  
+		     
+		     clock = new TimerPane("CounterImg.png");
+			 clock.setTranslateX(40);
+			 clock.setTranslateY(75);
+			 clock.printLabel(seconds, minutes);
+			 Counter counter2 = new Counter("CounterImg.png");
+			 counter2.setTranslateX(-80);
+			 counter2.setTranslateY(75);
+			 counter2.setCount(c);
+			 
 		     final Button play_button  = new Button();
 		     final ImageView play_button_node = new ImageView(); 
 		      
@@ -137,7 +144,7 @@ public class GridLock extends Application {
 		     
 		     play_button_node.setImage(replayButton); //set the image of the play button
 		     score_button_node.setImage(homeButton); //set the image of the score button
-		      
+		     
 		     play_button.setGraphic(play_button_node);
 		     play_button.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY))); //this is to make the button background transparent
 		     play_button.setScaleShape(true);
@@ -146,6 +153,7 @@ public class GridLock extends Application {
 		     score_button.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
 		     play_button.setMaxWidth(Double.MAX_VALUE); //Ensures that both buttons are of the same size
 		     score_button.setMaxWidth(Double.MAX_VALUE);
+		     
 		     
 		     play_button.setOnAction(e -> window.setScene(scene));
 		     score_button.setOnAction(e -> window.setScene(scene1));
@@ -160,14 +168,16 @@ public class GridLock extends Application {
 		
 		     GridPane root = new GridPane();
 		      
-		     root.getChildren().addAll(flashScreen_node, buttonContainer); //add the title screen and button container to the stackpane
+		     root.getChildren().addAll(flashScreen_node, clock, counter2, buttonContainer); //add the title screen and button container to the stackpane
 		     
 		     return root;
 		}
 	    
 	    private Parent createGameBoard(Stage window) {
-	    	//Removes all sprites from previous game
+	    	//ALL RESET LOGIC IS HERE
 	    	spriteGroup.getChildren().clear();
+	    	t.resetTimer();
+	    	
 	    	
 	        Pane root = new Pane();
 	        final Image gameScreen = new Image( "GameCanvas.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false); //title screen image
@@ -180,7 +190,16 @@ public class GridLock extends Application {
 		    counter = new Counter("CounterImg.png");
 		    counter.setTranslateX(20);
 		    counter.setTranslateY(20);
-	        
+		    
+		    /*
+		    clock = new TimerPane("CounterImg.png");
+			clock.setTranslateX(80);
+			clock.setTranslateY(20);
+			double finishedTime = t.getTimeFromStart();
+			int seconds = t.getSeconds(finishedTime);
+			int minutes = t.getMinutes(finishedTime);
+			clock.printLabel(seconds, minutes);
+	        */
 	        grid=new Grid();
 	        squareGroup.getChildren().addAll(grid.getListOfSquares());
 	        
@@ -329,13 +348,12 @@ public class GridLock extends Application {
 						int minutes = t.getMinutes(finishedTime);
 						System.out.println("Time taken " + minutes + " Minutes and " + seconds + " Seconds");
 						System.out.println("Moves taken " + moveCtr);
-						moveCtr=0; //reset ctr for next game
-						t.resetTimer();
-						
-						
+
 						//Reset the game screen for the next round
-						scene = new Scene(createGameBoard(window), CANVAS_HEIGHT, CANVAS_WIDTH); 
+						scene = new Scene(createGameBoard(window), CANVAS_HEIGHT, CANVAS_WIDTH);
+						scene2 = new Scene(exitScreen(window, seconds, minutes, moveCtr), CANVAS_HEIGHT, CANVAS_WIDTH);
 						window.setScene(scene2); //Goes to exit screen.
+						moveCtr=0; //reset ctr for next game
                    } else {
                 	   
                 		System.out.println("move ctr is " + moveCtr);
