@@ -6,6 +6,10 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
@@ -21,46 +25,24 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
+/**
+ * Menu board. Consists of Menu Buttons. Can revert to Options Menu and Scoreboard here too.
+ * 
+ * @author leochen
+ *
+ */
 public class MenuBoard extends Parent{
 	
 	private VBox menu1, menu2;
 	
 	
 	public MenuBoard (Stage window, GridLock g) {
-
-		//final Image titleScreen = new Image( "Title Page.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false); //title screen image
-//	     final Image playButton = new Image("Play.png", 150, 100, false, false); //the play button image
-//	     final Image scoreButton = new Image("Score.png", 150, 100, false, false); //the score button image
-	     
-	     
-	     //final ImageView menuScreen_node = new ImageView();
-	     //menuScreen_node.setImage(titleScreen); //set the image of the title screen
-	     //menuScreen_node.setPreserveRatio(true);
-	  
-//	     final Button play_button  = new Button();
-//	     final ImageView play_button_node = new ImageView(); 
-//	      
-//	     final Button score_button = new Button();
-//	     final ImageView score_button_node = new ImageView(); 
 	     
 	     MenuButton play_button = new MenuButton("Play", "StoneButton.png");
 	     MenuButton score_button = new MenuButton("Score", "StoneButton.png");
 	     MenuButton option_button = new MenuButton("Options", "StoneButton.png");
 	     MenuButton exit_button = new MenuButton("Exit", "StoneButton.png");
-//	     play_button_node.setImage(playButton); //set the image of the play button
-//	     score_button_node.setImage(scoreButton); //set the image of the score button
-//	      
-//	     play_button.setGraphic(play_button_node);
-//	     play_button.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY))); //this is to make the button background transparent
-//	     play_button.setScaleShape(true);
-//	     
-//	     score_button.setGraphic(score_button_node);
-//	     score_button.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
-//	     play_button.setMaxWidth(Double.MAX_VALUE); //Ensures that both buttons are of the same size
-//	     score_button.setMaxWidth(Double.MAX_VALUE);
-//	     option_button.setMaxWidth(Double.MAX_VALUE);
-	     
+
 	     /*
 	      * Set up Options Menu
 	      */
@@ -98,7 +80,21 @@ public class MenuBoard extends Parent{
 		private VBox createOptionsMenu() {
 			
 			VBox root = new VBox(10);
+			
+			
+			ChoiceBox<String> diffMenu = new ChoiceBox<String>();
+			
+			diffMenu.getItems().addAll("Easy", "Medium", "Hard");
+			diffMenu.setValue("Medium");
+			
 			ScrollBar s1 = new ScrollBar();
+			Button confirm = new Button("OK");
+			confirm.setOnMouseClicked(e -> {
+				GridLock.setDifficulty(diffMenu.getValue());
+				getChildren().remove(0);
+				getChildren().add(menu1);
+			
+			});
 			Button b1 = new Button("Back");
 			b1.setOnMouseClicked(e -> {
 				getChildren().remove(0);
@@ -106,7 +102,7 @@ public class MenuBoard extends Parent{
 			});
 			root.setTranslateX(200);
 			root.setTranslateY(300);
-			root.getChildren().addAll(s1, b1);
+			root.getChildren().addAll(s1,diffMenu,  confirm, b1);
 			
 			return root;
 		}

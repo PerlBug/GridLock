@@ -41,6 +41,20 @@ public class GridLock extends Application {
 	    private MenuBoard gameMenu;
 	    private Group squareGroup = new Group(); //Used within Create Game Board
 	    private Group spriteGroup = new Group(); // Used within create game board
+	    
+	    /*
+	     * Declares Difficulty: Starts at Medium Difficulty.
+	     */
+	    private static String Difficulty = "Medium";
+	    
+	    
+t pull origin mastert pull origin master
+
+
+
+
+
+
 	    public static Counter counter;
 	    public static TimerPane clock; 
 	    
@@ -121,9 +135,11 @@ public class GridLock extends Application {
 
 	    	 final Image titleScreen = new Image( "file:src/exitscreen.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false); //title screen image
 		     final Image replayButton = new Image("file:src/replay.png", 150, 100, false, false); //the play button image
-		     final Image homeButton = new Image("file:src/home-button-round-blue.png", 150, 100, false, false); //the score button image	     
-		     
-		     final ImageView flashScreen_node = new ImageView();
+<<<<<<< HEAD
+		     final Image homeButton = new Image("file:src/home-button-round-blue.png", 150, 100, false, false); //the score button image		    
+>>>>>>> moveCtr+drag
+
+	     final ImageView flashScreen_node = new ImageView();
 		     flashScreen_node.setImage(titleScreen); //set the image of the title screen
 		     flashScreen_node.setPreserveRatio(true);
 		     
@@ -176,9 +192,13 @@ public class GridLock extends Application {
 	    private Parent createGameBoard(Stage window) {
 	    	//ALL RESET LOGIC IS HERE
 	    	spriteGroup.getChildren().clear();
+<<<<<<< HEAD
 	    	t.resetTimer();
 	    	
 	    	
+=======
+	    		System.out.println("Difficulty is: " + Difficulty);
+>>>>>>> moveCtr+drag
 	        Pane root = new Pane();
 	        final Image gameScreen = new Image( "GameCanvas.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false); //title screen image
 	        root.setPrefSize(WIDTH * SQUARE_SIZE +CANVAS_WIDTH, HEIGHT * SQUARE_SIZE + CANVAS_HEIGHT);
@@ -364,5 +384,8 @@ public class GridLock extends Application {
 
         return s;
     }
-
+	    
+	    public static void setDifficulty(String d) {
+	    		Difficulty = d;
+	    }
 }
