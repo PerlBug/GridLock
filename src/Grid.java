@@ -261,9 +261,57 @@ public class Grid {
 	 * @param upwards --- is the sprite moving up or down?
 	 * @return
 	 */
-	public double furthestMoveYdirection(Sprite sprite, int oldX,int oldY, boolean upwards ) {
+	public double furthestMoveYdirection(Sprite s, int oldX,int oldY, boolean upwards ) {
+		int id=s.getID(); //id of our sprite
+		int y;
 		
-		return 0;
+		//moving up
+		if(upwards) {
+			for(y=oldY; y>=0; y--) { //going upwards, y coordinates decrease to 0
+				//find where the front end of the sprite meets another sprite
+				
+				
+				if(grid[oldX][y].getSpriteID()!=-1 && grid[oldX][y].getSpriteID()!=id) {
+					System.out.println("upward detected at y coord "+ y);
+					return y+1; 
+				}
+				
+				
+			}
+			
+			return 0; //no collisions so the furthest position for the top of the sprite is y=0
+			
+			
+		}else {
+		
+			//moving downwards
+			
+			for(y=oldY; y<= GridLock.WIDTH- s.getSize(); y++) { //going downwards, y coordinates increase
+				//find where the tail end of the sprite meets another sprite
+				
+				
+				if(grid[oldX][y].getSpriteID()!=-1 &&grid[oldX][y].getSpriteID()!=id) {
+					System.out.println("downard collision detected at y coord "+ y);
+					return y-1; 
+				}
+				//check length of sprite after its first square.
+				//prevent dragging part-way over another sprite.
+			
+				for(int k=0; k<s.getSize(); k++) { 
+					if(grid[oldX][y+k].getSpriteID()!=id && grid[oldX][y+k].getSpriteID()!=-1 ) {
+						return (y+k)-s.getSize() < 0? 0: (y+k)-s.getSize();
+					}
+				}
+				
+				
+				
+				
+			}
+			
+			return  GridLock.WIDTH- s.getSize(); //maximum y  position for the top of the sprite 
+			
+		}
+
 	}
 		
 	

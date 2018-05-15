@@ -24,7 +24,7 @@ public class DragHandler implements EventHandler<MouseEvent>{
 		//have to add the new offset...
 		double leftOffset = (GridLock.CANVAS_WIDTH - (GridLock.WIDTH*GridLock.SQUARE_SIZE))/2;
 		double newX= e.getSceneX()- leftOffset;
-		double newY=e.getSceneY();
+		double newY=e.getSceneY()- GridLock.CANVAS_HEIGHT*150/800+leftOffset;
 		System.out.println("scene x is  " +(e.getSceneX()-20));
 		double Xcoord=sprite.getXcoord();
 		double Ycoord=sprite.getYcoord();
@@ -94,6 +94,8 @@ public class DragHandler implements EventHandler<MouseEvent>{
     				//y coords get bigger going downwards
     				upwards = false;
     			}
+        		System.out.println("MOVING UPWARDS= "+upwards);
+        		
         		
         		//find furthest dist sprite can travel upwards or downwards without collision
         		double furthestY= GridLock.SQUARE_SIZE*(grid.furthestMoveYdirection(sprite, (int)grid.toGrid(Xcoord),
@@ -106,10 +108,12 @@ public class DragHandler implements EventHandler<MouseEvent>{
         			sprite.relocate(Xcoord, furthestY);
         		// if going downwards and the  dist is > than the max we can go, go to max
         		}else if(!upwards && dist > furthestY) {
-        			
+        			System.out.println("going backwards dist > furthesty dist is "+dist 
+        					+ "fruthest y is "+ furthestY);
         			sprite.relocate(Xcoord, furthestY);
         		//prevent dragging sprite off bottom of the grid
         		}else if(dist >maxDownDist) {
+        			
     				sprite.relocate(Xcoord,maxDownDist); 
     				
     			//prevent dragging sprite off top of the grid
@@ -117,7 +121,9 @@ public class DragHandler implements EventHandler<MouseEvent>{
     				sprite.relocate(Xcoord, 0);
     			}
     			else{
-    			
+    			System.out.println("here last else");
+    			System.out.println(" dist is "+dist 
+    					+ "fruthest y is "+ furthestY);
     				sprite.relocate( Xcoord, dist);
     			}
  	
