@@ -39,7 +39,7 @@ public class GridLock extends Application {
 	    private int moveCtr; //number of successful drags and drops during the duration of the game
 	    private Grid grid;
 	    private MenuBoard gameMenu;
-	    private Group SquareGroup = new Group(); //Used within Create Game Board
+	    private Group squareGroup = new Group(); //Used within Create Game Board
 	    private Group spriteGroup = new Group(); // Used within create game board
 	    
 	    Scene scene1, scene, scene2;
@@ -163,7 +163,17 @@ public class GridLock extends Application {
 		     return root;
 		}
 	    
-	    private Parent createGameBoard(Stage window) {
+	   /* private void reset(Stage window) {
+	    	squareGroup.getChildren().removeAll();
+	    	spriteGroup.getChildren().removeAll();
+	    	window.getChildren().removeAll(flashScreen_node, squareGroup, spriteGroup);
+	    	Scene reScene = new Scene(createGameBoard(window), CANVAS_HEIGHT, CANVAS_WIDTH);
+		    window.setScene(reScene);
+		    //window.show();
+			
+		}*/
+
+		private Parent createGameBoard(Stage window) {
 	        Pane root = new Pane();
 	        final Image gameScreen = new Image( "GameCanvas.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false); //title screen image
 	        root.setPrefSize(WIDTH * SQUARE_SIZE +CANVAS_WIDTH, HEIGHT * SQUARE_SIZE + CANVAS_HEIGHT);
@@ -174,12 +184,12 @@ public class GridLock extends Application {
 		    
 	        
 	        grid=new Grid();
-	        SquareGroup.getChildren().addAll(grid.getListOfSquares());
+	        squareGroup.getChildren().addAll(grid.getListOfSquares());
 	        
 	        double left_offset = (CANVAS_WIDTH - (WIDTH*SQUARE_SIZE))/2;
 	        //Insets gridContainerPadding = new Insets(CANVAS_HEIGHT*150/800,left_offset, left_offset,1);
-	        SquareGroup.setLayoutX(left_offset);
-	        SquareGroup.setLayoutY(CANVAS_HEIGHT*150/800+left_offset);
+	        squareGroup.setLayoutX(left_offset);
+	        squareGroup.setLayoutY(CANVAS_HEIGHT*150/800+left_offset);
 	        
 	        //layout of sprites must match that of the grid always
 	        spriteGroup.setLayoutX(left_offset);
@@ -190,7 +200,7 @@ public class GridLock extends Application {
 	        //And horizontal sprites cannot start past (3,Y) if truck or (4,Y) if a car
 	        //Also no collision detection when creating a sprite, only when moving sprites about
 	        //so make sure you create valid /no overlap starting positions for the sprites.
-            Sprite s= makeSprite(Sprite.Direction.VERTICAL,1,3,CAR_SIZE, "file:sprites/gurgle.png");
+            Sprite s= makeSprite(Sprite.Direction.VERTICAL,3,1,CAR_SIZE, "file:sprites/gurgle.png");
  
             	
             spriteGroup.getChildren().add(s); 
@@ -208,12 +218,12 @@ public class GridLock extends Application {
             spriteGroup.getChildren().add((Sprite)redCar);
            
             
-            if(grid.checkSetSpriteOnGrid(1,3)) {
+          /*  if(grid.checkSetSpriteOnGrid(1,3)) {
             	Sprite s2= makeSprite(Sprite.Direction.VERTICAL,1,3,TRUCK_SIZE,"file:sprites/whale.png");
             	spriteGroup.getChildren().add(s2);
-            }
+            }*/
             
-            root.getChildren().addAll(flashScreen_node, SquareGroup, spriteGroup);
+            root.getChildren().addAll(flashScreen_node, squareGroup, spriteGroup);
             root.setStyle("-fx-border-color: black");
             
             
@@ -303,7 +313,9 @@ public class GridLock extends Application {
 
 	            result = grid.checkMoveToGrid(s,xCoord,yCoord, newX, newY);
 
-	            if(result==false) {   	
+	            if(result==false) {  
+	            	//there is a sprite in the way...
+	            	//set newX, newY to the square before the sprite...
 	                    s.stopMove();
 	            }else {
                    grid.removeSpriteOnGrid(s, xCoord, yCoord); 
