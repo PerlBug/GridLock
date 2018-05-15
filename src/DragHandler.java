@@ -24,7 +24,7 @@ public class DragHandler implements EventHandler<MouseEvent>{
 		//have to add the new offset...
 		double leftOffset = (GridLock.CANVAS_WIDTH - (GridLock.WIDTH*GridLock.SQUARE_SIZE))/2;
 		double newX= e.getSceneX()- leftOffset;
-		double newY=e.getSceneY()- GridLock.CANVAS_HEIGHT*150/800+leftOffset;
+		double newY=e.getSceneY();//- GridLock.CANVAS_HEIGHT*150/800+leftOffset;
 		System.out.println("scene x is  " +(e.getSceneX()-20));
 		double Xcoord=sprite.getXcoord();
 		double Ycoord=sprite.getYcoord();
@@ -64,7 +64,7 @@ public class DragHandler implements EventHandler<MouseEvent>{
     			if(forwards && (dist > furthestX)) {
     				System.out.println("in if 1, furthest x is "+furthestX +"dist is "+ dist);
     				sprite.relocate(furthestX, Ycoord);
-    			}else if(!forwards && ((int)dist < (int)furthestX)) {
+    			}else if(!forwards && ((int)dist <= (int)furthestX)) {
     				System.out.println("in if 2(backwards dist <furthestx)"
     						+ ", furthest x is "+furthestX +"dist is "+ dist);
     				sprite.relocate(furthestX, Ycoord);
@@ -103,16 +103,16 @@ public class DragHandler implements EventHandler<MouseEvent>{
         		
         		//if going upwards and the new y coord is less than the max upwards y coord
         		//then only go up to the max upwards y coord 
-        		if(upwards && dist < furthestY ) {
+        		if(upwards && dist <= furthestY ) {
         		
         			sprite.relocate(Xcoord, furthestY);
         		// if going downwards and the  dist is > than the max we can go, go to max
-        		}else if(!upwards && dist > furthestY) {
+        		}else if(!upwards && dist >= furthestY) {
         			System.out.println("going backwards dist > furthesty dist is "+dist 
         					+ "fruthest y is "+ furthestY);
         			sprite.relocate(Xcoord, furthestY);
         		//prevent dragging sprite off bottom of the grid
-        		}else if(dist >maxDownDist) {
+        		}else if(dist > maxDownDist) {
         			
     				sprite.relocate(Xcoord,maxDownDist); 
     				

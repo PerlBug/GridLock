@@ -163,17 +163,9 @@ public class GridLock extends Application {
 		     return root;
 		}
 	    
-	   /* private void reset(Stage window) {
-	    	squareGroup.getChildren().removeAll();
-	    	spriteGroup.getChildren().removeAll();
-	    	window.getChildren().removeAll(flashScreen_node, squareGroup, spriteGroup);
-	    	Scene reScene = new Scene(createGameBoard(window), CANVAS_HEIGHT, CANVAS_WIDTH);
-		    window.setScene(reScene);
-		    //window.show();
-			
-		}*/
 
 		private Parent createGameBoard(Stage window) {
+
 	        Pane root = new Pane();
 	        final Image gameScreen = new Image( "GameCanvas.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false); //title screen image
 	        root.setPrefSize(WIDTH * SQUARE_SIZE +CANVAS_WIDTH, HEIGHT * SQUARE_SIZE + CANVAS_HEIGHT);
@@ -200,8 +192,9 @@ public class GridLock extends Application {
 	        //And horizontal sprites cannot start past (3,Y) if truck or (4,Y) if a car
 	        //Also no collision detection when creating a sprite, only when moving sprites about
 	        //so make sure you create valid /no overlap starting positions for the sprites.
-            Sprite s= makeSprite(Sprite.Direction.VERTICAL,3,1,CAR_SIZE, "file:sprites/gurgle.png");
- 
+
+            Sprite s= makeSprite(Sprite.Direction.VERTICAL,1,3,CAR_SIZE, "file:sprites/gurgle.png");
+            
             	
             spriteGroup.getChildren().add(s); 
             
@@ -212,11 +205,15 @@ public class GridLock extends Application {
             Sprite s3= makeSprite(Sprite.Direction.HORIZONTAL,3,3,TRUCK_SIZE, "file:sprites/whale.png");
 
             spriteGroup.getChildren().add(s3);
+            
+            Sprite s4= makeSprite(Sprite.Direction.VERTICAL,4,0,TRUCK_SIZE, "file:sprites/gurgle.png");
+            spriteGroup.getChildren().add(s4);
            // Sprite fakeUser=makeSprite(Sprite.Direction.HORIZONTAL,1,2,CAR_SIZE, "file:sprites/playercar.png");
             //spriteGroup.getChildren().add(fakeUser);
             UserCar redCar = makeUserCar(Sprite.Direction.HORIZONTAL,CAR_SIZE, "file:src/nemo.png", window);
             spriteGroup.getChildren().add((Sprite)redCar);
-           
+            
+            
             
           /*  if(grid.checkSetSpriteOnGrid(1,3)) {
             	Sprite s2= makeSprite(Sprite.Direction.VERTICAL,1,3,TRUCK_SIZE,"file:sprites/whale.png");
@@ -331,8 +328,12 @@ public class GridLock extends Application {
 						System.out.println("Moves taken " + moveCtr);
 						moveCtr=0; //reset ctr for next game
 						t.resetTimer();
+						
+						
+						//Reset the game screen for the next round
+						scene = new Scene(createGameBoard(window), CANVAS_HEIGHT, CANVAS_WIDTH); 
 						window.setScene(scene2); //Goes to exit screen.
-                   }else {
+                   } else {
                 	   
                 		System.out.println("move ctr is " + moveCtr);
                    }

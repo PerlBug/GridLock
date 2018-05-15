@@ -236,22 +236,31 @@ public class Grid {
 		
 		//moving backwards newx < old x
 			//we are comparing the tail for collisions, but tail is really the first square of the sprite
-			for(x=oldX; x>=0; x--) {
+			for(x=oldX; x>0; x--) {
 				//find where the front end of the sprite meets another sprite
 				if(grid[x][oldY].getSpriteID()!=-1 &&grid[x][oldY].getSpriteID()!=id) {
 					System.out.println("collision detected at x coord "+ x);
 					return (x+1); 
 				}
 				
+				//check one ahead
+				if(grid[x-1][oldY].getSpriteID()!=id && grid[x-1][oldY].getSpriteID()!=-1 ) {
+					System.out.println("backward k loop: collision detected at x coord "+ (x-1));
+					return (x);
+				}
 				
 			}
+			
+		
 			System.out.println("backwards, no collision detected returning 0");
 			return 0;
 		}
+		
+	}
 			
 			
 	
-		}
+		
 
 
 	/**
