@@ -43,9 +43,9 @@ public class MenuBoard extends Parent{
 //	     final Button score_button = new Button();
 //	     final ImageView score_button_node = new ImageView(); 
 	     
-	     MenuButton play_button = new MenuButton("Play", "Play.png");
-	     MenuButton score_button = new MenuButton("Score", "Score.png");
-	     MenuButton option_button = new MenuButton("Options", "Play.png");
+	     MenuButton play_button = new MenuButton("Play", "StoneButton.png");
+	     MenuButton score_button = new MenuButton("Score", "StoneButton.png");
+	     MenuButton option_button = new MenuButton("Options", "StoneButton.png");
 	     
 //	     play_button_node.setImage(playButton); //set the image of the play button
 //	     score_button_node.setImage(scoreButton); //set the image of the score button

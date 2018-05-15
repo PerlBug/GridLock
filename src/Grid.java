@@ -13,8 +13,10 @@ public class Grid {
 	
 	private Square grid[][] = new Square[GridLock.WIDTH][GridLock.HEIGHT];
 	private ArrayList<Square> listOfSquares;
+	private int moveCtr;
 	
 	public Grid() {
+		this.moveCtr = 0;
 		listOfSquares = new ArrayList<Square>();
 		//populating grid array with squares
 		for(int y = 0; y < GridLock.HEIGHT; y++) {
@@ -96,7 +98,7 @@ public class Grid {
 			
 			//make sure we move in the right direction and we don't go over the edge of the board
 			if(oldY!=newY || newX>GridLock.WIDTH-s.getSize()) return false;
-			System.out.println("here,old X is " + oldX +"new X is " + newX);			
+			System.out.println("here,old X is " + oldX +"new X is " + newX);
 			int i=(oldX < newX )? oldX: newX;
 			int j= (i==oldX)? newX: oldX;
 			for(int x=i; x<=j; x++) {
@@ -124,6 +126,8 @@ public class Grid {
 				
 			}
 		}
+		moveCtr++;
+		GridLock.counter.setCount(moveCtr);
 		return true;
 	}
 	  

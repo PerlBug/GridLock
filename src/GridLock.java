@@ -36,6 +36,7 @@ public class GridLock extends Application {
 	    public static final int HEIGHT = 6;
 	    public static final int CAR_SIZE=2;
 	    public static final int TRUCK_SIZE=3;
+	    public static Counter counter;
 
 	    private Grid grid;
 	    private MenuBoard gameMenu;
@@ -167,10 +168,13 @@ public class GridLock extends Application {
 	        final Image gameScreen = new Image( "GameCanvas.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false); //title screen image
 	        root.setPrefSize(WIDTH * SQUARE_SIZE +CANVAS_WIDTH, HEIGHT * SQUARE_SIZE + CANVAS_HEIGHT);
 	        
-	        final ImageView flashScreen_node = new ImageView();
-		    flashScreen_node.setImage(gameScreen); //set the image of the title screen
-		    flashScreen_node.setPreserveRatio(true);
+	        final ImageView gameScreen_node = new ImageView();
+		    gameScreen_node.setImage(gameScreen); //set the image of the title screen
+		    gameScreen_node.setPreserveRatio(true);
 		    
+		    counter = new Counter("CounterImg.png");
+		    counter.setTranslateX(20);
+		    counter.setTranslateY(20);
 	        
 	        grid=new Grid();
 	        SquareGroup.getChildren().addAll(grid.getListOfSquares());
@@ -212,7 +216,7 @@ public class GridLock extends Application {
             	spriteGroup.getChildren().add(s2);
             }
             
-            root.getChildren().addAll(flashScreen_node, SquareGroup, spriteGroup);
+            root.getChildren().addAll(gameScreen_node, counter, SquareGroup, spriteGroup);
             root.setStyle("-fx-border-color: black");
             
             

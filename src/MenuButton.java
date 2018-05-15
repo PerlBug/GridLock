@@ -32,7 +32,7 @@ public class MenuButton extends StackPane {
 		btn.setEffect(new Glow());
 		
 		setAlignment(Pos.CENTER);
-		setRotate(-0.5);
+		//setRotate(-0.5);
 		getChildren().addAll(btn, text);
 		
 		setOnMouseEntered(event -> {
