@@ -10,13 +10,12 @@ import javafx.*;
  */
 public class UserCar extends Sprite {
 	
-	private int moveCtr; //The number of grid squares traversed during the game. Not the same as number of drag 
-	//and drops since a drag can be over multiple grid squares in some situations. 
+	
 	
 	public UserCar(Direction dir, String url) {
 		
 		 super(dir, 0, 2, GridLock.CAR_SIZE, url); 
-		 moveCtr=0; //At each game moveCtr is initialised to 0
+		
 		 
 	}
 
@@ -35,19 +34,8 @@ public class UserCar extends Sprite {
 		}
 	}
 
-	public int getMoveCtr() {
-		return moveCtr;
-		
-	}
+
 	
-	
-	/**
-	 * Increment moveCtr.
-	 * 
-	 */
-	public void incrementMoveCtr() {
-		moveCtr++;
-	}
-	
+
 	
 }

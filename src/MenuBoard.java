@@ -1,3 +1,4 @@
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -46,7 +47,7 @@ public class MenuBoard extends Parent{
 	     MenuButton play_button = new MenuButton("Play", "StoneButton.png");
 	     MenuButton score_button = new MenuButton("Score", "StoneButton.png");
 	     MenuButton option_button = new MenuButton("Options", "StoneButton.png");
-	     
+	     MenuButton exit_button = new MenuButton("Exit", "StoneButton.png");
 //	     play_button_node.setImage(playButton); //set the image of the play button
 //	     score_button_node.setImage(scoreButton); //set the image of the score button
 //	      
@@ -74,7 +75,9 @@ public class MenuBoard extends Parent{
 	    	 	getChildren().remove(0);
 	    	 	getChildren().add(menu2);
 	     });
-	     
+	     exit_button.setOnMouseClicked(e -> {
+	    	 	Platform.exit();
+	     });
 	     
 	     /*
 	      * create the container of main menu buttons in a vertical box
@@ -83,8 +86,8 @@ public class MenuBoard extends Parent{
 	     menu1 = new VBox(10);
 	     menu1.setAlignment(Pos.TOP_CENTER);
 	    	 menu1.setTranslateX(200);
-	    	 menu1.setTranslateY(300);
-	     menu1.getChildren().addAll(play_button, score_button, option_button);
+	    	 menu1.setTranslateY(280);
+	     menu1.getChildren().addAll(play_button, score_button, option_button, exit_button);
 	     
 	     
 	     

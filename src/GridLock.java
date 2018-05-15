@@ -36,12 +36,13 @@ public class GridLock extends Application {
 	    public static final int HEIGHT = 6;
 	    public static final int CAR_SIZE=2;
 	    public static final int TRUCK_SIZE=3;
-	    public static Counter counter;
-
+	    private int moveCtr; //number of successful drags and drops during the duration of the game
 	    private Grid grid;
 	    private MenuBoard gameMenu;
 	    private Group SquareGroup = new Group(); //Used within Create Game Board
 	    private Group spriteGroup = new Group(); // Used within create game board
+	    public static Counter counter;
+	    
 	    
 	    Scene scene1, scene, scene2;
 	    Timer t;
@@ -53,6 +54,7 @@ public class GridLock extends Application {
 	    @Override
 	    public void start(Stage primaryStage) {
 	    	t = new Timer();	
+	    	moveCtr=0;
 	        scene = new Scene(createGameBoard(primaryStage), CANVAS_HEIGHT, CANVAS_WIDTH);
 	        scene1 = new Scene(startMenu(primaryStage), CANVAS_HEIGHT, CANVAS_WIDTH);
 	        scene2 = new Scene(exitScreen(primaryStage), CANVAS_HEIGHT, CANVAS_WIDTH);
@@ -164,6 +166,9 @@ public class GridLock extends Application {
 		}
 	    
 	    private Parent createGameBoard(Stage window) {
+	    	//Removes all sprites from previous game
+	    	spriteGroup.getChildren().clear();
+	    	
 	        Pane root = new Pane();
 	        final Image gameScreen = new Image( "GameCanvas.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false); //title screen image
 	        root.setPrefSize(WIDTH * SQUARE_SIZE +CANVAS_WIDTH, HEIGHT * SQUARE_SIZE + CANVAS_HEIGHT);
@@ -194,7 +199,7 @@ public class GridLock extends Application {
 	        //Also no collision detection when creating a sprite, only when moving sprites about
 	        //so make sure you create valid /no overlap starting positions for the sprites.
             Sprite s= makeSprite(Sprite.Direction.VERTICAL,1,3,CAR_SIZE, "file:sprites/gurgle.png");
- 
+            
             	
             spriteGroup.getChildren().add(s); 
             
@@ -205,11 +210,15 @@ public class GridLock extends Application {
             Sprite s3= makeSprite(Sprite.Direction.HORIZONTAL,3,3,TRUCK_SIZE, "file:sprites/whale.png");
 
             spriteGroup.getChildren().add(s3);
+            
+            Sprite s4= makeSprite(Sprite.Direction.VERTICAL,4,0,TRUCK_SIZE, "file:sprites/gurgle.png");
+            spriteGroup.getChildren().add(s4);
            // Sprite fakeUser=makeSprite(Sprite.Direction.HORIZONTAL,1,2,CAR_SIZE, "file:sprites/playercar.png");
             //spriteGroup.getChildren().add(fakeUser);
             UserCar redCar = makeUserCar(Sprite.Direction.HORIZONTAL,CAR_SIZE, "file:src/nemo.png", window);
             spriteGroup.getChildren().add((Sprite)redCar);
-           
+            
+            
             
             if(grid.checkSetSpriteOnGrid(1,3)) {
             	Sprite s2= makeSprite(Sprite.Direction.VERTICAL,1,3,TRUCK_SIZE,"file:sprites/whale.png");
@@ -266,6 +275,8 @@ public class GridLock extends Application {
 	                   grid.removeSpriteOnGrid(s, xCoord, yCoord); 
 	                   s.move(newX, newY); 
 	                   grid.setSpriteOnGrid(s,newX, newY);
+	                   moveCtr++;
+	                   System.out.println("move ctr is " + moveCtr);
 	                  
 		            }
 	               
@@ -303,16 +314,6 @@ public class GridLock extends Application {
 	            boolean result;
 
 	            result = grid.checkMoveToGrid(s,xCoord,yCoord, newX, newY);
-	            if (newX == 4) {
-	            	//Get time taken to complete game and print 
-	            	double finishedTime = t.getTimeFromStart();
-	            	int seconds = t.getSeconds(finishedTime);
-	            	int minutes = t.getMinutes(finishedTime);
-	   		        System.out.println("Time taken " + minutes + " Minutes and " + seconds + " Seconds");
-	   		        t.resetTimer();
-	            	window.setScene(scene2); //Goes to exit screen.
-	            }
-
 
 	            if(result==false) {   	
 	                    s.stopMove();
@@ -320,12 +321,27 @@ public class GridLock extends Application {
                    grid.removeSpriteOnGrid(s, xCoord, yCoord); 
                    s.move(newX, newY); 
                    grid.setSpriteOnGrid(s,newX, newY);
-               
-                   s.incrementMoveCtr(); 
-                   System.out.println("move ctr is " + s.getMoveCtr());
-                   
+                   moveCtr++;
+                   if (newX == 4) {
+						 //Get time taken to complete game and print 
+						double finishedTime = t.getTimeFromStart();
+						int seconds = t.getSeconds(finishedTime);
+						int minutes = t.getMinutes(finishedTime);
+						System.out.println("Time taken " + minutes + " Minutes and " + seconds + " Seconds");
+						System.out.println("Moves taken " + moveCtr);
+						moveCtr=0; //reset ctr for next game
+						t.resetTimer();
+						
+						
+						//Reset the game screen for the next round
+						scene = new Scene(createGameBoard(window), CANVAS_HEIGHT, CANVAS_WIDTH); 
+						window.setScene(scene2); //Goes to exit screen.
+                   } else {
+                	   
+                		System.out.println("move ctr is " + moveCtr);
+                   }
 	            }
-               
+	            
         });
 
         return s;

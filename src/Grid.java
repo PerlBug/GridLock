@@ -98,7 +98,7 @@ public class Grid {
 			
 			//make sure we move in the right direction and we don't go over the edge of the board
 			if(oldY!=newY || newX>GridLock.WIDTH-s.getSize()) return false;
-			System.out.println("here,old X is " + oldX +"new X is " + newX);
+			System.out.println("here,old X is " + oldX +"new X is " + newX);			
 			int i=(oldX < newX )? oldX: newX;
 			int j= (i==oldX)? newX: oldX;
 			for(int x=i; x<=j; x++) {
