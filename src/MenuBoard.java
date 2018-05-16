@@ -43,9 +43,9 @@ public class MenuBoard extends Parent{
 //	     final Button score_button = new Button();
 //	     final ImageView score_button_node = new ImageView(); 
 	     
-	     MenuButton play_button = new MenuButton("Play", "Play.png");
-	     MenuButton score_button = new MenuButton("Score", "Score.png");
-	     MenuButton option_button = new MenuButton("Options", "Play.png");
+	     MenuButton play_button = new MenuButton(" ", "Play.png");
+	     MenuButton score_button = new MenuButton(" ", "Score.png");
+	     //MenuButton option_button = new MenuButton(" ", "Options.png");
 	     
 //	     play_button_node.setImage(playButton); //set the image of the play button
 //	     score_button_node.setImage(scoreButton); //set the image of the score button
@@ -70,11 +70,13 @@ public class MenuBoard extends Parent{
 	      */
 	     play_button.setOnMouseClicked(e -> window.setScene(g.getGame()));
 	     score_button.setOnMouseClicked(e -> window.setScene(g.getGame()));
+	     
+	     /* OPTION BUTTON REMOVED TEMPORARILY
 	     option_button.setOnMouseClicked(e -> {
 	    	 	getChildren().remove(0);
 	    	 	getChildren().add(menu2);
 	     });
-	     
+	     */
 	     
 	     /*
 	      * create the container of main menu buttons in a vertical box
@@ -82,9 +84,9 @@ public class MenuBoard extends Parent{
 	     
 	     menu1 = new VBox(10);
 	     menu1.setAlignment(Pos.TOP_CENTER);
-	    	 menu1.setTranslateX(200);
-	    	 menu1.setTranslateY(300);
-	     menu1.getChildren().addAll(play_button, score_button, option_button);
+	    	 menu1.setTranslateX(250);
+	    	 menu1.setTranslateY(350);
+	     menu1.getChildren().addAll(play_button, score_button);
 	     
 	     
 	     
