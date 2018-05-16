@@ -1,5 +1,7 @@
 //for sprint review
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -21,6 +23,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  * Main class for the GridLock application
@@ -48,9 +51,6 @@ public class GridLock extends Application {
 	     * Declares Difficulty: Starts at Medium Difficulty.
 	     */
 	    private static String Difficulty = "Medium";
-
-
-
 
 	    public static Runnable liveClock;
 
@@ -97,6 +97,14 @@ public class GridLock extends Application {
 	        primaryStage.resizableProperty().setValue(Boolean.FALSE);
 
 	        
+	        //makes sure closing window shuts down application
+	        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+	            @Override
+	            public void handle(WindowEvent t) {
+	                Platform.exit();
+	                System.exit(0);
+	            }
+	        });
 	        
 	        primaryStage.show();
 	        
