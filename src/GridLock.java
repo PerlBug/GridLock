@@ -334,11 +334,7 @@ public class GridLock extends Application {
             }
             
             
-            
-            if(grid.checkSetSpriteOnGrid(1,3)) {
-            	Sprite s2= makeSprite(Sprite.Direction.VERTICAL,1,3,TRUCK_SIZE,"file:sprites/whale.png");
-            	spriteGroup.getChildren().add(s2);
-            }
+       
             
             root.getChildren().addAll(gameScreen_node, counter, ((TimerPane) liveClock), squareGroup, spriteGroup);
             root.setStyle("-fx-border-color: black");
