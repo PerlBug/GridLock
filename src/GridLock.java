@@ -209,16 +209,16 @@ public class GridLock extends Application {
 		    gameScreen_node.setPreserveRatio(true);
 		    
 		    counter = new Counter("CounterImg.png");
-		    counter.setTranslateX(20);
-		    counter.setTranslateY(20);
+		    counter.setTranslateX(0);
+		    counter.setTranslateY(0);
 		    
 		    		    
 		    liveClock = new TimerPane("CounterImg.png");
 		    Thread t1 = new Thread(liveClock);
 		    t1.start();
 		    
-		    ((TimerPane) liveClock).setTranslateX(300);
-		    ((TimerPane) liveClock).setTranslateY(20);
+		    ((TimerPane) liveClock).setTranslateX(CANVAS_WIDTH-TimerPane.WIDTH);
+		    ((TimerPane) liveClock).setTranslateY(0);
 		    
 		    /*
 		    clock = new TimerPane("CounterImg.png");
