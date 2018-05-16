@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -36,6 +37,7 @@ public class GridLock extends Application {
 	    public static final int HEIGHT = 6;
 	    public static final int CAR_SIZE=2;
 	    public static final int TRUCK_SIZE=3;
+	    
 	    private int moveCtr; //number of successful drags and drops during the duration of the game
 	    private Grid grid;
 	    private MenuBoard gameMenu;
@@ -50,7 +52,7 @@ public class GridLock extends Application {
 
 
 
-
+	    public static Runnable liveClock;
 
 	    public static Counter counter;
 	    public static TimerPane clock; 
@@ -202,6 +204,14 @@ public class GridLock extends Application {
 		    counter.setTranslateX(20);
 		    counter.setTranslateY(20);
 		    
+		    		    
+		    liveClock = new TimerPane("CounterImg.png");
+		    Thread t1 = new Thread(liveClock);
+		    t1.start();
+		    
+		    ((TimerPane) liveClock).setTranslateX(300);
+		    ((TimerPane) liveClock).setTranslateY(20);
+		    
 		    /*
 		    clock = new TimerPane("CounterImg.png");
 			clock.setTranslateX(80);
@@ -232,7 +242,7 @@ public class GridLock extends Application {
             //generation of different boards
             //change value of i to get different board difficulties
 	        //creating 4 different boards
-	    	int i = 4;
+	    	int i = 0;
             switch (i) {
             	case 0: Sprite v10= makeSprite(Sprite.Direction.VERTICAL,1,3,CAR_SIZE, "file:sprites/gurgle.png");
             		spriteGroup.getChildren().add(v10); 
@@ -330,7 +340,7 @@ public class GridLock extends Application {
             	spriteGroup.getChildren().add(s2);
             }
             
-            root.getChildren().addAll(gameScreen_node, counter, squareGroup, spriteGroup);
+            root.getChildren().addAll(gameScreen_node, counter, ((TimerPane) liveClock), squareGroup, spriteGroup);
             root.setStyle("-fx-border-color: black");
             
             
@@ -438,12 +448,15 @@ public class GridLock extends Application {
 						//Reset the game screen for the next round
 						scene = new Scene(createGameBoard(window), CANVAS_HEIGHT, CANVAS_WIDTH);
 						scene2 = new Scene(exitScreen(window, seconds, minutes, moveCtr), CANVAS_HEIGHT, CANVAS_WIDTH);
-						window.setScene(scene2); //Goes to exit screen.
+						
+						((TimerPane) liveClock).set_keep_timing(false);
 						moveCtr=0; //reset ctr for next game
+						window.setScene(scene2); //Goes to exit screen.
                    } else {
                 	   
                 		System.out.println("move ctr is " + moveCtr);
                    }
+                   
 	            }
 	            
         });
