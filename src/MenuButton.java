@@ -26,6 +26,16 @@ public class MenuButton extends StackPane {
 	private double widthRel;
 	
 	
+	public double getHeightRel() {
+		return heightRel;
+	}
+
+
+	public double getWidthRel() {
+		return widthRel;
+	}
+
+
 	public MenuButton(String name, String img) {
 		text = new Text(name);
 		text.setFont(text.getFont().font(20));

@@ -67,8 +67,8 @@ public class MenuBoard extends Parent{
 	     
 	     menu1 = new VBox(10);
 	     menu1.setAlignment(Pos.TOP_CENTER);
-	    	 menu1.setTranslateX(200);
-	    	 menu1.setTranslateY(280);
+	    	 menu1.setTranslateX((GridLock.CANVAS_WIDTH/2) - play_button.getWidthRel()/2);
+	    	 menu1.setTranslateY((GridLock.CANVAS_HEIGHT/2) - 40);
 	     menu1.getChildren().addAll(play_button, score_button, option_button, exit_button);
 	     
 	     
