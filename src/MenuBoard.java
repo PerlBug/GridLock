@@ -59,6 +59,7 @@ public class MenuBoard extends Parent{
 	     });
 	     exit_button.setOnMouseClicked(e -> {
 	    	 	Platform.exit();
+	    	 	System.exit(0);
 	     });
 	     
 	     /*
