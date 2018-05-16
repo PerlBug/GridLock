@@ -75,7 +75,8 @@ public class GridLock extends Application {
 	        
 	        primaryStage.setTitle("Gridlock");
 	        primaryStage.setScene(scene1);
-	        
+
+
 	        /*
 	         * Sets the starting position of the window to being the top left
 	         */
@@ -93,9 +94,8 @@ public class GridLock extends Application {
 	        primaryStage.setWidth(CANVAS_WIDTH);
 	        primaryStage.setMaxHeight(CANVAS_HEIGHT+left_offset);
 	        primaryStage.setMaxWidth(CANVAS_WIDTH);
-	        final boolean resizable = primaryStage.isResizable();
-	        primaryStage.setResizable(!resizable);
-	        primaryStage.setResizable(resizable);
+	        primaryStage.resizableProperty().setValue(Boolean.FALSE);
+
 	        
 	        
 	        primaryStage.show();
