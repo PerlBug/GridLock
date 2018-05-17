@@ -16,7 +16,7 @@ public class Grid {
 	private int moveCtr;
 	
 	public Grid() {
-		this.moveCtr = 0;
+		this.moveCtr = 0; //initialise ctr
 		listOfSquares = new ArrayList<Square>();
 		//populating grid array with squares
 		for(int y = 0; y < GridLock.HEIGHT; y++) {
@@ -110,6 +110,9 @@ public class Grid {
 					if(grid[x+k][oldY].getSpriteID()!=id && grid[x+k][oldY].getSpriteID()!=-1 ) return false;
 				}
 			}
+			if(oldX!=newX) { //only increment if actually moved by > 1 squares
+				moveCtr++;
+			}
 			
 		}else { 
 		
@@ -125,8 +128,11 @@ public class Grid {
 				}
 				
 			}
+			if(oldY!=newY) {
+				moveCtr++;
+			}
 		}
-		moveCtr++;
+		
 		GridLock.counter.setCount(moveCtr);
 		return true;
 	}
@@ -315,7 +321,17 @@ public class Grid {
 		}
 
 	}
+
+
+
+	public int getMovectr() {
+		return moveCtr;
+	}
 		
+	public void resetMoveCtr() {
+		moveCtr=0;
+		
+	}
 	
 		
 
