@@ -38,7 +38,6 @@ public class GridLock extends Application {
 	    public static final int CAR_SIZE=2;
 	    public static final int TRUCK_SIZE=3;
 	    
-	  //  private int moveCtr; //number of successful drags and drops during the duration of the game
 	    private Grid grid;
 	    private MenuBoard gameMenu;
 	    private Group squareGroup = new Group(); //Used within Create Game Board
@@ -424,7 +423,9 @@ public class GridLock extends Application {
 						int minutes = t.getMinutes(finishedTime);
 						System.out.println("Time taken " + minutes + " Minutes and " + seconds + " Seconds");
 						System.out.println("Moves taken " + grid.getMovectr());
-						int old_count=grid.getMovectr();
+						int old_count=grid.getMovectr(); //get the last move count to display
+						//at end of game.
+						
 						//Reset the game screen for the next round
 						scene = new Scene(createGameBoard(window), CANVAS_HEIGHT, CANVAS_WIDTH);
 						scene2 = new Scene(exitScreen(window, seconds, minutes, old_count), CANVAS_HEIGHT, CANVAS_WIDTH);
