@@ -51,8 +51,8 @@ public class MenuBoard extends Parent{
 	     /*
 	      * Set up action calls for Main Menu buttons
 	      */
-	     play_button.setOnMouseClicked(e -> window.setScene(g.getGame()));
-	     score_button.setOnMouseClicked(e -> window.setScene(g.getGame()));
+	     play_button.setOnMouseClicked(e -> window.setScene(g.getGame(window)));
+	     score_button.setOnMouseClicked(e -> window.setScene(g.getGame(window)));
 	     option_button.setOnMouseClicked(e -> {
 	    	 	getChildren().remove(0);
 	    	 	getChildren().add(menu2);

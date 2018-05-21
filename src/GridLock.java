@@ -69,7 +69,7 @@ public class GridLock extends Application {
 	    public void start(Stage primaryStage) {
 	    	t = new Timer();	
 	    	moveCtr=0;
-	        scene = new Scene(createGameBoard(primaryStage), CANVAS_HEIGHT, CANVAS_WIDTH);
+	        //scene = new Scene(createGameBoard(primaryStage), CANVAS_HEIGHT, CANVAS_WIDTH);
 	        scene1 = new Scene(startMenu(primaryStage), CANVAS_HEIGHT, CANVAS_WIDTH);
 	        //scene2 = new Scene(exitScreen(primaryStage), CANVAS_HEIGHT, CANVAS_WIDTH);
 	        
@@ -131,10 +131,12 @@ public class GridLock extends Application {
 		     return root;
 		}
 	    /**
-	     * Returns the GameBoard Scene
+	     * Returns the GameBoard Scene by making a new one
 	     * @return
 	     */
-	    public Scene getGame() {
+	    public Scene getGame(Stage window) {
+	    		//creates new game scene and returns
+	    	    scene = new Scene(createGameBoard(window), CANVAS_HEIGHT, CANVAS_WIDTH);
 	    		return this.scene;
 	    }
 	    
@@ -177,7 +179,8 @@ public class GridLock extends Application {
 		     score_button.setMaxWidth(Double.MAX_VALUE);
 		     
 		     
-		     play_button.setOnAction(e -> window.setScene(scene));
+		     
+		     play_button.setOnAction(e -> window.setScene(new Scene(createGameBoard(window), CANVAS_HEIGHT, CANVAS_WIDTH))); //replay
 		     score_button.setOnAction(e -> window.setScene(scene1));
 		     /*
 		      * create the container of those buttons in a horizontal box
@@ -448,14 +451,16 @@ public class GridLock extends Application {
 						int minutes = t.getMinutes(finishedTime);
 						System.out.println("Time taken " + minutes + " Minutes and " + seconds + " Seconds");
 						System.out.println("Moves taken " + moveCtr);
-
-						//Reset the game screen for the next round
-						scene = new Scene(createGameBoard(window), CANVAS_HEIGHT, CANVAS_WIDTH);
 						scene2 = new Scene(exitScreen(window, seconds, minutes, moveCtr), CANVAS_HEIGHT, CANVAS_WIDTH);
+						
 						
 						((TimerPane) liveClock).set_keep_timing(false);
 						moveCtr=0; //reset ctr for next game
 						window.setScene(scene2); //Goes to exit screen.
+						
+						//Reset the game screen for the next round
+						//scene = new Scene(createGameBoard(window), CANVAS_HEIGHT, CANVAS_WIDTH);
+						
                    } else {
                 	   
                 		System.out.println("move ctr is " + moveCtr);
