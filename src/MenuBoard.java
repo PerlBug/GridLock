@@ -42,7 +42,7 @@ public class MenuBoard extends Parent{
 	     MenuButton score_button = new MenuButton("Score", "StoneButton.png");
 	     MenuButton option_button = new MenuButton("Options", "StoneButton.png");
 	     MenuButton exit_button = new MenuButton("Exit", "StoneButton.png");
-
+	     MenuButton instruction_button = new MenuButton("Instructions", "StoneButton.png");
 	     /*
 	      * Set up Options Menu
 	      */
@@ -61,6 +61,7 @@ public class MenuBoard extends Parent{
 	    	 	Platform.exit();
 	    	 	System.exit(0);
 	     });
+	     instruction_button.setOnMouseClicked(e -> window.setScene(g.getInstruction(window)));
 	     
 	     /*
 	      * create the container of main menu buttons in a vertical box
@@ -70,7 +71,7 @@ public class MenuBoard extends Parent{
 	     menu1.setAlignment(Pos.TOP_CENTER);
 	    	 menu1.setTranslateX((GridLock.CANVAS_WIDTH/2) - play_button.getWidthRel()/2);
 	    	 menu1.setTranslateY((GridLock.CANVAS_HEIGHT/2) - 40);
-	     menu1.getChildren().addAll(play_button, score_button, option_button, exit_button);
+	     menu1.getChildren().addAll(play_button, score_button, option_button, exit_button, instruction_button);
 	     
 	     
 	     

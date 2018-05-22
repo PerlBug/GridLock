@@ -12,6 +12,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -58,7 +60,7 @@ public class GridLock extends Application {
 	    public static TimerPane clock; 
 	    
 	    
-	    Scene scene1, scene, scene2;
+	    Scene scene1, scene, scene2, instructionScene;
 	    Timer t;
 	    
 	    public static void main(String[] args) {
@@ -72,7 +74,7 @@ public class GridLock extends Application {
 	        //scene = new Scene(createGameBoard(primaryStage), CANVAS_HEIGHT, CANVAS_WIDTH);
 	        scene1 = new Scene(startMenu(primaryStage), CANVAS_HEIGHT, CANVAS_WIDTH);
 	        //scene2 = new Scene(exitScreen(primaryStage), CANVAS_HEIGHT, CANVAS_WIDTH);
-	        
+	        instructionScene = new Scene(instructions(primaryStage), CANVAS_HEIGHT, CANVAS_WIDTH);
 	        primaryStage.setTitle("Gridlock");
 	        primaryStage.setScene(scene1);
 
@@ -140,14 +142,67 @@ public class GridLock extends Application {
 	    		return this.scene;
 	    }
 	    
+	    /**
+	     * Returns the Instructions scene
+	     * @param window
+	     * @return
+	     */
+	    public Scene getInstruction(Stage window) {
+	    	return this.instructionScene;
+	    }
+	    
+	    /**
+	     * Creates a scene with the instructions for the game
+	     * @param window
+	     * @return
+	     */
+	    private GridPane instructions(Stage window) {
+	    	final Image background = new Image( "file:src/instructions_scene.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false);
+	    	
+	    	final ImageView flashScreen_node = new ImageView();
+		    flashScreen_node.setImage(background); //set the image of the title screen
+		    flashScreen_node.setPreserveRatio(true);
+		    
+		    final Image menuImage = new Image("file:src/home-button-round-blue.png", 100, 100, false, false);
+		    final Button menuButton  = new Button();
+		    final ImageView menuButtonNode = new ImageView(); 
+		    menuButtonNode.setImage(menuImage);
+		    
+		    
+		    menuButton.setGraphic(menuButtonNode);
+		    menuButton.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY))); //this is to make the button background transparent
+		    menuButton.setScaleShape(true);
+		    menuButton.setMaxWidth(Double.MAX_VALUE);
+			
+			menuButton.setOnAction(e -> window.setScene(scene1)); //Go back to the main menu when clicked
+		    final HBox buttonContainer = new HBox(1);
+		    buttonContainer.setAlignment(Pos.TOP_RIGHT);
+		    Insets buttonContainerPadding = new Insets(400, 1, 1, 1); //Distance from the top center down
+		    buttonContainer.setPadding(buttonContainerPadding);
+		    buttonContainer.getChildren().addAll(menuButton);
+		    
+	    	GridPane root = new GridPane(); 
+		    root.getChildren().addAll(flashScreen_node, buttonContainer);
+		    return root;
+	    }
+	    
+	    
+	    /**
+	     * Method which creates the exit scene and displays number of moves and how long game took
+	     * @param window
+	     * @param seconds
+	     * @param minutes
+	     * @param c
+	     * @return
+	     */
 	    private GridPane exitScreen(Stage window, int seconds, int minutes, int c) {
 
 	    	 final Image titleScreen = new Image( "file:src/exitscreen.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false); //title screen image
-		     final Image replayButton = new Image("file:src/replay.png", 150, 100, false, false); //the play button image
-		     final Image homeButton = new Image("file:src/home-button-round-blue.png", 150, 100, false, false); //the score button image		    
+		     final Image replayButton = new Image("file:src/replay.png", 100, 100, false, false); //the play button image
+		     final Image homeButton = new Image("file:src/home-button-round-blue.png", 100, 100, false, false); //the score button image		    
 
 
-	     final ImageView flashScreen_node = new ImageView();
+		     final ImageView flashScreen_node = new ImageView();
 		     flashScreen_node.setImage(titleScreen); //set the image of the title screen
 		     flashScreen_node.setPreserveRatio(true);
 		     
@@ -198,6 +253,8 @@ public class GridLock extends Application {
 		     return root;
 		}
 	    
+	    
+	    
 	    private Parent createGameBoard(Stage window) {
 	    	//ALL RESET LOGIC IS HERE
 	    	spriteGroup.getChildren().clear();
@@ -223,15 +280,6 @@ public class GridLock extends Application {
 		    ((TimerPane) liveClock).setTranslateX(CANVAS_WIDTH-TimerPane.WIDTH);
 		    ((TimerPane) liveClock).setTranslateY(0);
 		    
-		    /*
-		    clock = new TimerPane("CounterImg.png");
-			clock.setTranslateX(80);
-			clock.setTranslateY(20);
-			double finishedTime = t.getTimeFromStart();
-			int seconds = t.getSeconds(finishedTime);
-			int minutes = t.getMinutes(finishedTime);
-			clock.printLabel(seconds, minutes);
-	        */
 	        grid=new Grid();
 	        squareGroup.getChildren().addAll(grid.getListOfSquares());
 	        
@@ -244,6 +292,21 @@ public class GridLock extends Application {
 	        spriteGroup.setLayoutX(left_offset);
 	        spriteGroup.setLayoutY(CANVAS_HEIGHT*150/800+left_offset);
 	        
+	    
+		    final Image menuImage = new Image("file:src/home-button-round-blue.png", 100, 100, false, false);
+		    final Button menuButton  = new Button();
+		    final ImageView menuButtonNode = new ImageView(); 
+		    menuButtonNode.setImage(menuImage);
+		    menuButton.setGraphic(menuButtonNode);
+		    menuButton.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY))); //this is to make the button background transparent
+		    menuButton.setScaleShape(true);
+		    menuButton.setMaxWidth(Double.MAX_VALUE);
+		    menuButton.setOnAction(e -> window.setScene(scene1)); //Go back to the main menu when clicked
+		    final HBox buttonContainer = new HBox(1);
+		    buttonContainer.setAlignment(Pos.CENTER);
+		    Insets buttonContainerPadding = new Insets(400, 1, 1, 1); //Distance from the top center down
+		    buttonContainer.setPadding(buttonContainerPadding);
+		    buttonContainer.getChildren().addAll(menuButton);
 	        
 	        //NOTE: vertical sprites cannot start past (X,3) if a truck or (X,4) if a car
 	        //And horizontal sprites cannot start past (3,Y) if truck or (4,Y) if a car
@@ -347,7 +410,7 @@ public class GridLock extends Application {
             
        
             
-            root.getChildren().addAll(gameScreen_node, counter, ((TimerPane) liveClock), squareGroup, spriteGroup);
+            root.getChildren().addAll(buttonContainer, gameScreen_node, counter, ((TimerPane) liveClock), squareGroup, spriteGroup);
             root.setStyle("-fx-border-color: black");
             
             
