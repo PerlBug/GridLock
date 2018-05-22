@@ -1,4 +1,9 @@
 //for sprint review
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -16,6 +21,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -46,6 +52,7 @@ public class GridLock extends Application {
 	    private int moveCtr; //number of successful drags and drops during the duration of the game
 	    private Grid grid;
 	    private MenuBoard gameMenu;
+	    private Scoreboard scoreMenu;
 	    private Group squareGroup = new Group(); //Used within Create Game Board
 	    private Group spriteGroup = new Group(); // Used within create game board
 	    
@@ -121,7 +128,7 @@ public class GridLock extends Application {
 
 	    		Pane root = new Pane();
 	        
-	        final Image titleScreen = new Image( "Title Page.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false);
+	        final Image titleScreen = new Image( "Title Page2.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false);
 	        final ImageView menuScreen_node = new ImageView();
 		    menuScreen_node.setImage(titleScreen); //set the image of the title screen
 		    menuScreen_node.setPreserveRatio(true);
@@ -215,28 +222,62 @@ public class GridLock extends Application {
 			 counter2.setTranslateY(75);
 			 counter2.setCount(c);
 			 
-		     final Button play_button  = new Button();
-		     final ImageView play_button_node = new ImageView(); 
-		      
-		     final Button score_button = new Button();
-		     final ImageView score_button_node = new ImageView(); 
+			 FileWriter writeScore = null;
+			 BufferedWriter bw = null;
+			 File file = new File(MenuBoard.fileAccess);
+			 try {
+			     if(!file.exists()) {
+			    	 	file.createNewFile();
+			     }
+				 writeScore = new FileWriter(file.getAbsoluteFile(), true);
+			     bw = new BufferedWriter(writeScore);
+			     
+			     bw.write(Difficulty + " " + "Hello" + " " + counter2.getCount() + " " + minutes + ":" + seconds + "\n");
+			     
+			     System.out.println("saved");
+			 } catch (IOException e){
+				 e.printStackTrace();
+			 }finally {
+				 try {
+					 if(bw != null)
+						 bw.close();
+					 if(writeScore != null)
+						 writeScore.close();
+				 } catch(IOException ex) {
+					 ex.printStackTrace();
+				 }
+			 }
+			 
+			 MenuButton play_button = new MenuButton("Replay", "file:src/StoneButton.png");
+			 MenuButton score_button = new MenuButton("Return Home", "file:src/StoneButton.png");
+			 
+			 play_button.removeTranslate(0);
+			 score_button.removeTranslate(0);
+			 
+//		     final Button play_button  = new Button();
+//		     final ImageView play_button_node = new ImageView(); 
+//		      
+//		     final Button score_button = new Button();
+//		     final ImageView score_button_node = new ImageView(); 
+//		     
+//		     play_button_node.setImage(replayButton); //set the image of the play button
+//		     score_button_node.setImage(homeButton); //set the image of the score button
+//		     
+//		     play_button.setGraphic(play_button_node);
+//		     play_button.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY))); //this is to make the button background transparent
+//		     play_button.setScaleShape(true);
+//		     
+//		     score_button.setGraphic(score_button_node);
+//		     score_button.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
+//		     play_button.setMaxWidth(Double.MAX_VALUE); //Ensures that both buttons are of the same size
+//		     score_button.setMaxWidth(Double.MAX_VALUE);
 		     
-		     play_button_node.setImage(replayButton); //set the image of the play button
-		     score_button_node.setImage(homeButton); //set the image of the score button
-		     
-		     play_button.setGraphic(play_button_node);
-		     play_button.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY))); //this is to make the button background transparent
-		     play_button.setScaleShape(true);
-		     
-		     score_button.setGraphic(score_button_node);
-		     score_button.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
-		     play_button.setMaxWidth(Double.MAX_VALUE); //Ensures that both buttons are of the same size
-		     score_button.setMaxWidth(Double.MAX_VALUE);
 		     
 		     
+		     play_button.setOnMouseClicked(e -> window.setScene(new Scene(createGameBoard(window), CANVAS_HEIGHT, CANVAS_WIDTH))); //replay
 		     
-		     play_button.setOnAction(e -> window.setScene(new Scene(createGameBoard(window), CANVAS_HEIGHT, CANVAS_WIDTH))); //replay
-		     score_button.setOnAction(e -> window.setScene(scene1));
+		     //returns back to the original menu screen. Does not refresh the scoreboard. Ensure that is implemented
+		     score_button.setOnMouseClicked(e -> window.setScene(scene1));
 		     /*
 		      * create the container of those buttons in a horizontal box
 		      */
@@ -245,10 +286,15 @@ public class GridLock extends Application {
 		     Insets buttonContainerPadding = new Insets(400, 1, 1, 1); //Distance from the top center down
 		     buttonContainer.setPadding(buttonContainerPadding);
 		     buttonContainer.getChildren().addAll(play_button,score_button);
-		
+		     
+		     final HBox StatDisplay = new HBox(GridLock.CANVAS_WIDTH/3);
+		     StatDisplay.setAlignment(Pos.TOP_CENTER);
+		     Insets StatContainerPadding = new Insets(250,1,1,1);
+		     StatDisplay.setPadding(StatContainerPadding);
+		     StatDisplay.getChildren().addAll(clock, counter2);
 		     GridPane root = new GridPane();
 		      
-		     root.getChildren().addAll(flashScreen_node, clock, counter2, buttonContainer); //add the title screen and button container to the stackpane
+		     root.getChildren().addAll(flashScreen_node, StatDisplay, buttonContainer); //add the title screen and button container to the stackpane
 		     
 		     return root;
 		}
@@ -539,4 +585,22 @@ public class GridLock extends Application {
 	    public static void setDifficulty(String d) {
 	    		Difficulty = d;
 	    }
+	    
+	    public AnchorPane ScoreMenu(Stage window) {
+
+	    		AnchorPane root = new AnchorPane();
+		        
+		        final Image titleScreen = new Image( "HiScoreMenu2.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false);
+		        final ImageView scoreScreen_node = new ImageView();
+			    scoreScreen_node.setImage(titleScreen); //set the image of the title screen
+			    scoreScreen_node.setPreserveRatio(true);
+		        
+			    scoreMenu = new Scoreboard(window, this);
+			    
+			    	scoreMenu.populateScores();
+			    
+			    root.getChildren().addAll(scoreScreen_node, scoreMenu);
+		     
+		     return root;
+		}
 }

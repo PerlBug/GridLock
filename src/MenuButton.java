@@ -73,4 +73,11 @@ public class MenuButton extends StackPane {
 		});
 		
 	}
+	
+	public void removeTranslate(double x) {
+		this.btn.setTranslateX(x);
+		this.text.setTranslateX(x);
+		setOnMouseEntered(e -> text.setFill(Color.BLACK));
+		setOnMouseExited(e -> text.setFill(Color.WHITE));
+	}
 }
