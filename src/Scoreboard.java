@@ -1,13 +1,11 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -30,12 +28,12 @@ public class Scoreboard extends AnchorPane {
 	public Scoreboard(Stage window, GridLock g) {
 		
 		TabPane scoreboard = new TabPane();
-		scoreboard.setPrefSize(GridLock.CANVAS_WIDTH/2, GridLock.CANVAS_WIDTH/2);
-		tableSize = GridLock.CANVAS_WIDTH/2;
-		AnchorPane.setTopAnchor(scoreboard,  200.0);
-		AnchorPane.setBottomAnchor(scoreboard, 350.0);
-		AnchorPane.setLeftAnchor(scoreboard, 100.0);
-		AnchorPane.setRightAnchor(scoreboard, 100.0);
+		scoreboard.setPrefSize(GridLock.CANVAS_WIDTH/2, GridLock.CANVAS_HEIGHT/2);
+		tableSize = GridLock.CANVAS_WIDTH-200*GridLock.widthScale;
+		AnchorPane.setTopAnchor(scoreboard,  200.0*GridLock.heightScale);
+		AnchorPane.setBottomAnchor(scoreboard, 250.0*GridLock.heightScale);
+		AnchorPane.setLeftAnchor(scoreboard, 100.0*GridLock.widthScale);
+		AnchorPane.setRightAnchor(scoreboard, 100.0*GridLock.widthScale);
 		
 		Tab easy = new Tab();
 		Tab medium = new Tab();
@@ -46,10 +44,11 @@ public class Scoreboard extends AnchorPane {
 		hard.setText("Hard");
 		
 		TableColumn<Score, String> nameE = new TableColumn<Score, String> ("Name");
-		TableColumn nameM = new TableColumn ("Name");
-		nameM.setMinWidth(tableSize/3);
-		nameM.setMaxWidth(tableSize/3);
+		TableColumn<Score, String> nameM = new TableColumn<Score, String> ("Name");
 		TableColumn<Score, String> nameH = new TableColumn<Score, String> ("Name");
+		nameE.setPrefWidth(tableSize/3);
+		nameM.setPrefWidth(tableSize/3);
+		nameH.setPrefWidth(tableSize/3);
 		
 		nameE.setCellValueFactory(
 				new PropertyValueFactory<Score, String>("name"));
@@ -60,10 +59,11 @@ public class Scoreboard extends AnchorPane {
 		
 		
 		TableColumn<Score, Integer>MovesE = new TableColumn<Score, Integer>("Moves");
-		TableColumn MovesM = new TableColumn ("Moves");
-		MovesM.setMinWidth(tableSize/3);
-		MovesM.setMaxWidth(tableSize/3);
+		TableColumn<Score, Integer> MovesM = new TableColumn<Score, Integer> ("Moves");
 		TableColumn<Score, Integer>MovesH = new TableColumn<Score, Integer>("Moves");
+		MovesE.setPrefWidth(tableSize/3);
+		MovesM.setPrefWidth(tableSize/3);
+		MovesH.setPrefWidth(tableSize/3);
 		
 		MovesE.setCellValueFactory(
 				new PropertyValueFactory<Score, Integer>("moves"));
@@ -73,10 +73,11 @@ public class Scoreboard extends AnchorPane {
 				new PropertyValueFactory<Score, Integer>("moves"));
 		
 		TableColumn<Score, String>StringE = new TableColumn<Score, String>("Time");
-		TableColumn StringM = new TableColumn ("Time");
-		StringM.setMinWidth(tableSize/3);
-		StringM.setMaxWidth(tableSize/3);
+		TableColumn<Score, String> StringM = new TableColumn<Score, String> ("Time");
 		TableColumn<Score, String>StringH = new TableColumn<Score, String>("Time");
+		StringE.setPrefWidth(tableSize/3);
+		StringM.setPrefWidth(tableSize/3);
+		StringH.setPrefWidth(tableSize/3);
 		
 		StringE.setCellValueFactory(
 				new PropertyValueFactory<Score, String>("time"));
@@ -93,9 +94,9 @@ public class Scoreboard extends AnchorPane {
 		medPane.getChildren().add(MedTab);
 		hardPane.getChildren().add(HardTab);
 		
-		easyPane.setPrefHeight(tableSize);
-		medPane.setPrefWidth(tableSize);
-		hardPane.setPrefWidth(tableSize);
+		easyPane.setMinHeight(tableSize);
+		medPane.setMinWidth(tableSize);
+		hardPane.setMinWidth(tableSize);
 		
 		
 		easy.setContent(easyPane);
@@ -147,16 +148,13 @@ public class Scoreboard extends AnchorPane {
 				
 				while(sc.hasNextLine()) {
 					String s1 = sc.nextLine();
-					String s2[] = s1.split(" ");
+					String s2[] = s1.split(" ",4);
 					if(s2[0].equals("Easy")) {
-						System.out.println(s2[0] + s2[1] + s2[2]);
-						dataE.add(new Score(s2[1], Integer.parseInt(s2[2]), s2[3]));
+						dataE.add(new Score(s2[3], Integer.parseInt(s2[1]), s2[2]));
 					} else if (s2[0].equals("Medium")) {
-						System.out.println(s2[0] + s2[1] + s2[2]);
-						dataM.add(new Score(s2[1], Integer.parseInt(s2[2]), s2[3]));
+						dataM.add(new Score(s2[3], Integer.parseInt(s2[1]), s2[2]));
 					} else if (s2[0].equals("Hard")) {
-						System.out.println(s2[0] + s2[1] + s2[2]);
-						dataH.add(new Score(s2[1], Integer.parseInt(s2[2]), s2[3]));
+						dataH.add(new Score(s2[3], Integer.parseInt(s2[1]), s2[2]));
 					}
 				}	
 				

@@ -28,7 +28,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
-import javafx.stage.Popup;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -207,9 +206,6 @@ public class GridLock extends Application {
 	    private AnchorPane exitScreen(Stage window, int seconds, int minutes, int c) {
 
 	    	 final Image titleScreen = new Image( "file:src/exitScreen2.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false); //title screen image
-		     final Image replayButton = new Image("file:src/replay.png", 100*widthScale, 100*heightScale, false, false); //the play button image
-		     final Image homeButton = new Image("file:src/home-button-round-blue.png", 100*widthScale , 100*heightScale, false, false); //the score button image		    
-
 
 		     final ImageView flashScreen_node = new ImageView();
 		     flashScreen_node.setImage(titleScreen); //set the image of the title screen
@@ -258,7 +254,7 @@ public class GridLock extends Application {
 								 writeScore = new FileWriter(file.getAbsoluteFile(), true);
 							     bw = new BufferedWriter(writeScore);
 							     
-							     bw.write(Difficulty + " " + nameEnter.getText() + " " + counter2.getCount() + " " + minutes + ":" + seconds + "\n");
+							     bw.write(Difficulty + " " + counter2.getCount() + " " + minutes + ":" + seconds + " " + nameEnter.getText() +"\n");
 							     System.out.println("Saved Name: " + nameEnter.getText());
 							 } catch (IOException er){
 								 er.printStackTrace();
@@ -273,7 +269,6 @@ public class GridLock extends Application {
 								 }
 							 }
 				    	 	}
-					nameEnter.clear();
 					
 					Stage popUp = new Stage();
                     	popUp.initModality(Modality.WINDOW_MODAL);
@@ -288,6 +283,7 @@ public class GridLock extends Application {
 					} else {
 						displayS = new Text("Saved into Hi Score. Thank you!");
 					}
+					nameEnter.clear();
 					VBox v1= new VBox(10);
 					v1.getChildren().addAll(displayS, exitB);
 					popUp.setScene(new Scene(v1));
