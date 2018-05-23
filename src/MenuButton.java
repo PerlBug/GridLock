@@ -19,15 +19,31 @@ public class MenuButton extends StackPane {
 	
 	private Text text;
 	private ImageView btn;
+	private final double BUTTON_HEIGHT = 35;
+	private final double BUTTON_WIDTH = 150;
+	
+	private double heightRel; //height and width of the menu button relative to the canvas size
+	private double widthRel;
 	
 	
+	public double getHeightRel() {
+		return heightRel;
+	}
+
+
+	public double getWidthRel() {
+		return widthRel;
+	}
+
+
 	public MenuButton(String name, String img) {
 		text = new Text(name);
 		text.setFont(text.getFont().font(20));
 		text.setFill(Color.WHITE);
-		
+		heightRel = GridLock.CANVAS_HEIGHT/16;
+		widthRel = GridLock.CANVAS_WIDTH/3;
 		System.out.println("Runs here");
-		Image btnImg = new Image(img, 150, 50, false, false);
+		Image btnImg = new Image(img, widthRel, heightRel, false, false);
 		btn = new ImageView(btnImg);
 		btn.setEffect(new Glow());
 		
@@ -56,5 +72,12 @@ public class MenuButton extends StackPane {
 			setEffect(null);
 		});
 		
+	}
+	
+	public void removeTranslate(double x) {
+		this.btn.setTranslateX(x);
+		this.text.setTranslateX(x);
+		setOnMouseEntered(e -> text.setFill(Color.BLACK));
+		setOnMouseExited(e -> text.setFill(Color.WHITE));
 	}
 }

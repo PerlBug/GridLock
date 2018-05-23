@@ -15,9 +15,13 @@ public class TimerPane extends StackPane implements Runnable {
 	private int minutes;
 	private Timer timer;
 	private boolean keep_running;
+	public static final double HEIGHT = 120;
+	public static final double WIDTH = 120;
+
 	
 	public TimerPane (String imageurl) {
-		Image imgPre = new Image(imageurl, 120, 120, false, false);
+		
+		Image imgPre = new Image(imageurl, WIDTH, HEIGHT, false, false);
 		ImageView img = new ImageView(imgPre);
 		this.seconds = 0;
 		this.minutes = 0;

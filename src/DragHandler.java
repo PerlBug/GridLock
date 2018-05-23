@@ -3,42 +3,55 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 /**
  *  Handler class for when the user attempts to drag a sprite.
- *  Prevents dragging motions that make the sprite temporarily go off screen then
+ *  Prevents dragging motions that make the sprite temporarily go off screen or overlap another sprite then
  *   bounce back to the original
- *  valid position (where the drag request originated from). 
- *  The sprite cannot be dragged off screen now.
- *  
- * 
+ *  valid position (where the drag request originated from).  
  *
  */
 public class DragHandler implements EventHandler<MouseEvent>{
 	
-	private Grid grid; //current grid
+	private Grid grid; 
 	private Sprite sprite;
+	
+	
+	/**
+	 * Create a new DragHandler object
+	 * @param g is the grid for the current game
+	 * @param s is the sprite being dragged.
+	 */
 	public DragHandler(Grid g, Sprite s) {
 		this.grid=g;
 		this.sprite=s;
 	}
 
+	
+	/**
+	 * Controls the range where a sprite can be dragged across the screen.
+	 * In particular,the sprite cannot be dragged off the grid boundary, in the wrong direction,
+	 *  or partially/fully over another sprite.
+	 * 
+	 */
 	@Override
 	public void handle(MouseEvent e) {
 		//have to add the new offset...
-		double leftOffset = (GridLock.CANVAS_WIDTH - (GridLock.WIDTH*GridLock.SQUARE_SIZE))/2;
+		double leftOffset = (GridLock.CANVAS_WIDTH - (GridLock.WIDTH*GridLock.SQUARE_SIZE))/2; 
 		double newX= e.getSceneX()- leftOffset;
 		double newY=e.getSceneY();//- GridLock.CANVAS_HEIGHT*150/800+leftOffset;
-		System.out.println("scene x is  " +(e.getSceneX()-20));
-		double Xcoord=sprite.getXcoord();
+		
+		//The coordinates of the sprite within the grid
+		double Xcoord=sprite.getXcoord(); 
 		double Ycoord=sprite.getYcoord();
+		//The coordinates of where the mouse clicked before dragging the sprite
 		double mouseX=sprite.getMouseX();
 		double mouseY=sprite.getMouseY();
 
 		
-		
+	
     	if(sprite.getDirection()==Sprite.Direction.HORIZONTAL) {
     		
-    			double dist= newX-mouseX +Xcoord; //the distance we want to travel, with no restrctions
+    			double dist= newX-mouseX +Xcoord; //the distance we want to travel, with no restrictions
     			
-    			//maximum distance the sprite can move to the right
+    			//Maximum distance the sprite can move to the right
     			//(note that the coordinates of the sprite are for the first grid square
     			// on the left side of the sprite)
     			//so max right distance is when the first grid square is at x=2 or x=3 , and the back end of the
@@ -49,23 +62,22 @@ public class DragHandler implements EventHandler<MouseEvent>{
     			//determine if the sprite is moving forwards (to the right) or backwards
     			boolean forwards=false; 
     			
-    			//sprite is moving forwards if we want to move to a grid square whose
-    			//x coord is greater than where we currently are.
+    			//sprite is moving forwards if we want to move to a grid square (toGrid(dist)) whose
+    			//x coord is greater than where we currently are (toGrid(Xcoord))
     			if( (int) grid.toGrid(dist) >= (int)grid.toGrid(Xcoord)) {
     				forwards = true;
     			} 
     			
-    			//calculate the furthest x distance we can travel before having to stop
-    			//due to an obstacle 
-    			//the distance is different depending on if moving forward or back.
+    			//calculate the farthest x distance/position we can travel before having to stop
+    			//due to an obstacle
+    			//note that the furthestX distance/position is different depending on if we are moving forward or back.
     			double furthestX= GridLock.SQUARE_SIZE*(grid.furthestMoveXdirection(sprite, (int)grid.toGrid(Xcoord),
     					(int)grid.toGrid(Ycoord), forwards));
     			
-    			//if we are travelling forwards and want to move beyond the furthestX,
+    			//if we are traveling forwards and want to move beyond the furthestX,
     			//this is not valid(cannot drag over an obstacle).
     			
     			if(forwards && (dist > furthestX)) {
-    				//System.out.println("in if 1, furthest x is "+furthestX +"dist is "+ dist);
     				sprite.relocate(furthestX, Ycoord);
     				
     			//if moving backwards and want to move beyond an obstacle, 
@@ -74,7 +86,7 @@ public class DragHandler implements EventHandler<MouseEvent>{
     			
     				sprite.relocate(furthestX, Ycoord);
     			
-    			//if the distance is out of the grid bounds to the right, drag is blocked at the boundry
+    			//if the distance is out of the grid bounds to the right, drag is blocked at the boundary
     			}else if(dist >maxRightDist) {
     				sprite.relocate(maxRightDist, Ycoord); 
     				
@@ -94,14 +106,14 @@ public class DragHandler implements EventHandler<MouseEvent>{
         		
         	
         		boolean upwards=true; // is sprite moving up or down?
+        		//moving down if the y-coord/vertical position we want to travel to is greater than where we originated from.
+        		// (y coords get bigger going downwards)
         		if( (int) grid.toGrid(dist) >= (int)grid.toGrid(Ycoord)) {
-    				//y coords get bigger going downwards
+    			
     				upwards = false;
     			}
-        	//	System.out.println("MOVING UPWARDS= "+upwards);
-        		
-        		
-        		//find the furthest dist sprite can travel upwards or downwards before collision
+        
+        		//find the farthest distance the sprite can travel upwards or downwards before collision
         		double furthestY= GridLock.SQUARE_SIZE*(grid.furthestMoveYdirection(sprite, (int)grid.toGrid(Xcoord),
     					(int)grid.toGrid(Ycoord), upwards));
         		

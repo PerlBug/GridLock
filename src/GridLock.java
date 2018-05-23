@@ -1,7 +1,16 @@
-//21/5/2018
+
+
 import java.awt.Point;
 
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -12,8 +21,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -23,6 +35,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  * Main class for the GridLock application
@@ -42,6 +55,7 @@ public class GridLock extends Application {
 	    
 	    private Grid grid;
 	    private MenuBoard gameMenu;
+	    private Scoreboard scoreMenu;
 	    private Group squareGroup = new Group(); //Used within Create Game Board
 	    private Group spriteGroup = new Group(); // Used within create game board
 	    
@@ -50,16 +64,13 @@ public class GridLock extends Application {
 	     */
 	    private static String Difficulty = "Medium";
 
-
-
-
 	    public static Runnable liveClock;
 
 	    public static Counter counter;
 	    public static TimerPane clock; 
 	    
 	    
-	    Scene scene1, scene, scene2;
+	    Scene scene1, scene, scene2, instructionScene;
 	    Timer t;
 	    
 	    public static void main(String[] args) {
@@ -69,10 +80,12 @@ public class GridLock extends Application {
 	    @Override
 	    public void start(Stage primaryStage) {
 	    	t = new Timer();	
-	        scene = new Scene(createGameBoard(primaryStage), CANVAS_HEIGHT, CANVAS_WIDTH);
+
+	        //scene = new Scene(createGameBoard(primaryStage), CANVAS_HEIGHT, CANVAS_WIDTH);
+
 	        scene1 = new Scene(startMenu(primaryStage), CANVAS_HEIGHT, CANVAS_WIDTH);
 	        //scene2 = new Scene(exitScreen(primaryStage), CANVAS_HEIGHT, CANVAS_WIDTH);
-	        
+	        instructionScene = new Scene(instructions(primaryStage), CANVAS_HEIGHT, CANVAS_WIDTH);
 	        primaryStage.setTitle("Gridlock");
 	        primaryStage.setScene(scene1);
 
@@ -97,6 +110,14 @@ public class GridLock extends Application {
 	        primaryStage.resizableProperty().setValue(Boolean.FALSE);
 
 	        
+	        //makes sure closing window shuts down application
+	        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+	            @Override
+	            public void handle(WindowEvent t) {
+	                Platform.exit();
+	                System.exit(0);
+	            }
+	        });
 	        
 	        primaryStage.show();
 	        
@@ -111,7 +132,7 @@ public class GridLock extends Application {
 
 	    		Pane root = new Pane();
 	        
-	        final Image titleScreen = new Image( "Title Page.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false);
+	        final Image titleScreen = new Image( "Title Page2.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false);
 	        final ImageView menuScreen_node = new ImageView();
 		    menuScreen_node.setImage(titleScreen); //set the image of the title screen
 		    menuScreen_node.setPreserveRatio(true);
@@ -123,21 +144,76 @@ public class GridLock extends Application {
 		     return root;
 		}
 	    /**
-	     * Returns the GameBoard Scene
+	     * Returns the GameBoard Scene by making a new one
 	     * @return
 	     */
-	    public Scene getGame() {
+	    public Scene getGame(Stage window) {
+	    		//creates new game scene and returns
+	    	    scene = new Scene(createGameBoard(window), CANVAS_HEIGHT, CANVAS_WIDTH);
 	    		return this.scene;
 	    }
 	    
+	    /**
+	     * Returns the Instructions scene
+	     * @param window
+	     * @return
+	     */
+	    public Scene getInstruction(Stage window) {
+	    	return this.instructionScene;
+	    }
+	    
+	    /**
+	     * Creates a scene with the instructions for the game
+	     * @param window
+	     * @return
+	     */
+	    private GridPane instructions(Stage window) {
+	    	final Image background = new Image( "file:src/instructions_scene.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false);
+	    	
+	    	final ImageView flashScreen_node = new ImageView();
+		    flashScreen_node.setImage(background); //set the image of the title screen
+		    flashScreen_node.setPreserveRatio(true);
+		    
+		    final Image menuImage = new Image("file:src/home-button-round-blue.png", 100, 100, false, false);
+		    final Button menuButton  = new Button();
+		    final ImageView menuButtonNode = new ImageView(); 
+		    menuButtonNode.setImage(menuImage);
+		    
+		    
+		    menuButton.setGraphic(menuButtonNode);
+		    menuButton.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY))); //this is to make the button background transparent
+		    menuButton.setScaleShape(true);
+		    menuButton.setMaxWidth(Double.MAX_VALUE);
+			
+			menuButton.setOnAction(e -> window.setScene(scene1)); //Go back to the main menu when clicked
+		    final HBox buttonContainer = new HBox(1);
+		    buttonContainer.setAlignment(Pos.TOP_RIGHT);
+		    Insets buttonContainerPadding = new Insets(400, 1, 1, 1); //Distance from the top center down
+		    buttonContainer.setPadding(buttonContainerPadding);
+		    buttonContainer.getChildren().addAll(menuButton);
+		    
+	    	GridPane root = new GridPane(); 
+		    root.getChildren().addAll(flashScreen_node, buttonContainer);
+		    return root;
+	    }
+	    
+	    
+	    /**
+	     * Method which creates the exit scene and displays number of moves and how long game took
+	     * @param window
+	     * @param seconds
+	     * @param minutes
+	     * @param c
+	     * @return
+	     */
 	    private GridPane exitScreen(Stage window, int seconds, int minutes, int c) {
 
 	    	 final Image titleScreen = new Image( "file:src/exitscreen.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false); //title screen image
-		     final Image replayButton = new Image("file:src/replay.png", 150, 100, false, false); //the play button image
-		     final Image homeButton = new Image("file:src/home-button-round-blue.png", 150, 100, false, false); //the score button image		    
+		     final Image replayButton = new Image("file:src/replay.png", 100, 100, false, false); //the play button image
+		     final Image homeButton = new Image("file:src/home-button-round-blue.png", 100, 100, false, false); //the score button image		    
 
 
-	     final ImageView flashScreen_node = new ImageView();
+		     final ImageView flashScreen_node = new ImageView();
 		     flashScreen_node.setImage(titleScreen); //set the image of the title screen
 		     flashScreen_node.setPreserveRatio(true);
 		     
@@ -149,28 +225,64 @@ public class GridLock extends Application {
 			 counter2.setTranslateX(-80);
 			 counter2.setTranslateY(75);
 			 counter2.setCount(c);
+			
 			 
-		     final Button play_button  = new Button();
-		     final ImageView play_button_node = new ImageView(); 
-		      
-		     final Button score_button = new Button();
-		     final ImageView score_button_node = new ImageView(); 
+			 FileWriter writeScore = null;
+			 BufferedWriter bw = null;
+			 File file = new File(MenuBoard.fileAccess);
+			 try {
+			     if(!file.exists()) {
+			    	 	file.createNewFile();
+			     }
+				 writeScore = new FileWriter(file.getAbsoluteFile(), true);
+			     bw = new BufferedWriter(writeScore);
+			     
+			     bw.write(Difficulty + " " + "Hello" + " " + counter2.getCount() + " " + minutes + ":" + seconds + "\n");
+			     
+			     System.out.println("saved");
+			 } catch (IOException e){
+				 e.printStackTrace();
+			 }finally {
+				 try {
+					 if(bw != null)
+						 bw.close();
+					 if(writeScore != null)
+						 writeScore.close();
+				 } catch(IOException ex) {
+					 ex.printStackTrace();
+				 }
+			 }
+			 
+			 MenuButton play_button = new MenuButton("Replay", "file:src/StoneButton.png");
+			 MenuButton score_button = new MenuButton("Return Home", "file:src/StoneButton.png");
+			 
+			 play_button.removeTranslate(0);
+			 score_button.removeTranslate(0);
+			 
+//		     final Button play_button  = new Button();
+//		     final ImageView play_button_node = new ImageView(); 
+//		      
+//		     final Button score_button = new Button();
+//		     final ImageView score_button_node = new ImageView(); 
+//		     
+//		     play_button_node.setImage(replayButton); //set the image of the play button
+//		     score_button_node.setImage(homeButton); //set the image of the score button
+//		     
+//		     play_button.setGraphic(play_button_node);
+//		     play_button.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY))); //this is to make the button background transparent
+//		     play_button.setScaleShape(true);
+//		     
+//		     score_button.setGraphic(score_button_node);
+//		     score_button.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
+//		     play_button.setMaxWidth(Double.MAX_VALUE); //Ensures that both buttons are of the same size
+//		     score_button.setMaxWidth(Double.MAX_VALUE);
 		     
-		     play_button_node.setImage(replayButton); //set the image of the play button
-		     score_button_node.setImage(homeButton); //set the image of the score button
-		     
-		     play_button.setGraphic(play_button_node);
-		     play_button.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY))); //this is to make the button background transparent
-		     play_button.setScaleShape(true);
-		     
-		     score_button.setGraphic(score_button_node);
-		     score_button.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
-		     play_button.setMaxWidth(Double.MAX_VALUE); //Ensures that both buttons are of the same size
-		     score_button.setMaxWidth(Double.MAX_VALUE);
 		     
 		     
-		     play_button.setOnAction(e -> window.setScene(scene));
-		     score_button.setOnAction(e -> window.setScene(scene1));
+		     play_button.setOnMouseClicked(e -> window.setScene(new Scene(createGameBoard(window), CANVAS_HEIGHT, CANVAS_WIDTH))); //replay
+		     
+		     //returns back to the original menu screen. Does not refresh the scoreboard. Ensure that is implemented
+		     score_button.setOnMouseClicked(e -> window.setScene(scene1));
 		     /*
 		      * create the container of those buttons in a horizontal box
 		      */
@@ -179,13 +291,20 @@ public class GridLock extends Application {
 		     Insets buttonContainerPadding = new Insets(400, 1, 1, 1); //Distance from the top center down
 		     buttonContainer.setPadding(buttonContainerPadding);
 		     buttonContainer.getChildren().addAll(play_button,score_button);
-		
+		     
+		     final HBox StatDisplay = new HBox(GridLock.CANVAS_WIDTH/3);
+		     StatDisplay.setAlignment(Pos.TOP_CENTER);
+		     Insets StatContainerPadding = new Insets(250,1,1,1);
+		     StatDisplay.setPadding(StatContainerPadding);
+		     StatDisplay.getChildren().addAll(clock, counter2);
 		     GridPane root = new GridPane();
 		      
-		     root.getChildren().addAll(flashScreen_node, clock, counter2, buttonContainer); //add the title screen and button container to the stackpane
+		     root.getChildren().addAll(flashScreen_node, StatDisplay, buttonContainer); //add the title screen and button container to the stackpane
 		     
 		     return root;
 		}
+	    
+	    
 	    
 	    private Parent createGameBoard(Stage window) {
 	    	//ALL RESET LOGIC IS HERE
@@ -201,26 +320,17 @@ public class GridLock extends Application {
 		    gameScreen_node.setPreserveRatio(true);
 		    
 		    counter = new Counter("CounterImg.png");
-		    counter.setTranslateX(20);
-		    counter.setTranslateY(20);
+		    counter.setTranslateX(0);
+		    counter.setTranslateY(0);
 		    
 		    		    
 		    liveClock = new TimerPane("CounterImg.png");
 		    Thread t1 = new Thread(liveClock);
 		    t1.start();
 		    
-		    ((TimerPane) liveClock).setTranslateX(300);
-		    ((TimerPane) liveClock).setTranslateY(20);
+		    ((TimerPane) liveClock).setTranslateX(CANVAS_WIDTH-TimerPane.WIDTH);
+		    ((TimerPane) liveClock).setTranslateY(0);
 		    
-		    /*
-		    clock = new TimerPane("CounterImg.png");
-			clock.setTranslateX(80);
-			clock.setTranslateY(20);
-			double finishedTime = t.getTimeFromStart();
-			int seconds = t.getSeconds(finishedTime);
-			int minutes = t.getMinutes(finishedTime);
-			clock.printLabel(seconds, minutes);
-	        */
 	        grid=new Grid();
 	        squareGroup.getChildren().addAll(grid.getListOfSquares());
 	        
@@ -233,6 +343,21 @@ public class GridLock extends Application {
 	        spriteGroup.setLayoutX(left_offset);
 	        spriteGroup.setLayoutY(CANVAS_HEIGHT*150/800+left_offset);
 	        
+	    
+		    final Image menuImage = new Image("file:src/home-button-round-blue.png", 100, 100, false, false);
+		    final Button menuButton  = new Button();
+		    final ImageView menuButtonNode = new ImageView(); 
+		    menuButtonNode.setImage(menuImage);
+		    menuButton.setGraphic(menuButtonNode);
+		    menuButton.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY))); //this is to make the button background transparent
+		    menuButton.setScaleShape(true);
+		    menuButton.setMaxWidth(Double.MAX_VALUE);
+		    menuButton.setOnAction(e -> window.setScene(scene1)); //Go back to the main menu when clicked
+		    final HBox buttonContainer = new HBox(1);
+		    buttonContainer.setAlignment(Pos.CENTER);
+		    Insets buttonContainerPadding = new Insets(1, 1, 1, 160); //Distance from the top center down
+		    buttonContainer.setPadding(buttonContainerPadding);
+		    buttonContainer.getChildren().addAll(menuButton);
 	        
 	        //NOTE: vertical sprites cannot start past (X,3) if a truck or (X,4) if a car
 	        //And horizontal sprites cannot start past (3,Y) if truck or (4,Y) if a car
@@ -269,8 +394,8 @@ public class GridLock extends Application {
             		spriteGroup.getChildren().add(v31);
             		Sprite v41= makeSprite(Sprite.Direction.VERTICAL,5,0,TRUCK_SIZE, "file:sprites/gurgle.png");
             		spriteGroup.getChildren().add(v41);
-	    			UserCar redCar1 = makeUserCar(Sprite.Direction.HORIZONTAL,CAR_SIZE, "file:sprites/nemo.png", window);
-	    			spriteGroup.getChildren().add((Sprite)redCar1);
+	    		UserCar redCar1 = makeUserCar(Sprite.Direction.HORIZONTAL,CAR_SIZE, "file:sprites/nemo.png", window);
+	    		spriteGroup.getChildren().add((Sprite)redCar1);
 	    		break;
     		case 2: Sprite v12= makeSprite(Sprite.Direction.VERTICAL,1,3,CAR_SIZE, "file:sprites/gurgle.png");
     			spriteGroup.getChildren().add(v12); 
@@ -294,11 +419,11 @@ public class GridLock extends Application {
 		    	spriteGroup.getChildren().add((Sprite)redCar2);
 		    	break; 
     		case 3: Sprite v13= makeSprite(Sprite.Direction.VERTICAL,1,3,CAR_SIZE, "file:sprites/gurgle.png");
-    				spriteGroup.getChildren().add(v13); 
-    				Sprite h13= makeSprite(Sprite.Direction.HORIZONTAL,1,1,CAR_SIZE,"file:sprites/dory.png");
-    				spriteGroup.getChildren().add(h13);
-    				Sprite h23= makeSprite(Sprite.Direction.HORIZONTAL,3,3,TRUCK_SIZE, "file:sprites/whale.png");
-    				spriteGroup.getChildren().add(h23);
+    			spriteGroup.getChildren().add(v13); 
+    			Sprite h13= makeSprite(Sprite.Direction.HORIZONTAL,1,1,CAR_SIZE,"file:sprites/dory.png");
+    			spriteGroup.getChildren().add(h13);
+    			Sprite h23= makeSprite(Sprite.Direction.HORIZONTAL,3,3,TRUCK_SIZE, "file:sprites/whale.png");
+    			spriteGroup.getChildren().add(h23);
 		    	Sprite v23= makeSprite(Sprite.Direction.VERTICAL,4,0,TRUCK_SIZE, "file:sprites/gurgle.png");
 		    	spriteGroup.getChildren().add(v23);
 		    	Sprite v33= makeSprite(Sprite.Direction.VERTICAL,5,0,TRUCK_SIZE, "file:sprites/gurgle.png");
@@ -336,21 +461,12 @@ public class GridLock extends Application {
             
        
             
-            root.getChildren().addAll(gameScreen_node, counter, ((TimerPane) liveClock), squareGroup, spriteGroup);
+            root.getChildren().addAll(gameScreen_node, buttonContainer, counter, ((TimerPane) liveClock), squareGroup, spriteGroup);
             root.setStyle("-fx-border-color: black");
             
             
 	        return root;
 	    }
-	    
-	    /**
-	     * ArrayList to hold the previous intial moves
-	     */
-	private Point initPosition(Sprite v) {
-		return null;
-	}
-
-    	/**
     	 * Convert pixel/position on the main panel to a grid square index
     	 * @param pixel is the coordinate of an object on the primary stage
     	 * @return the corresponding grid square coordinate the pixel is in.
@@ -387,13 +503,14 @@ public class GridLock extends Application {
 	
 		            result = grid.checkMoveToGrid(s,xCoord,yCoord, newX, newY);
 		            if(result==false) {   	
-		                    s.stopMove();
+		                   s.stopMove();
 		            }else {
 	                   grid.removeSpriteOnGrid(s, xCoord, yCoord); 
 	                   s.move(newX, newY); 
 	                   grid.setSpriteOnGrid(s,newX, newY);
 	                 	                  
 		            }
+
 	               
 	        });
 	        	
@@ -430,17 +547,23 @@ public class GridLock extends Application {
 						int seconds = t.getSeconds(finishedTime);
 						int minutes = t.getMinutes(finishedTime);
 						System.out.println("Time taken " + minutes + " Minutes and " + seconds + " Seconds");
+
 						System.out.println("Moves taken " + grid.getMovectr());
 						int old_count=grid.getMovectr(); //get the last move count to display
 						//at end of game.
-						
-						//Reset the game screen for the next round
-						scene = new Scene(createGameBoard(window), CANVAS_HEIGHT, CANVAS_WIDTH);
 						scene2 = new Scene(exitScreen(window, seconds, minutes, old_count), CANVAS_HEIGHT, CANVAS_WIDTH);
-						grid.resetMoveCtr(); //set to 0 again
+						
+						
+
+						
+					
 						((TimerPane) liveClock).set_keep_timing(false);
 						
 						window.setScene(scene2); //Goes to exit screen.
+						
+						//Reset the game screen for the next round
+						//scene = new Scene(createGameBoard(window), CANVAS_HEIGHT, CANVAS_WIDTH);
+						
                    } else {
                 	   
                 		System.out.println("move ctr is " + grid.getMovectr());
@@ -456,4 +579,22 @@ public class GridLock extends Application {
 	    public static void setDifficulty(String d) {
 	    		Difficulty = d;
 	    }
+	    
+	    public AnchorPane ScoreMenu(Stage window) {
+
+	    		AnchorPane root = new AnchorPane();
+		        
+		        final Image titleScreen = new Image( "HiScoreMenu2.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false);
+		        final ImageView scoreScreen_node = new ImageView();
+			    scoreScreen_node.setImage(titleScreen); //set the image of the title screen
+			    scoreScreen_node.setPreserveRatio(true);
+		        
+			    scoreMenu = new Scoreboard(window, this);
+			    
+			    	scoreMenu.populateScores();
+			    
+			    root.getChildren().addAll(scoreScreen_node, scoreMenu);
+		     
+		     return root;
+		}
 }
