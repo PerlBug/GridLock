@@ -1,13 +1,8 @@
-
-
 import java.awt.Point;
-
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -467,6 +462,7 @@ public class GridLock extends Application {
             
 	        return root;
 	    }
+	    /**
     	 * Convert pixel/position on the main panel to a grid square index
     	 * @param pixel is the coordinate of an object on the primary stage
     	 * @return the corresponding grid square coordinate the pixel is in.
