@@ -15,8 +15,8 @@ public class TimerPane extends StackPane implements Runnable {
 	private int minutes;
 	private Timer timer;
 	private boolean keep_running;
-	public static final double HEIGHT = 120;
-	public static final double WIDTH = 120;
+	public static final double HEIGHT = GridLock.CANVAS_WIDTH/5;
+	public static final double WIDTH = GridLock.CANVAS_WIDTH/5;
 
 	
 	public TimerPane (String imageurl) {

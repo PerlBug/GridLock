@@ -12,9 +12,9 @@ import javafx.scene.text.Text;
 public class Counter extends StackPane {
 	private Text countShow = new Text();
 	private int count;
-	
+	private double size = GridLock.CANVAS_WIDTH/5;
 	public Counter(String url) {
-		Image imgPre = new Image(url, 120, 120, false, false);
+		Image imgPre = new Image(url, size, size, false, false);
 		ImageView img = new ImageView(imgPre);
 		this.count = 0;
 		

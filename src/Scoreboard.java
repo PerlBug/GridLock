@@ -24,12 +24,14 @@ public class Scoreboard extends AnchorPane {
 	ObservableList<Score> dataE = FXCollections.observableArrayList();
 	ObservableList<Score> dataM = FXCollections.observableArrayList();
 	ObservableList<Score> dataH = FXCollections.observableArrayList();
+	private double tableSize;
 	
 	@SuppressWarnings("unchecked")
 	public Scoreboard(Stage window, GridLock g) {
 		
 		TabPane scoreboard = new TabPane();
-		scoreboard.setPrefSize(320, 320);
+		scoreboard.setPrefSize(GridLock.CANVAS_WIDTH/2, GridLock.CANVAS_WIDTH/2);
+		tableSize = GridLock.CANVAS_WIDTH/2;
 		AnchorPane.setTopAnchor(scoreboard,  200.0);
 		AnchorPane.setBottomAnchor(scoreboard, 350.0);
 		AnchorPane.setLeftAnchor(scoreboard, 100.0);
@@ -45,6 +47,8 @@ public class Scoreboard extends AnchorPane {
 		
 		TableColumn<Score, String> nameE = new TableColumn<Score, String> ("Name");
 		TableColumn nameM = new TableColumn ("Name");
+		nameM.setMinWidth(tableSize/3);
+		nameM.setMaxWidth(tableSize/3);
 		TableColumn<Score, String> nameH = new TableColumn<Score, String> ("Name");
 		
 		nameE.setCellValueFactory(
@@ -57,6 +61,8 @@ public class Scoreboard extends AnchorPane {
 		
 		TableColumn<Score, Integer>MovesE = new TableColumn<Score, Integer>("Moves");
 		TableColumn MovesM = new TableColumn ("Moves");
+		MovesM.setMinWidth(tableSize/3);
+		MovesM.setMaxWidth(tableSize/3);
 		TableColumn<Score, Integer>MovesH = new TableColumn<Score, Integer>("Moves");
 		
 		MovesE.setCellValueFactory(
@@ -68,6 +74,8 @@ public class Scoreboard extends AnchorPane {
 		
 		TableColumn<Score, String>StringE = new TableColumn<Score, String>("Time");
 		TableColumn StringM = new TableColumn ("Time");
+		StringM.setMinWidth(tableSize/3);
+		StringM.setMaxWidth(tableSize/3);
 		TableColumn<Score, String>StringH = new TableColumn<Score, String>("Time");
 		
 		StringE.setCellValueFactory(
@@ -85,13 +93,22 @@ public class Scoreboard extends AnchorPane {
 		medPane.getChildren().add(MedTab);
 		hardPane.getChildren().add(HardTab);
 		
+		easyPane.setPrefHeight(tableSize);
+		medPane.setPrefWidth(tableSize);
+		hardPane.setPrefWidth(tableSize);
+		
+		
 		easy.setContent(easyPane);
 		medium.setContent(medPane);
 		hard.setContent(hardPane);
 		
 		scoreboard.getTabs().addAll(easy, medium, hard);
 		
-		Button back = new Button("Back");
+		MenuButton back = new MenuButton("Back", "StoneButton.png");
+		back.setScaleX(0.5);
+		back.setScaleY(0.5);
+		back.setLayoutX(GridLock.CANVAS_WIDTH * 0.67);
+		back.setLayoutY(GridLock.CANVAS_HEIGHT * 0.8);
 		
 		back.setOnMouseClicked(e -> window.setScene(new Scene(g.startMenu(window), GridLock.CANVAS_HEIGHT, GridLock.CANVAS_WIDTH)));
 		
@@ -101,6 +118,12 @@ public class Scoreboard extends AnchorPane {
 			MedTab.setItems(dataM);
 			HardTab.setItems(dataH);
 		}
+		
+		EasyTab.setPrefSize(tableSize, tableSize);
+		MedTab.setPrefSize(tableSize, tableSize);
+		HardTab.setPrefSize(tableSize, tableSize);
+		
+		
 		
 		EasyTab.getColumns().addAll(nameE, MovesE, StringE);
 		MedTab.getColumns().addAll(nameM, MovesM, StringM);

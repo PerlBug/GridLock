@@ -11,14 +11,10 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Glow;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -28,7 +24,11 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Popup;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -43,6 +43,8 @@ public class GridLock extends Application {
 	 	static Rectangle2D primaryStagebounds = Screen.getPrimary().getVisualBounds();
 	 	public static final double CANVAS_HEIGHT = primaryStagebounds.getHeight()*0.8;
 	 	public static final double CANVAS_WIDTH = CANVAS_HEIGHT * 650/800; //Sets the proportion of the game to satisfy all screen sizes
+	 	public static final double heightScale = CANVAS_HEIGHT/800;
+	 	public static final double widthScale = CANVAS_WIDTH/650;
 	    public static final double SQUARE_SIZE = (double)CANVAS_HEIGHT/8; //Each square should be equivalent 100/800px height
 	    public static final int WIDTH = 6;
 	    public static final int HEIGHT = 6;
@@ -202,11 +204,11 @@ public class GridLock extends Application {
 	     * @param c
 	     * @return
 	     */
-	    private GridPane exitScreen(Stage window, int seconds, int minutes, int c) {
+	    private AnchorPane exitScreen(Stage window, int seconds, int minutes, int c) {
 
-	    	 final Image titleScreen = new Image( "file:src/exitscreen.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false); //title screen image
-		     final Image replayButton = new Image("file:src/replay.png", 100, 100, false, false); //the play button image
-		     final Image homeButton = new Image("file:src/home-button-round-blue.png", 100, 100, false, false); //the score button image		    
+	    	 final Image titleScreen = new Image( "file:src/exitScreen2.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false); //title screen image
+		     final Image replayButton = new Image("file:src/replay.png", 100*widthScale, 100*heightScale, false, false); //the play button image
+		     final Image homeButton = new Image("file:src/home-button-round-blue.png", 100*widthScale , 100*heightScale, false, false); //the score button image		    
 
 
 		     final ImageView flashScreen_node = new ImageView();
@@ -222,79 +224,101 @@ public class GridLock extends Application {
 			 counter2.setTranslateY(75);
 			 counter2.setCount(c);
 			 
-			 FileWriter writeScore = null;
-			 BufferedWriter bw = null;
-			 File file = new File(MenuBoard.fileAccess);
-			 try {
-			     if(!file.exists()) {
-			    	 	file.createNewFile();
-			     }
-				 writeScore = new FileWriter(file.getAbsoluteFile(), true);
-			     bw = new BufferedWriter(writeScore);
-			     
-			     bw.write(Difficulty + " " + "Hello" + " " + counter2.getCount() + " " + minutes + ":" + seconds + "\n");
-			     
-			     System.out.println("saved");
-			 } catch (IOException e){
-				 e.printStackTrace();
-			 }finally {
-				 try {
-					 if(bw != null)
-						 bw.close();
-					 if(writeScore != null)
-						 writeScore.close();
-				 } catch(IOException ex) {
-					 ex.printStackTrace();
-				 }
-			 }
-			 
 			 MenuButton play_button = new MenuButton("Replay", "file:src/StoneButton.png");
 			 MenuButton score_button = new MenuButton("Return Home", "file:src/StoneButton.png");
+			 play_button.setScaleX(0.8);
+			 play_button.setScaleY(0.9);
+			 score_button.setScaleX(0.8);
+			 score_button.setScaleY(0.9);
 			 
 			 play_button.removeTranslate(0);
 			 score_button.removeTranslate(0);
 			 
-//		     final Button play_button  = new Button();
-//		     final ImageView play_button_node = new ImageView(); 
-//		      
-//		     final Button score_button = new Button();
-//		     final ImageView score_button_node = new ImageView(); 
-//		     
-//		     play_button_node.setImage(replayButton); //set the image of the play button
-//		     score_button_node.setImage(homeButton); //set the image of the score button
-//		     
-//		     play_button.setGraphic(play_button_node);
-//		     play_button.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY))); //this is to make the button background transparent
-//		     play_button.setScaleShape(true);
-//		     
-//		     score_button.setGraphic(score_button_node);
-//		     score_button.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
-//		     play_button.setMaxWidth(Double.MAX_VALUE); //Ensures that both buttons are of the same size
-//		     score_button.setMaxWidth(Double.MAX_VALUE);
-		     
-		     
+			 TextField nameEnter = new TextField();
+			 nameEnter.setMinWidth(CANVAS_WIDTH/2*widthScale);
+			 nameEnter.setMinHeight(30*heightScale);
+			 nameEnter.setOpacity(80);
+			 
+			 MenuButton submit = new MenuButton("", "file:src/envelopeButton.png", 50*widthScale, 40*heightScale);
 		     
 		     play_button.setOnMouseClicked(e -> window.setScene(new Scene(createGameBoard(window), CANVAS_HEIGHT, CANVAS_WIDTH))); //replay
 		     
 		     //returns back to the original menu screen. Does not refresh the scoreboard. Ensure that is implemented
 		     score_button.setOnMouseClicked(e -> window.setScene(scene1));
+		     
+			 submit.setOnMouseClicked(e -> {
+			    	 	if(!nameEnter.getText().trim().isEmpty()) {
+					    	 FileWriter writeScore = null;
+							 BufferedWriter bw = null;
+							 File file = new File(MenuBoard.fileAccess);
+							 try {
+							     if(!file.exists()) {
+							    	 	file.createNewFile();
+							     }
+								 writeScore = new FileWriter(file.getAbsoluteFile(), true);
+							     bw = new BufferedWriter(writeScore);
+							     
+							     bw.write(Difficulty + " " + nameEnter.getText() + " " + counter2.getCount() + " " + minutes + ":" + seconds + "\n");
+							     System.out.println("Saved Name: " + nameEnter.getText());
+							 } catch (IOException er){
+								 er.printStackTrace();
+							 }finally {
+								 try {
+									 if(bw != null)
+										 bw.close();
+									 if(writeScore != null)
+										 writeScore.close();
+								 } catch(IOException ex) {
+									 ex.printStackTrace();
+								 }
+							 }
+				    	 	}
+					nameEnter.clear();
+					
+					Stage popUp = new Stage();
+                    	popUp.initModality(Modality.WINDOW_MODAL);
+					final Button exitB = new Button("Close Dialog");
+					exitB.setOnMouseClicked(event -> popUp.close());
+					
+					popUp.setX(200);
+					popUp.setY(200);
+					Text displayS = new Text();
+					if(nameEnter.getText().trim().isEmpty()) {
+						displayS.setText("Please input name");
+					} else {
+						displayS = new Text("Saved into Hi Score. Thank you!");
+					}
+					VBox v1= new VBox(10);
+					v1.getChildren().addAll(displayS, exitB);
+					popUp.setScene(new Scene(v1));
+					popUp.show();
+			     });
 		     /*
 		      * create the container of those buttons in a horizontal box
 		      */
-		     final HBox buttonContainer = new HBox(1);
+		     final HBox buttonContainer = new HBox(5);
 		     buttonContainer.setAlignment(Pos.TOP_CENTER);
-		     Insets buttonContainerPadding = new Insets(400, 1, 1, 1); //Distance from the top center down
+		     System.out.println("Layout Y is " + buttonContainer.getLayoutY());
+		     Insets buttonContainerPadding = new Insets(600*heightScale, 120*widthScale, 10*heightScale, 120*widthScale); //Distance from the top center down
+		     buttonContainer.setMaxSize(buttonContainer.getWidth(), play_button.getHeight());
 		     buttonContainer.setPadding(buttonContainerPadding);
 		     buttonContainer.getChildren().addAll(play_button,score_button);
 		     
-		     final HBox StatDisplay = new HBox(GridLock.CANVAS_WIDTH/3);
+		     final HBox textEnter = new HBox(10);
+		     Insets textEnterPadding = new Insets(530*heightScale, 150*widthScale , 10*heightScale ,150*widthScale);
+		     textEnter.setMaxSize(buttonContainer.getWidth(), play_button.getHeight());
+		     textEnter.setPadding(textEnterPadding);
+		     textEnter.getChildren().addAll(nameEnter, submit);
+		     
+		     final HBox StatDisplay = new HBox(GridLock.CANVAS_WIDTH/4);
 		     StatDisplay.setAlignment(Pos.TOP_CENTER);
-		     Insets StatContainerPadding = new Insets(250,1,1,1);
+		     Insets StatContainerPadding = new Insets(300*heightScale,140*widthScale,300*heightScale,140*widthScale);
+		     StatDisplay.setMaxHeight(clock.getHeight());
 		     StatDisplay.setPadding(StatContainerPadding);
 		     StatDisplay.getChildren().addAll(clock, counter2);
-		     GridPane root = new GridPane();
+		     AnchorPane root = new AnchorPane();
 		      
-		     root.getChildren().addAll(flashScreen_node, StatDisplay, buttonContainer); //add the title screen and button container to the stackpane
+		     root.getChildren().addAll(flashScreen_node, StatDisplay, buttonContainer, textEnter); //add the title screen and button container to the stackpane
 		     
 		     return root;
 		}
@@ -339,18 +363,22 @@ public class GridLock extends Application {
 	        spriteGroup.setLayoutY(CANVAS_HEIGHT*150/800+left_offset);
 	        
 	    
-		    final Image menuImage = new Image("file:src/home-button-round-blue.png", 100, 100, false, false);
-		    final Button menuButton  = new Button();
-		    final ImageView menuButtonNode = new ImageView(); 
-		    menuButtonNode.setImage(menuImage);
-		    menuButton.setGraphic(menuButtonNode);
-		    menuButton.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY))); //this is to make the button background transparent
-		    menuButton.setScaleShape(true);
-		    menuButton.setMaxWidth(Double.MAX_VALUE);
-		    menuButton.setOnAction(e -> window.setScene(scene1)); //Go back to the main menu when clicked
+//		    final Image menuImage = new Image("file:src/home-button-round-blue.png", 100, 100, false, false);
+//		    final Button menuButton  = new Button();
+//		    final ImageView menuButtonNode = new ImageView(); 
+//		    menuButtonNode.setImage(menuImage);
+//		    menuButton.setGraphic(menuButtonNode);
+//		    menuButton.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY))); //this is to make the button background transparent
+//		    menuButton.setScaleShape(true);
+//		    menuButton.setMaxWidth(Double.MAX_VALUE);
+	        final MenuButton menuButton = new MenuButton("Back to Menu", "StoneButton.png");
+	        menuButton.setScaleX(0.8);
+	        menuButton.setScaleY(0.9);
+	        menuButton.removeTranslate(0);
+		    menuButton.setOnMouseClicked(e -> window.setScene(scene1)); //Go back to the main menu when clicked
 		    final HBox buttonContainer = new HBox(1);
 		    buttonContainer.setAlignment(Pos.CENTER);
-		    Insets buttonContainerPadding = new Insets(400, 1, 1, 1); //Distance from the top center down
+		    Insets buttonContainerPadding = new Insets(50*heightScale, 1, 1, CANVAS_WIDTH/2-75); //Distance from the top center down
 		    buttonContainer.setPadding(buttonContainerPadding);
 		    buttonContainer.getChildren().addAll(menuButton);
 	        
@@ -456,7 +484,7 @@ public class GridLock extends Application {
             
        
             
-            root.getChildren().addAll(buttonContainer, gameScreen_node, counter, ((TimerPane) liveClock), squareGroup, spriteGroup);
+            root.getChildren().addAll(gameScreen_node, buttonContainer, counter, ((TimerPane) liveClock), squareGroup, spriteGroup);
             root.setStyle("-fx-border-color: black");
             
             
@@ -501,7 +529,7 @@ public class GridLock extends Application {
 	
 		            result = grid.checkMoveToGrid(s,xCoord,yCoord, newX, newY);
 		            if(result==false) {   	
-		                    s.stopMove();
+		                   s.stopMove();
 		            }else {
 	                   grid.removeSpriteOnGrid(s, xCoord, yCoord); 
 	                   s.move(newX, newY); 
@@ -510,6 +538,7 @@ public class GridLock extends Application {
 	                   System.out.println("move ctr is " + moveCtr);
 	                  
 		            }
+
 	               
 	        });
 	        	
