@@ -1,4 +1,6 @@
 //21/5/2018
+import java.awt.Point;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -345,7 +347,7 @@ public class GridLock extends Application {
 	     * ArrayList to hold the previous intial moves
 	     */
 	private Point initPosition(Sprite v) {
-		
+		return null;
 	}
 
     	/**
