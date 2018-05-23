@@ -14,7 +14,7 @@ public class UserCar extends Sprite {
 	
 	public UserCar(Direction dir, String url) {
 		
-		 super(dir, 0, 2, GridLock.CAR_SIZE, url); 
+		 super(dir, 0, 2, GridLock.CAR_SIZE, "file:sprites/nemo.png"); 
 		
 		 
 	}

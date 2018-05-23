@@ -16,6 +16,8 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import java.awt.Point;
+import java.awt.geom.Point2D;
 /**
  * A  class to represent Sprites (cars and trucks).
  * A car has size 2, truck size 3.
@@ -120,6 +122,15 @@ public class Sprite extends StackPane {
      */
     public void stopMove() {
         relocate(Xcoord, Ycoord);
+    }
+    
+    /**
+     * Gets the position of the sprite
+     */
+    public Point getPosition() {
+    	Point p = null;
+    	p.setLocation(Xcoord, Ycoord);
+    	return p;
     }
     
     /**

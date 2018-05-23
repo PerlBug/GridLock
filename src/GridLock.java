@@ -1,4 +1,4 @@
-//for sprint review
+//21/5/2018
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -240,7 +240,7 @@ public class GridLock extends Application {
             //generation of different boards
             //change value of i to get different board difficulties
 	        //creating 4 different boards
-	    	int i = 0;
+	    	int i = 1;
             switch (i) {
             	case 0: Sprite v10= makeSprite(Sprite.Direction.VERTICAL,1,3,CAR_SIZE, "file:sprites/gurgle.png");
             		spriteGroup.getChildren().add(v10); 
@@ -250,25 +250,25 @@ public class GridLock extends Application {
             		spriteGroup.getChildren().add(h20);
             		Sprite v20= makeSprite(Sprite.Direction.VERTICAL,4,0,TRUCK_SIZE, "file:sprites/gurgle.png");
             		spriteGroup.getChildren().add(v20);
-            		UserCar redCar0 = makeUserCar(Sprite.Direction.HORIZONTAL,CAR_SIZE, "file:src/nemo.png", window);
+            		UserCar redCar0 = makeUserCar(Sprite.Direction.HORIZONTAL,CAR_SIZE, "file:sprites/nemo.png", window);
             		spriteGroup.getChildren().add((Sprite)redCar0);
             		break;
             	case 1: Sprite v11= makeSprite(Sprite.Direction.VERTICAL,1,3,CAR_SIZE, "file:sprites/gurgle.png");
             		spriteGroup.getChildren().add(v11);
             		Sprite v01= makeSprite(Sprite.Direction.VERTICAL,2,3,CAR_SIZE, "file:sprites/gurgle.png");
             		spriteGroup.getChildren().add(v01); 
-    			Sprite h11= makeSprite(Sprite.Direction.HORIZONTAL,0,1,CAR_SIZE,"file:sprites/dory.png");
-    			spriteGroup.getChildren().add(h11);
-	    		Sprite h21= makeSprite(Sprite.Direction.HORIZONTAL,3,3,TRUCK_SIZE, "file:sprites/whale.png");
-	    		spriteGroup.getChildren().add(h21);
-	    		Sprite v21= makeSprite(Sprite.Direction.VERTICAL,3,0,TRUCK_SIZE, "file:sprites/gurgle.png");
-	   		spriteGroup.getChildren().add(v21);
-	   		Sprite v31= makeSprite(Sprite.Direction.VERTICAL,4,0,TRUCK_SIZE, "file:sprites/gurgle.png");
-	   		spriteGroup.getChildren().add(v31);
-	    		Sprite v41= makeSprite(Sprite.Direction.VERTICAL,5,0,TRUCK_SIZE, "file:sprites/gurgle.png");
-	    		spriteGroup.getChildren().add(v41);
-	    		UserCar redCar1 = makeUserCar(Sprite.Direction.HORIZONTAL,CAR_SIZE, "file:src/nemo.png", window);
-	    		spriteGroup.getChildren().add((Sprite)redCar1);
+            		Sprite h11= makeSprite(Sprite.Direction.HORIZONTAL,0,1,CAR_SIZE,"file:sprites/dory.png");
+            		spriteGroup.getChildren().add(h11);
+            		Sprite h21= makeSprite(Sprite.Direction.HORIZONTAL,3,3,TRUCK_SIZE, "file:sprites/whale.png");
+            		spriteGroup.getChildren().add(h21);
+            		Sprite v21= makeSprite(Sprite.Direction.VERTICAL,3,0,TRUCK_SIZE, "file:sprites/gurgle.png");
+            		spriteGroup.getChildren().add(v21);
+            		Sprite v31= makeSprite(Sprite.Direction.VERTICAL,4,0,TRUCK_SIZE, "file:sprites/gurgle.png");
+            		spriteGroup.getChildren().add(v31);
+            		Sprite v41= makeSprite(Sprite.Direction.VERTICAL,5,0,TRUCK_SIZE, "file:sprites/gurgle.png");
+            		spriteGroup.getChildren().add(v41);
+	    			UserCar redCar1 = makeUserCar(Sprite.Direction.HORIZONTAL,CAR_SIZE, "file:sprites/nemo.png", window);
+	    			spriteGroup.getChildren().add((Sprite)redCar1);
 	    		break;
     		case 2: Sprite v12= makeSprite(Sprite.Direction.VERTICAL,1,3,CAR_SIZE, "file:sprites/gurgle.png");
     			spriteGroup.getChildren().add(v12); 
@@ -288,15 +288,15 @@ public class GridLock extends Application {
 		    	spriteGroup.getChildren().add(v42);
 		    	Sprite v52= makeSprite(Sprite.Direction.VERTICAL,3,2,CAR_SIZE, "file:sprites/gurgle.png");
 		    	spriteGroup.getChildren().add(v52);
-		    	UserCar redCar2 = makeUserCar(Sprite.Direction.HORIZONTAL,CAR_SIZE, "file:src/nemo.png", window);
+		    	UserCar redCar2 = makeUserCar(Sprite.Direction.HORIZONTAL,CAR_SIZE, "file:sprites/nemo.png", window);
 		    	spriteGroup.getChildren().add((Sprite)redCar2);
 		    	break; 
     		case 3: Sprite v13= makeSprite(Sprite.Direction.VERTICAL,1,3,CAR_SIZE, "file:sprites/gurgle.png");
-    			spriteGroup.getChildren().add(v13); 
-			Sprite h13= makeSprite(Sprite.Direction.HORIZONTAL,1,1,CAR_SIZE,"file:sprites/dory.png");
-			spriteGroup.getChildren().add(h13);
-			Sprite h23= makeSprite(Sprite.Direction.HORIZONTAL,3,3,TRUCK_SIZE, "file:sprites/whale.png");
-			spriteGroup.getChildren().add(h23);
+    				spriteGroup.getChildren().add(v13); 
+    				Sprite h13= makeSprite(Sprite.Direction.HORIZONTAL,1,1,CAR_SIZE,"file:sprites/dory.png");
+    				spriteGroup.getChildren().add(h13);
+    				Sprite h23= makeSprite(Sprite.Direction.HORIZONTAL,3,3,TRUCK_SIZE, "file:sprites/whale.png");
+    				spriteGroup.getChildren().add(h23);
 		    	Sprite v23= makeSprite(Sprite.Direction.VERTICAL,4,0,TRUCK_SIZE, "file:sprites/gurgle.png");
 		    	spriteGroup.getChildren().add(v23);
 		    	Sprite v33= makeSprite(Sprite.Direction.VERTICAL,5,0,TRUCK_SIZE, "file:sprites/gurgle.png");
@@ -305,7 +305,7 @@ public class GridLock extends Application {
     			spriteGroup.getChildren().add(v43); 
     			Sprite v53= makeSprite(Sprite.Direction.VERTICAL,2,4,CAR_SIZE, "file:sprites/gurgle.png");
     			spriteGroup.getChildren().add(v53); 
-		    	UserCar redCar3 = makeUserCar(Sprite.Direction.HORIZONTAL,CAR_SIZE, "file:src/nemo.png", window);
+		    	UserCar redCar3 = makeUserCar(Sprite.Direction.HORIZONTAL,CAR_SIZE, "file:sprites/nemo.png", window);
 		    	spriteGroup.getChildren().add((Sprite)redCar3);
 		    	break; 
     		case 4: Sprite v14= makeSprite(Sprite.Direction.VERTICAL,1,3,CAR_SIZE, "file:sprites/gurgle.png");
@@ -326,7 +326,7 @@ public class GridLock extends Application {
 		    	spriteGroup.getChildren().add(v44);
 		    	Sprite v54= makeSprite(Sprite.Direction.VERTICAL,5,2,CAR_SIZE, "file:sprites/gurgle.png");
 		    	spriteGroup.getChildren().add(v54);
-		    	UserCar redCar4 = makeUserCar(Sprite.Direction.HORIZONTAL,CAR_SIZE, "file:src/nemo.png", window);
+		    	UserCar redCar4 = makeUserCar(Sprite.Direction.HORIZONTAL,CAR_SIZE, "file:sprites/nemo.png", window);
 		    	spriteGroup.getChildren().add((Sprite)redCar4);
 		    	break; 
             }
@@ -340,7 +340,13 @@ public class GridLock extends Application {
             
 	        return root;
 	    }
-	
+	    
+	    /**
+	     * ArrayList to hold the previous intial moves
+	     */
+	private Point initPosition(Sprite v) {
+		
+	}
 
     	/**
     	 * Convert pixel/position on the main panel to a grid square index
