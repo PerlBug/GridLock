@@ -350,7 +350,7 @@ public class GridLock extends Application {
 		    menuButton.setOnAction(e -> window.setScene(scene1)); //Go back to the main menu when clicked
 		    final HBox buttonContainer = new HBox(1);
 		    buttonContainer.setAlignment(Pos.CENTER);
-		    Insets buttonContainerPadding = new Insets(400, 1, 1, 1); //Distance from the top center down
+		    Insets buttonContainerPadding = new Insets(1, 1, 1, 160); //Distance from the top center down
 		    buttonContainer.setPadding(buttonContainerPadding);
 		    buttonContainer.getChildren().addAll(menuButton);
 	        
@@ -456,7 +456,7 @@ public class GridLock extends Application {
             
        
             
-            root.getChildren().addAll(buttonContainer, gameScreen_node, counter, ((TimerPane) liveClock), squareGroup, spriteGroup);
+            root.getChildren().addAll(gameScreen_node, buttonContainer, counter, ((TimerPane) liveClock), squareGroup, spriteGroup);
             root.setStyle("-fx-border-color: black");
             
             
@@ -501,7 +501,7 @@ public class GridLock extends Application {
 	
 		            result = grid.checkMoveToGrid(s,xCoord,yCoord, newX, newY);
 		            if(result==false) {   	
-		                    s.stopMove();
+		                   s.stopMove();
 		            }else {
 	                   grid.removeSpriteOnGrid(s, xCoord, yCoord); 
 	                   s.move(newX, newY); 
@@ -510,6 +510,7 @@ public class GridLock extends Application {
 	                   System.out.println("move ctr is " + moveCtr);
 	                  
 		            }
+
 	               
 	        });
 	        	
