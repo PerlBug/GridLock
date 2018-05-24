@@ -16,6 +16,9 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import java.awt.Point;
+import java.awt.geom.Point2D;
+import java.util.Stack;
 /**
  * A  class to represent Sprites (cars and trucks).
  * A car has size 2, truck size 3.
@@ -36,6 +39,8 @@ public class Sprite extends StackPane {
     private int id; //unique for every sprite created first sprite created has id 0
     private int size; //length of the block (width if horizontal movement, height if vertical)
     private Rectangle r;
+    Stack StackX = new Stack();
+    Stack StackY = new Stack();
     
     /**
      * Constructor for Sprite object.
@@ -107,11 +112,13 @@ public class Sprite extends StackPane {
      */
     public void move(int x, int y) {
     	
-    	
+	    //creating stack
         Xcoord = x * GridLock.SQUARE_SIZE;
         Ycoord = y * GridLock.SQUARE_SIZE;
        /* System.out.println(Xcoord);
     	System.out.println(Ycoord);*/
+        StackX.push(Xcoord);
+        StackY.push(Ycoord);
         relocate(Xcoord, Ycoord);
     }
 
@@ -120,6 +127,15 @@ public class Sprite extends StackPane {
      */
     public void stopMove() {
         relocate(Xcoord, Ycoord);
+    }
+    
+    /**
+     * Gets the position of the sprite
+     */
+    public Point getPosition(Sprite v) {
+    	Point p = null;
+    	p.setLocation(Xcoord, Ycoord);
+    	return p;
     }
     
     /**

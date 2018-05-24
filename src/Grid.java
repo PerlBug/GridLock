@@ -16,7 +16,7 @@ public class Grid {
 	private int moveCtr;
 	
 	public Grid() {
-		this.moveCtr = 0;
+		this.moveCtr = 0; //initialise ctr
 		listOfSquares = new ArrayList<Square>();
 		//populating grid array with squares
 		for(int y = 0; y < GridLock.HEIGHT; y++) {
