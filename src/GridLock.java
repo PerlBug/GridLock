@@ -231,10 +231,10 @@ public class GridLock extends Application {
 			 score_button.removeTranslate(0);
 			 
 			 TextField nameEnter = new TextField();
-			 nameEnter.setPromptText("Enter your name to submit your score!");
+			 nameEnter.setPromptText("Enter your name to record your score!");
 			 nameEnter.setStyle(""+ "-fx-font-size: 10px;");
 			 nameEnter.setFocusTraversable(false); 
-			 nameEnter.setMinWidth(CANVAS_WIDTH/2*widthScale); //can we make the box bigger so whole prompt is visible?
+			 nameEnter.setMinWidth(1.3*CANVAS_WIDTH/2*widthScale); //made wider to fit the message 
 			 nameEnter.setMinHeight(30*heightScale);
 			 nameEnter.setOpacity(80);
 
