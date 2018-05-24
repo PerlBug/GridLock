@@ -257,8 +257,21 @@ public class GridLock extends Application {
 							     }
 								 writeScore = new FileWriter(file.getAbsoluteFile(), true);
 							     bw = new BufferedWriter(writeScore);
+							     if(seconds < 10) {
+							    	 if (minutes < 10) {
+							    		 bw.write(Difficulty + " " + counter2.getCount() + " 0" + minutes + ":0" + seconds + " " + nameEnter.getText() +"\n");
+							    	 }
+							    	 else {
+							    		 bw.write(Difficulty + " " + counter2.getCount() + " " + minutes + ":0" + seconds + " " + nameEnter.getText() +"\n");
+							    	 }
+							    	 
+							     }
+							     else {
+							    	 
+							    	 bw.write(Difficulty + " " + counter2.getCount() + " " + minutes + ":" + seconds + " " + nameEnter.getText() +"\n");
+							     }
 							     
-							     bw.write(Difficulty + " " + counter2.getCount() + " " + minutes + ":" + seconds + " " + nameEnter.getText() +"\n");
+							     
 							     System.out.println("Saved Name: " + nameEnter.getText());
 							 } catch (IOException er){
 								 er.printStackTrace();
