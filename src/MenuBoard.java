@@ -12,14 +12,18 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollBar;
+import javafx.scene.control.Tooltip;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -28,6 +32,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 /**
@@ -38,7 +43,8 @@ import javafx.stage.Stage;
  */
 public class MenuBoard extends Parent{
 	
-	private VBox menu1, menu2;
+	private VBox menu1;
+	private AnchorPane menu2;
 	public static String fileAccess = "Default Hi Scores";
 	public static boolean flag = true;
 	
@@ -85,7 +91,7 @@ public class MenuBoard extends Parent{
 	     menu1 = new VBox(10);
 	     menu1.setAlignment(Pos.TOP_CENTER);
 	    	 menu1.setTranslateX((GridLock.CANVAS_WIDTH/2) - play_button.getWidthRel()/2);
-	    	 menu1.setTranslateY((GridLock.CANVAS_HEIGHT/2) - 40);
+	    	 menu1.setTranslateY((GridLock.CANVAS_HEIGHT/2) - 40*GridLock.widthScale);
 	     menu1.getChildren().addAll(play_button, score_button, option_button, exit_button, instruction_button);
 	     
 	     
@@ -94,18 +100,32 @@ public class MenuBoard extends Parent{
 	     
 	}
 	
-		private VBox createOptionsMenu(Stage window) {
+		private AnchorPane createOptionsMenu(Stage window) {
 			
-			VBox root = new VBox(10);
+			AnchorPane root = new AnchorPane();
 			
+			Label difficultyLbl = new Label("Difficulty: ");
+			difficultyLbl.setFont(new Font(20));
 			
 			ChoiceBox<String> diffMenu = new ChoiceBox<String>();
 			
 			diffMenu.getItems().addAll("Easy", "Medium", "Hard");
 			diffMenu.setValue("Medium");
 			
-			ScrollBar s1 = new ScrollBar();
-			Button confirm = new Button("OK");
+			final HBox diffB = new HBox(20*GridLock.widthScale);
+			diffB.setTranslateX(-30*GridLock.widthScale);
+			final HBox scoreB = new HBox(10*GridLock.widthScale);
+			scoreB.setTranslateX(-30*GridLock.widthScale);
+			final HBox confirmB = new HBox(20*GridLock.widthScale);
+			final HBox HSclearB = new HBox(30*GridLock.widthScale);
+			HSclearB.setTranslateX(-30*GridLock.widthScale);
+			
+			diffB.getChildren().addAll(difficultyLbl, diffMenu);
+			
+			MenuButton confirm = new MenuButton("OK", "StoneButton.png");
+			confirm.setScaleX(0.5);
+			confirm.setScaleY(0.7);
+			confirm.removeTranslate(0);
 			confirm.setOnMouseClicked(e -> {
 				GridLock.setDifficulty(diffMenu.getValue());
 				getChildren().remove(0);
@@ -113,15 +133,70 @@ public class MenuBoard extends Parent{
 			
 			});
 			
-			Button clearHiScores = new Button("Clear Hi Scores?");
-			Button setDest = new Button("Set Destination?");
-			Button disable = new Button("Disable Hi Scores?");
+			MenuButton b1 = new MenuButton("Back", "StoneButton.png");
+			b1.setScaleX(0.5);
+			b1.setScaleY(0.7);
+			b1.removeTranslate(0);
+			b1.setOnMouseClicked(e -> {
+				getChildren().remove(0);
+				getChildren().add(menu1);
+			});
+			
+			confirmB.setTranslateX(-100*GridLock.widthScale);
+			confirmB.getChildren().addAll(confirm, b1);
+			
+			Label clearHS = new Label("Clear Hi Scores?  ");
+			clearHS.setFont(new Font(20));
+			Button clearHiScores = new Button("Remove");
+			
+			HSclearB.getChildren().addAll(clearHS, clearHiScores);
 			
 			//Set a prompt which tells the user that current Hi scores will be deleted.
+			Label enableLbl = new Label("Enable Hi Scores:  ");
+			enableLbl.setFont(new Font(20));
+			
+			Image thumbUp = new Image("thumbUp.png", 30*GridLock.widthScale, 30*GridLock.heightScale, false, false);
+			Image thumbDown = new Image("thumbDown.png", 30*GridLock.widthScale, 30*GridLock.heightScale, false, false);
+			
+			ImageView HSthumbUp = new ImageView(thumbUp);
+			ImageView HSthumbDown = new ImageView(thumbDown);
+	
+			Tooltip t = new Tooltip("Current File Destination: " + fileAccess + "\n" + "To set new Location: Click Here");
+			
+			DropShadow drop = new DropShadow(30*GridLock.widthScale, Color.YELLOW);
+			drop.setInput(new Glow());
+			
+			if(flag == true) {
+				HSthumbDown.setEffect(null);
+				HSthumbUp.setEffect(drop);
+				Tooltip.install(HSthumbUp, t);
+			} else if ( flag == false) {
+				HSthumbDown.setEffect(drop);
+				HSthumbUp.setEffect(null);
+				Tooltip.uninstall(HSthumbUp, t);
+			}
+			
+			HSthumbUp.setOnMouseEntered(e -> {
+				HSthumbUp.setScaleY(1.2);
+				HSthumbUp.setScaleX(1.2);
+				});
+			HSthumbUp.setOnMouseExited(e -> {
+				HSthumbUp.setScaleX(1/1.2);
+				HSthumbUp.setScaleY(1/1.2);
+			});
+			HSthumbDown.setOnMouseEntered(e -> {
+				HSthumbDown.setScaleY(1.2);
+				HSthumbDown.setScaleX(1.2);
+				});
+			HSthumbDown.setOnMouseExited(e -> {
+				HSthumbDown.setScaleX(1/1.2);
+				HSthumbDown.setScaleY(1/1.2);
+			});
+			
 			
 			//Edit location to save Hi Score File
 			DirectoryChooser fileChoose = new DirectoryChooser();
-			setDest.setOnMouseClicked(e -> {
+			HSthumbUp.setOnMouseClicked(e -> {
 			File file = fileChoose.showDialog(window);
 				if(file != null) {
 					setFileAccess(file.getPath()+"/HiScores");
@@ -129,13 +204,15 @@ public class MenuBoard extends Parent{
 				}
 			});
 			
-			Button b1 = new Button("Back");
-			b1.setOnMouseClicked(e -> {
-				getChildren().remove(0);
-				getChildren().add(menu1);
+			HSthumbDown.setOnMouseClicked(e -> {
+				setFlag(false);
+				HSthumbDown.setEffect(new Glow());
+				HSthumbUp.setEffect(null);
+				Tooltip.uninstall(HSthumbUp, t);
 			});
 			
-			disable.setOnMouseClicked(e -> setFlag(false));
+			scoreB.getChildren().addAll(enableLbl, HSthumbUp, HSthumbDown);
+			
 			clearHiScores.setOnMouseClicked(e -> {
 				try {
 					clearHiScores();
@@ -148,7 +225,11 @@ public class MenuBoard extends Parent{
 			
 			root.setTranslateX(200);
 			root.setTranslateY(300);
-			root.getChildren().addAll(s1,diffMenu,  clearHiScores, setDest, disable, confirm, b1);
+			AnchorPane.setTopAnchor(diffB, 0.0*GridLock.heightScale);
+			AnchorPane.setTopAnchor(scoreB, 50.0*GridLock.heightScale);
+			AnchorPane.setTopAnchor(HSclearB, 100.0*GridLock.heightScale);
+			AnchorPane.setTopAnchor(confirmB, 250.0*GridLock.heightScale);
+			root.getChildren().addAll(diffB,  HSclearB, scoreB , confirmB);
 			
 			return root;
 		}

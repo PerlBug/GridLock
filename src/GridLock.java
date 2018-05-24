@@ -44,7 +44,7 @@ public class GridLock extends Application {
 	 	public static final double CANVAS_WIDTH = CANVAS_HEIGHT * 650/800; //Sets the proportion of the game to satisfy all screen sizes
 	 	public static final double heightScale = CANVAS_HEIGHT/800;
 	 	public static final double widthScale = CANVAS_WIDTH/650;
-	    public static final double SQUARE_SIZE = (double)CANVAS_HEIGHT/8; //Each square should be equivalent 100/800px height
+	    public static final double SQUARE_SIZE = (double)CANVAS_HEIGHT/8*0.9; //Each square should be equivalent 100/800px height
 	    public static final int WIDTH = 6;
 	    public static final int HEIGHT = 6;
 	    public static final int CAR_SIZE=2;
@@ -99,7 +99,7 @@ public class GridLock extends Application {
 	         * Sizes the Canvas to be correct height and creates max height so cannot be expanded
 	         * beyond
 	         */
-	        double left_offset = (CANVAS_WIDTH - (WIDTH*SQUARE_SIZE))/2;
+	        double left_offset = (CANVAS_WIDTH - (WIDTH*SQUARE_SIZE)-(65*widthScale*0.9))/2;
 	        primaryStage.setHeight(CANVAS_HEIGHT+left_offset);
 	        primaryStage.setWidth(CANVAS_WIDTH);
 	        primaryStage.setMaxHeight(CANVAS_HEIGHT+left_offset);
@@ -185,7 +185,7 @@ public class GridLock extends Application {
 			menuButton.setOnAction(e -> window.setScene(scene1)); //Go back to the main menu when clicked
 		    final HBox buttonContainer = new HBox(1);
 		    buttonContainer.setAlignment(Pos.TOP_RIGHT);
-		    Insets buttonContainerPadding = new Insets(400, 1, 1, 1); //Distance from the top center down
+		    Insets buttonContainerPadding = new Insets(600*heightScale, 1, 20*heightScale, 20*widthScale); //Distance from the top center down
 		    buttonContainer.setPadding(buttonContainerPadding);
 		    buttonContainer.getChildren().addAll(menuButton);
 		    
@@ -234,7 +234,7 @@ public class GridLock extends Application {
 			 nameEnter.setPromptText("Enter your name to record your score!");
 			 nameEnter.setStyle(""+ "-fx-font-size: 10px;");
 			 nameEnter.setFocusTraversable(false); 
-			 nameEnter.setMinWidth(1.35*CANVAS_WIDTH/2*widthScale); //made wider to fit the message 
+			 nameEnter.setMinWidth(1.1*CANVAS_WIDTH/2*widthScale); //made wider to fit the message 
 			 nameEnter.setMinHeight(30*heightScale);
 			 nameEnter.setOpacity(80);
 
@@ -344,7 +344,7 @@ public class GridLock extends Application {
 	    	t.resetTimer();
 	    	System.out.println("Difficulty is: " + Difficulty);
 	        Pane root = new Pane();
-	        final Image gameScreen = new Image( "GameCanvas.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false); //title screen image
+	        final Image gameScreen = new Image( "GameCanvas2.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false); //title screen image
 	        root.setPrefSize(WIDTH * SQUARE_SIZE +CANVAS_WIDTH, HEIGHT * SQUARE_SIZE + CANVAS_HEIGHT);
 	        
 	        final ImageView gameScreen_node = new ImageView();
@@ -391,7 +391,7 @@ public class GridLock extends Application {
 		    menuButton.setOnMouseClicked(e -> window.setScene(scene1)); //Go back to the main menu when clicked
 		    final HBox buttonContainer = new HBox(1);
 		    buttonContainer.setAlignment(Pos.CENTER);
-		    Insets buttonContainerPadding = new Insets(50*heightScale, 1, 1, CANVAS_WIDTH/2-75); //Distance from the top center down
+		    Insets buttonContainerPadding = new Insets(80*heightScale, 1, 1, CANVAS_WIDTH/2-75); //Distance from the top center down
 		    buttonContainer.setPadding(buttonContainerPadding);
 		    buttonContainer.getChildren().addAll(menuButton);
 	        
