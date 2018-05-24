@@ -50,7 +50,7 @@ public class GridLock extends Application {
 	    public static final int CAR_SIZE=2;
 	    public static final int TRUCK_SIZE=3;
 	    
-	    private int moveCtr; //number of successful drags and drops during the duration of the game
+	    
 	    private Grid grid;
 	    private MenuBoard gameMenu;
 	    private Scoreboard scoreMenu;
@@ -78,7 +78,7 @@ public class GridLock extends Application {
 	    @Override
 	    public void start(Stage primaryStage) {
 	    	t = new Timer();	
-	    	moveCtr=0;
+	    	
 	        //scene = new Scene(createGameBoard(primaryStage), CANVAS_HEIGHT, CANVAS_WIDTH);
 	        scene1 = new Scene(startMenu(primaryStage), CANVAS_HEIGHT, CANVAS_WIDTH);
 	        //scene2 = new Scene(exitScreen(primaryStage), CANVAS_HEIGHT, CANVAS_WIDTH);
@@ -231,9 +231,13 @@ public class GridLock extends Application {
 			 score_button.removeTranslate(0);
 			 
 			 TextField nameEnter = new TextField();
-			 nameEnter.setMinWidth(CANVAS_WIDTH/2*widthScale);
+			 nameEnter.setPromptText("Enter your name to submit your score!");
+			 nameEnter.setStyle(""+ "-fx-font-size: 10px;");
+			 nameEnter.setFocusTraversable(false); 
+			 nameEnter.setMinWidth(CANVAS_WIDTH/2*widthScale); //can we make the box bigger so whole prompt is visible?
 			 nameEnter.setMinHeight(30*heightScale);
 			 nameEnter.setOpacity(80);
+
 			 
 			 MenuButton submit = new MenuButton("", "file:src/envelopeButton.png", 50*widthScale, 40*heightScale);
 		     
@@ -530,8 +534,8 @@ public class GridLock extends Application {
 	                   grid.removeSpriteOnGrid(s, xCoord, yCoord); 
 	                   s.move(newX, newY); 
 	                   grid.setSpriteOnGrid(s,newX, newY);
-	                   moveCtr++;
-	                   System.out.println("move ctr is " + moveCtr);
+	                  
+	                   System.out.println("move ctr is " + grid.getMovectr());
 	                  
 		            }
 
@@ -577,19 +581,23 @@ public class GridLock extends Application {
                    grid.removeSpriteOnGrid(s, xCoord, yCoord); 
                    s.move(newX, newY); 
                    grid.setSpriteOnGrid(s,newX, newY);
-                   moveCtr++;
+                  
                    if (newX == 4) {
-						 //Get time taken to complete game and print 
+                	   //Get time taken to complete game and print 
 						double finishedTime = t.getTimeFromStart();
 						int seconds = t.getSeconds(finishedTime);
 						int minutes = t.getMinutes(finishedTime);
 						System.out.println("Time taken " + minutes + " Minutes and " + seconds + " Seconds");
-						System.out.println("Moves taken " + moveCtr);
-						scene2 = new Scene(exitScreen(window, seconds, minutes, moveCtr), CANVAS_HEIGHT, CANVAS_WIDTH);
-						
-						
+
+						System.out.println("Moves taken " + grid.getMovectr());
+						int oldCount=grid.getMovectr(); //get the last move count to display
+						//at end of game.
+						scene2 = new Scene(exitScreen(window, seconds, minutes, oldCount), CANVAS_HEIGHT, CANVAS_WIDTH);
+			
+						grid.resetMoveCtr(); //set to 0 again
+
 						((TimerPane) liveClock).set_keep_timing(false);
-						moveCtr=0; //reset ctr for next game
+						
 						window.setScene(scene2); //Goes to exit screen.
 						
 						//Reset the game screen for the next round
@@ -597,7 +605,7 @@ public class GridLock extends Application {
 						
                    } else {
                 	   
-                		System.out.println("move ctr is " + moveCtr);
+                		System.out.println("move ctr is " + grid.getMovectr());
                    }
                    
 	            }

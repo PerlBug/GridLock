@@ -110,6 +110,9 @@ public class Grid {
 					if(grid[x+k][oldY].getSpriteID()!=id && grid[x+k][oldY].getSpriteID()!=-1 ) return false;
 				}
 			}
+			if(oldX!=newX) {
+				moveCtr++;
+			}
 			
 		}else { 
 		
@@ -125,9 +128,14 @@ public class Grid {
 				}
 				
 			}
+			if(oldY!=newY) {
+				moveCtr++;
+			}
+			
+			
 		}
-		moveCtr++;
 		GridLock.counter.setCount(moveCtr);
+
 		return true;
 	}
 	  
@@ -314,6 +322,24 @@ public class Grid {
 			
 		}
 
+	}
+
+	/**
+	 * Resets the moveCtr to 0
+	 */
+	public void resetMoveCtr() {
+		
+		 moveCtr=0;
+	}
+		
+
+	/**
+	 * Getter method for number of moves that Sprites have made on the grid.
+	 * @return moveCtr.
+	 */
+	public int getMovectr() {
+		
+		return moveCtr;
 	}
 		
 	
