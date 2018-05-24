@@ -1,6 +1,7 @@
 /**
+ * This is a class to display the timer
  * @author Shilpa
- * A class to display the timer
+ * 
  */
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
@@ -18,7 +19,11 @@ public class TimerPane extends StackPane implements Runnable {
 	public static final double HEIGHT = GridLock.CANVAS_WIDTH/5;
 	public static final double WIDTH = GridLock.CANVAS_WIDTH/5;
 
-	
+	/**
+	 * Constructor method for the TimerPane class
+	 * @precondition imageurl != null and is is a valid image
+	 * @param imageurl
+	 */
 	public TimerPane (String imageurl) {
 		
 		Image imgPre = new Image(imageurl, WIDTH, HEIGHT, false, false);
@@ -28,13 +33,18 @@ public class TimerPane extends StackPane implements Runnable {
 		keep_running = true;
 		
 		timer = new Timer();
-		//t.setText("Time taken " + minutes + " Minutes and " + seconds + " Seconds");
 		
 		getChildren().addAll(img, t);
 		
 		setAlignment(Pos.CENTER);
 	}
 
+	/**
+	 * Method which prints the time elapsed from the start of the game
+	 * @precondition seconds >= 0 and minutes >=0;
+	 * @param seconds
+	 * @param minutes
+	 */
 	public void printLabel(int seconds, int minutes) {
 		this.seconds = seconds;
 		this.minutes = minutes;
@@ -50,20 +60,38 @@ public class TimerPane extends StackPane implements Runnable {
 		
 		
 	}
-
+	
+	/**
+	 * This method sets the flag which 'terminates' the thread, stopping the clock
+	 * 
+	 * @param flag
+	 */
 	public void set_keep_timing(boolean flag) {
-		this.keep_running = flag;
+		this.keep_running = flag; //true = thread keeps running; false = thread stops
 	}
+	
+	/**
+	 * This method sets the current display time on the clock
+	 * @precondition sec >= 0
+	 * @precondition min >= 0
+	 * @param sec
+	 * @param min
+	 */
 	public void setTime(int sec, int min) {
 		this.seconds = sec;
 		this.minutes = min;
 	}
+	
+	/**
+	 * Method which runs a thread which keeps displaying the current time in minutes and seconds
+	 * on the TimerPane in the GUI
+	 */
 	@Override
 	public void run() {
 		
 		
 		while (keep_running) {
-			//System.out.println("hello i'm here");
+			
 			double finishedTime = timer.getTimeFromStart();
 			this.seconds = timer.getSeconds(finishedTime);
 			this.minutes = timer.getMinutes(finishedTime);
