@@ -39,6 +39,13 @@ public class Sprite extends StackPane {
     private int id; //unique for every sprite created first sprite created has id 0
     private int size; //length of the block (width if horizontal movement, height if vertical)
     private Rectangle r;
+    
+    private int initialGX;
+    private int initialGY;
+    private double prevXC;
+    private double prevYC;
+    
+    
     Stack StackX = new Stack();
     Stack StackY = new Stack();
     
@@ -57,6 +64,8 @@ public class Sprite extends StackPane {
     	this.id=classId++;
     	System.out.println("sprite id is " + id);
     	this.direction=dir;
+    	this.initialGX = x;
+    	this.initialGY = y;
         move(x, y); //sets up xCoord, yCoord
     	this.width=size*GridLock.SQUARE_SIZE; // 2 for cars, 3 for truck
     	this.height=GridLock.SQUARE_SIZE;
@@ -113,8 +122,14 @@ public class Sprite extends StackPane {
     public void move(int x, int y) {
     	
 	    //creating stack
+    	
+    	//Pertains to undo button
+    		this.prevXC = Xcoord;
+    		this.prevYC = Ycoord;
+    		
         Xcoord = x * GridLock.SQUARE_SIZE;
         Ycoord = y * GridLock.SQUARE_SIZE;
+        
        /* System.out.println(Xcoord);
     	System.out.println(Ycoord);*/
         StackX.push(Xcoord);
@@ -129,6 +144,15 @@ public class Sprite extends StackPane {
         relocate(Xcoord, Ycoord);
     }
     
+    /**
+     * Resets sprite to initial position
+     * @author leochen
+     */
+    public void resetSprite() {
+    		double xcord = this.initialGX * GridLock.SQUARE_SIZE;
+    		double ycord = this.initialGY * GridLock.SQUARE_SIZE;
+    		relocate(xcord, ycord);
+    }
     /**
      * Gets the position of the sprite
      */
@@ -169,7 +193,21 @@ public class Sprite extends StackPane {
     	return mouseY;
     }
 
-
+    public void setPrevX(double X) {
+    		this.prevXC = X;
+    }
+    
+    public void setPrevY(double Y) {
+    		this.prevYC = Y;
+    }
+    
+    public double getPrevX() {
+    		return this.prevXC;
+    }
+    
+    public double getPrevY() {
+    		return this.prevYC;
+    }
 	
 
 }

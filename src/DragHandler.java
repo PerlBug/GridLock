@@ -34,7 +34,7 @@ public class DragHandler implements EventHandler<MouseEvent>{
 	@Override
 	public void handle(MouseEvent e) {
 		//have to add the new offset...
-		double leftOffset = (GridLock.CANVAS_WIDTH - (GridLock.WIDTH*GridLock.SQUARE_SIZE))/2; 
+		double leftOffset = (GridLock.CANVAS_WIDTH - (GridLock.WIDTH*GridLock.SQUARE_SIZE)-65*GridLock.widthScale*0.9)/2; 
 		double newX= e.getSceneX()- leftOffset;
 		double newY=e.getSceneY();//- GridLock.CANVAS_HEIGHT*150/800+leftOffset;
 		
@@ -45,7 +45,8 @@ public class DragHandler implements EventHandler<MouseEvent>{
 		double mouseX=sprite.getMouseX();
 		double mouseY=sprite.getMouseY();
 
-		
+		sprite.setPrevX(Xcoord);
+		sprite.setPrevY(Ycoord);
 	
     	if(sprite.getDirection()==Sprite.Direction.HORIZONTAL) {
     		
@@ -141,6 +142,11 @@ public class DragHandler implements EventHandler<MouseEvent>{
     			}
  	
         	}
+    		
+    	//Pertains to undo button
+    		State currState = new State(sprite, GridLock.prevState);
+    		GridLock.stateList.add(currState);
+    		GridLock.prevState = currState;
      }
 		
 
