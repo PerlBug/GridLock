@@ -211,13 +211,13 @@ public class GridLock extends Application {
 		     flashScreen_node.setImage(titleScreen); //set the image of the title screen
 		     flashScreen_node.setPreserveRatio(true);
 		     
-		     clock = new TimerPane("CounterImg.png");
+		     clock = new TimerPane("file:src/goldseal.png");
 			 clock.setTranslateX(40);
-			 clock.setTranslateY(75);
+			 clock.setTranslateY(60);
 			 clock.printLabel(seconds, minutes);
-			 Counter counter2 = new Counter("CounterImg.png");
-			 counter2.setTranslateX(-80);
-			 counter2.setTranslateY(75);
+			 Counter counter2 = new Counter("file:src/goldseal.png");
+			 counter2.setTranslateX(-30);
+			 counter2.setTranslateY(60);
 			 counter2.setCount(c);
 			 
 			 MenuButton play_button = new MenuButton("Replay", "file:src/StoneButton.png");
@@ -239,7 +239,7 @@ public class GridLock extends Application {
 			 nameEnter.setOpacity(80);
 
 			 
-			 MenuButton submit = new MenuButton("", "file:src/envelopeButton.png", 50*widthScale, 40*heightScale);
+			 MenuButton submit = new MenuButton("", "file:src/arrow.png", 50*widthScale, 40*heightScale);
 		     
 		     play_button.setOnMouseClicked(e -> window.setScene(new Scene(createGameBoard(window), CANVAS_HEIGHT, CANVAS_WIDTH))); //replay
 		     
@@ -338,12 +338,12 @@ public class GridLock extends Application {
 		    gameScreen_node.setImage(gameScreen); //set the image of the title screen
 		    gameScreen_node.setPreserveRatio(true);
 		    
-		    counter = new Counter("CounterImg.png");
+		    counter = new Counter("file:src/bluebubble.png");
 		    counter.setTranslateX(0);
 		    counter.setTranslateY(0);
 		    
 		    		    
-		    liveClock = new TimerPane("CounterImg.png");
+		    liveClock = new TimerPane("file:src/bluebubble.png");
 		    Thread t1 = new Thread(liveClock);
 		    t1.start();
 		    
