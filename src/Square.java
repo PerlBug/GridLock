@@ -3,7 +3,7 @@ import javafx.scene.shape.Rectangle;
 /**
  * Class representing grid squares.
  * Each grid Square can contain part of a sprite object.
- * 
+ * @author becca
  *
  */
 public class Square extends Rectangle{
@@ -25,12 +25,13 @@ public class Square extends Rectangle{
         setHeight(height);
         this.x=x;
         this.y=y;
-        this.spriteID=-1; //default value
+        this.spriteID=-1; //default value for a square with no sprite 
         relocate(x * width, y * height);
 
         setFill(Color.TRANSPARENT);
         setStroke(Color.TRANSPARENT);
     }
+    
     /**
      * Check if a square is occupied by a sprite. 
      * @return true if the spriteID for this square is not -1.
@@ -40,12 +41,20 @@ public class Square extends Rectangle{
     	
     }
 
-
+    /**
+     * Signal a square is occupied by a particular sprite.
+     * @param i is the id of the sprite occupying the grid square.
+     * @postCondition: this.spriteID=i;
+     */
 	public void setSpriteID(int i) {
 		this.spriteID=i;
 		
 	}
-
+	
+	/**
+	 * Getter method for the id of the sprite occupying the square
+	 * @return spriteID
+	 */
 	public int getSpriteID() {
 		return spriteID;
 	}
