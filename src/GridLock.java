@@ -394,12 +394,19 @@ public class GridLock extends Application {
 	        undo.setScaleY(0.9);
 	        undo.removeTranslate(0);
 	        undo.setOnMouseClicked(e -> {
-	        	if(prevState!=null) {
-	        		Sprite s1 = prevState.getSprite();
-	        		//	grid.removeSpriteOnGrid()
-		        		s1.relocate(s1.getPrevX(), s1.getPrevY());
-	        		//	grid.setSpriteOnGrid(s, x, y);
-		        		prevState = prevState.getPrevState();
+	        	//if(prevState!=null) {
+	        		//Sprite s1 = prevState.getSprite();
+	        	if(!StackUndo.empty()) {
+		        	Sprite s1= StackUndo.pop();
+			        	if(s1!=null) {
+			        			grid.removeSpriteOnGrid(s1, (int) toGrid(s1.getXcoord()), (int)toGrid(s1.getYcoord()));
+			        			int newX=(int)toGrid( s1.getPrevX());
+			        			int newY=(int) toGrid(s1.getPrevY());
+			        				
+				        		s1.move(newX, newY);
+			        			grid.setSpriteOnGrid(s1, (int) toGrid(s1.getXcoord()), (int)toGrid(s1.getYcoord()));
+				        		//prevState = prevState.getPrevState();
+			        	}
 	        	}
 	        });
 	        
@@ -685,22 +692,8 @@ public class GridLock extends Application {
 			            		spriteGroup.getChildren().add((Sprite)redCar);
 			            		break;
 	            	}
-	
-			    if(e0 != null) StackUndo.add(e0);
-			    if(e1 != null) StackUndo.add(e1);
-			    if(e2 != null) StackUndo.add(e2);
-			    if(e3 != null) StackUndo.add(e3);
-			    if(e4 != null) StackUndo.add(e4);
-			    if(e5 != null) StackUndo.add(e5);
-			    if(e6 != null) StackUndo.add(e6);
-			    if(e7 != null) StackUndo.add(e7);
-			    if(e8 != null) StackUndo.add(e8);
-			    if(e9 != null) StackUndo.add(e9);
-			    if(e10 != null) StackUndo.add(e10);
-			    if(e11 != null) StackUndo.add(e11);
-			    if(redCar != null) StackUndo.add(redCar);
 		    	}
-            
+		
             root.getChildren().addAll(gameScreen_node, counter, ((TimerPane) liveClock), buttonContainer, squareGroup, spriteGroup);
             root.setStyle("-fx-border-color: black");
             curr_i=i; //update
@@ -753,9 +746,10 @@ public class GridLock extends Application {
 	                   grid.removeSpriteOnGrid(s, xCoord, yCoord); 
 	                   s.move(newX, newY); 
 	                   grid.setSpriteOnGrid(s,newX, newY);
+	                   StackUndo.add(s);
 	                  
-	                   StackUndo.push(s);
 		            }
+		           
 
 	               
 	        });
@@ -794,7 +788,7 @@ public class GridLock extends Application {
                    grid.removeSpriteOnGrid(s, xCoord, yCoord); 
                    s.move(newX, newY); 
                    grid.setSpriteOnGrid(s,newX, newY);
-                   StackUndo.push(s);
+                  
                  
                    if (newX == 4) {
                 	   //Get time taken to complete game and print 
@@ -821,8 +815,9 @@ public class GridLock extends Application {
                 	   
                 		System.out.println("move ctr is " + grid.getMovectr());
                    }
-                   
+                   StackUndo.add(s);
 	            }
+	        
 	            
         });
 
@@ -857,7 +852,7 @@ public class GridLock extends Application {
 	 * @author leochen    
 	 */
 	    public void resetGameBoard(Stage window) {
-	    		replay=true; //signal want to use the curr_i as the level.
+	    		replay=true; //signal want to use the curr_i as the level and not a new random level.
 	    	 	window.setScene(new Scene(createGameBoard(window), CANVAS_HEIGHT, CANVAS_WIDTH));
 	    	 	
 	    	 	

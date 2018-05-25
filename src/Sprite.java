@@ -67,7 +67,10 @@ public class Sprite extends StackPane {
     	this.direction=dir;
     	this.initialGX = x;
     	this.initialGY = y;
-        move(x, y); //sets up xCoord, yCoord
+    	//Initialise previous values.
+    	this.Xcoord = x * GridLock.SQUARE_SIZE;
+        this.Ycoord = y * GridLock.SQUARE_SIZE;
+        move(x, y); //sets up xCoord, yCoord, and prevXC, prevYC
     	this.width=size*GridLock.SQUARE_SIZE; 
     	this.height=GridLock.SQUARE_SIZE;
     	this.size=size;
