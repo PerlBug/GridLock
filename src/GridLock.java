@@ -392,9 +392,12 @@ public class GridLock extends Application {
 	        undo.setScaleY(0.9);
 	        undo.removeTranslate(0);
 	        undo.setOnMouseClicked(e -> {
+	        	if(prevState!=null) {
 	        		Sprite s1 = prevState.getSprite();
-	        		s1.relocate(s1.getPrevX(), s1.getPrevY());
-	        		prevState = prevState.getPrevState();
+	        		
+		        		s1.relocate(s1.getPrevX(), s1.getPrevY());
+		        		prevState = prevState.getPrevState();
+	        	}
 	        });
 	        
 	        //
@@ -833,7 +836,14 @@ public class GridLock extends Application {
 	 */
 	    public void resetGameBoard() {
 	    		for(Sprite s1 : StackUndo) {
+	    			
+	    			int x=(int)toGrid(s1.getXcoord());
+	    			int y=(int)toGrid(s1.getYcoord());
+	    			grid.removeSpriteOnGrid(s1,  x,  y) ;
 	    			s1.resetSprite();
+	    			 x=(int)toGrid(s1.getXcoord());
+	    			 y=(int)toGrid(s1.getYcoord());
+	    			grid.setSpriteOnGrid(s1, x, y);
 	    		}
 	    		
 	    }
