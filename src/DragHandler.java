@@ -143,10 +143,6 @@ public class DragHandler implements EventHandler<MouseEvent>{
  	
         	}
     		
-    	//Pertains to undo button
-    		State currState = new State(sprite, GridLock.prevState);
-    		GridLock.stateList.add(currState);
-    		GridLock.prevState = currState;
      }
 		
 
