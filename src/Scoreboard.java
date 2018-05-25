@@ -1,3 +1,21 @@
+/**
+ * Scoreboard.java written for COMP2511 18s1 Project - Group 3
+ * GitHub IDs:
+ * 
+ * @authors
+ * 5162531 Diaz, Rebecca Avril: beccaD6 - <becca.diaz6@gmail.com>
+ * 3461044 Kala, Shilpa: sk2552 - <simple.snowflake@gmail.com>
+ * 3463869 Sun, Elliott Yongrui: umeb0shi - <elly.here@gmail.com>
+ * 5157086 Galoyan, Mkrtich: PerlBug - <galoyanmko@gmail.com>
+ * 5060239 Chen, Leo Jia Jian: leochen15 - <leochen1512@gmail.com>
+ * 
+ * Scoreboard records the moves and time of a solve of the puzzle.
+ * This is only entered when the user inputs a name after completion of the puzzle
+ * Saves into a designated location
+ *  
+ *  
+ */
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -14,13 +32,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-/**
- * Scoreboard records the moves and time of a solve of the puzzle.
- * This is only entered when the user inputs a name after completion of the puzzle
- * Saves into a designated location
- * @author leochen
- *
- */
+
 public class Scoreboard extends AnchorPane {
 	
 	/*

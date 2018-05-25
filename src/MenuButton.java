@@ -1,3 +1,18 @@
+/**
+ * MenuButton.java written for COMP2511 18s1 Project - Group 3
+ * GitHub IDs:
+ * 
+ * @authors
+ * 5162531 Diaz, Rebecca Avril: beccaD6 - <becca.diaz6@gmail.com>
+ * 3461044 Kala, Shilpa: sk2552 - <simple.snowflake@gmail.com>
+ * 3463869 Sun, Elliott Yongrui: umeb0shi - <elly.here@gmail.com>
+ * 5157086 Galoyan, Mkrtich: PerlBug - <galoyanmko@gmail.com>
+ * 5060239 Chen, Leo Jia Jian: leochen15 - <leochen1512@gmail.com>
+ * 
+ *  Main Buttons for Main Page
+ *  
+ */
+
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
@@ -7,13 +22,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-
-/**
- * Menu Buttons for Main Page
- * @author leochen
- *
- */
-
 
 public class MenuButton extends StackPane {
 	

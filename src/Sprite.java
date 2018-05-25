@@ -1,3 +1,17 @@
+/**
+ * Sprite.java written for COMP2511 18s1 Project - Group 3
+ * 
+ * @authors
+ * 5162531 Diaz, Rebecca Avril: beccaD6 - <becca.diaz6@gmail.com>
+ * 3461044 Kala, Shilpa: sk2552 - <simple.snowflake@gmail.com>
+ * 3463869 Sun, Elliott Yongrui: umeb0shi - <elly.here@gmail.com>
+ * 5157086 Galoyan, Mkrtich: PerlBug - <galoyanmko@gmail.com>
+ * 5060239 Chen, Leo Jia Jian: leochen15 - <leochen1512@gmail.com>
+ * 
+ * A  class to represent Sprites (we chose images of fish to represent our sprites instead of cars)
+ * A  small fish takes up 2 grid squares,a large fish takes up 3.
+ * 
+ */
 import com.sun.javafx.scene.traversal.Direction;
 import javafx.*;
 import javafx.application.Application;
@@ -19,12 +33,7 @@ import javafx.scene.shape.Shape;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.Stack;
-/**
- * A  class to represent Sprites (we chose images of fish to represent our sprites instead of cars)
- *  A  small fish takes up 2 grid squares,a large fish takes up 3.
- *  @author becca
- * 
- */
+
 public class Sprite extends StackPane {
     private double mouseX, mouseY;  //where the user clicked on the sprite
     private double Xcoord, Ycoord; //this is a pixel value (not a grid square coordinate)

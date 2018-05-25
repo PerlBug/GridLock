@@ -1,3 +1,16 @@
+/**
+ * GridLock.java written for COMP2511 18s1 Project - Group 3
+ * 
+ * @authors and GitHub IDs
+ * 5162531 Diaz, Rebecca Avril: beccaD6 - <becca.diaz6@gmail.com>
+ * 3461044 Kala, Shilpa: sk2552 - <simple.snowflake@gmail.com>
+ * 3463869 Sun, Elliott Yongrui: umeb0shi - <elly.here@gmail.com>
+ * 5157086 Galoyan, Mkrtich: PerlBug - <galoyanmko@gmail.com>
+ * 5060239 Chen, Leo Jia Jian: leochen15 - <leochen1512@gmail.com>
+ * 
+ * This is a class for the GridLock system. It contains the main[] method
+ * 
+ */
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -177,6 +190,8 @@ public class GridLock extends Application {
 	    
 	    /**
 	     * Creates a scene with the instructions for the game
+	     * @precondition window != null
+	     * @postcondition A scene is created containing instructions for the user to play the game
 	     * @param window
 	     * @return
 	     */
@@ -217,6 +232,11 @@ public class GridLock extends Application {
 	     * @param seconds
 	     * @param minutes
 	     * @param c
+	     * 
+	     * @precondition window != null
+	     * @precondition seconds >= 0; minutes >= 0; c >=0
+	     * @postcondition a new exit scene is created
+	     * 
 	     * @return
 	     */
 	    private AnchorPane exitScreen(Stage window, int seconds, int minutes, int c) {
@@ -354,6 +374,8 @@ public class GridLock extends Application {
 	    
 	    /**
 	     * Method for creating the gameboard
+	     * @precondition window != null
+	     * @postcondition a new game scene is created with a different random preset game 
 	     * @param window 
 	     * @return
 	     */
@@ -772,6 +794,11 @@ public class GridLock extends Application {
 	    * @param size is the length of the sprite (2 for cars, 3 for trucks)
 	    * @return a new Sprite object with the above properties.
 	    * 
+	    *  @precondition dir != null
+	    * @precondition size = 2 or 3 ONLY
+	    * @precondition url != null and is a valid string to an image
+	    * @precondition window != null
+	    * 
 	    * @Postcondition: A new sprite object is created and placed on the game board at position (x,y).
 	    */
 	    private Sprite makeSprite(Sprite.Direction dir, int x, int y,int size, String imageURL) {
@@ -815,7 +842,14 @@ public class GridLock extends Application {
 	    
 	    
 	    /**
-	     * Constructor to make the redcar
+	     * A method to create the target sprite, nemo 
+	     * @postcondition the target object, nemo is created and placed on the gameboard
+	     * @postcondition Monitors the position of nemo and detects the end of the game
+	     * @precondition dir != null
+	     * @precondition size = 2 or 3 ONLY
+	     * @precondition url != null and is a valid string to an image
+	     * @precondition window != null
+	     * 
 	     * @param dir the orientation of the sprite (horizontal/vertical)
 	     * @param size determines the size of the sprite, could be 2 spaces or 3 spaces large
 	     * @param url location of the image file
@@ -842,7 +876,7 @@ public class GridLock extends Application {
                    s.move(newX, newY); 
                    grid.setSpriteOnGrid(s,newX, newY);
                   
-                 
+                   //Nemo has reached the goal -> go to the exit screen
                    if (newX == 4) {
                 	   //Get time taken to complete game and print 
 						double finishedTime = t.getTimeFromStart();
@@ -861,8 +895,6 @@ public class GridLock extends Application {
 						
 						window.setScene(scene2); //Goes to exit screen.
 						
-						//Reset the game screen for the next round
-						//scene = new Scene(createGameBoard(window), CANVAS_HEIGHT, CANVAS_WIDTH);
 						
                    } else {
                 	   

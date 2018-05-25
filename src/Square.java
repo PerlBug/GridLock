@@ -1,11 +1,22 @@
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 /**
+ * Square.java written for COMP2511 18s1 Project - Group 3
+ * 
+ * @authors
+ * 5162531 Diaz, Rebecca Avril: beccaD6 - <becca.diaz6@gmail.com>
+ * 3461044 Kala, Shilpa: sk2552 - <simple.snowflake@gmail.com>
+ * 3463869 Sun, Elliott Yongrui: umeb0shi - <elly.here@gmail.com>
+ * 5157086 Galoyan, Mkrtich: PerlBug - <galoyanmko@gmail.com>
+ * 5060239 Chen, Leo Jia Jian: leochen15 - <leochen1512@gmail.com>
+ * 
+ * 
  * Class representing grid squares.
  * Each grid Square can contain part of a sprite object.
- * @author becca
- *
+ * 
  */
+
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+
 public class Square extends Rectangle{
 
     private int spriteID; //Id of the sprite occupying the square.

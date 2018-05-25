@@ -1,7 +1,15 @@
 /**
- * A Timer class which keeps track of how long the game has gone for.
- * @author Shilpa
- *
+ * Timer.java written for COMP2511 18s1 Project - Group 3
+ * 
+ * @authors
+ * 5162531 Diaz, Rebecca Avril: beccaD6 - <becca.diaz6@gmail.com>
+ * 3461044 Kala, Shilpa: sk2552 - <simple.snowflake@gmail.com>
+ * 3463869 Sun, Elliott Yongrui: umeb0shi - <elly.here@gmail.com>
+ * 5157086 Galoyan, Mkrtich: PerlBug - <galoyanmko@gmail.com>
+ * 5060239 Chen, Leo Jia Jian: leochen15 - <leochen1512@gmail.com>
+ * 
+ * This is a Timer class which keeps track of how long the game has gone for.
+ * 
  */
 public class Timer {
 	
