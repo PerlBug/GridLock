@@ -267,11 +267,16 @@ public class MenuBoard extends Parent{
 			
 			return root;
 		}
-			
+	/**		
+	 * @param e sets File access
+	 */
 	private static void setFileAccess(String e) {
 		fileAccess = e;
 	}
 	
+	/**
+	 * @param t sets flags 
+	 */
 	private static void setFlag(boolean t) {
 		flag = t;
 	}
