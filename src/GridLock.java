@@ -323,8 +323,8 @@ public class GridLock extends Application {
 					
 					Stage popUp = new Stage();
                     	popUp.initModality(Modality.WINDOW_MODAL);
-					final Button exitB = new Button("Close Dialog");
-					exitB.setOnMouseClicked(event -> popUp.close());
+					//final Button exitB = new Button("Close Dialog");
+					//exitB.setOnMouseClicked(event -> popUp.close());
 					
 					popUp.setX(200);
 					popUp.setY(200);
@@ -336,7 +336,7 @@ public class GridLock extends Application {
 					}
 					nameEnter.clear();
 					VBox v1= new VBox(10);
-					v1.getChildren().addAll(displayS, exitB);
+					v1.getChildren().addAll(displayS);
 					popUp.setScene(new Scene(v1));
 					popUp.show();
 			     });
