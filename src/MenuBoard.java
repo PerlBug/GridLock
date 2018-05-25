@@ -37,6 +37,8 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 /**
  * Menu board. Consists of Menu Buttons. Can revert to Options Menu and Scoreboard here too.
+ * Extends Parent node which can be easily fitted into Game scene
+ * Holds file access variable which can be accessed globally. Variable holds location where hi scores are saved.
  * 
  * @author leochen
  *
@@ -48,7 +50,12 @@ public class MenuBoard extends Parent{
 	public static String fileAccess = "Default Hi Scores";
 	public static boolean flag = true;
 	
-	
+	/**
+	 * MenuBoard constructor: creates buttons and actions for these buttons.
+	 * Initiliases scoreboard
+	 * @param window: Links to primaryStage
+	 * @param g: Links to original GridLock set up
+	 */
 	public MenuBoard (Stage window, GridLock g) {
 	     
 	     MenuButton play_button = new MenuButton("Play", "StoneButton.png");
@@ -56,6 +63,7 @@ public class MenuBoard extends Parent{
 	     MenuButton option_button = new MenuButton("Options", "StoneButton.png");
 	     MenuButton exit_button = new MenuButton("Exit", "StoneButton.png");
 	     MenuButton instruction_button = new MenuButton("Instructions", "StoneButton.png");
+	     
 	     /*
 	      * Set up Options Menu
 	      */
@@ -63,6 +71,7 @@ public class MenuBoard extends Parent{
 	     
 	     /*
 	      * Set up action calls for Main Menu buttons
+	      * if Hi Scores disabled, you are unable to access Scoreboard.
 	      */
 	     
 	     score_button.setOnMouseClicked(e -> {
@@ -71,17 +80,22 @@ public class MenuBoard extends Parent{
 	    	 		window.setScene(scoreScene);
 	    	 	}
 	     });
-	     
+	     //Play Button
 	     play_button.setOnMouseClicked(e -> window.setScene(g.getGame(window)));
 	     
+	     //Options Button: When clicked, replaces current VBox with new AnchorPane.
 	     option_button.setOnMouseClicked(e -> {
 	    	 	getChildren().remove(0);
 	    	 	getChildren().add(menu2);
 	     });
+	     
+	     //Exits platform
 	     exit_button.setOnMouseClicked(e -> {
 	    	 	Platform.exit();
 	    	 	System.exit(0);
 	     });
+	     
+	     //Enters Instruction Manual
 	     instruction_button.setOnMouseClicked(e -> window.setScene(g.getInstruction(window)));
 	     
 	     /*
@@ -100,6 +114,11 @@ public class MenuBoard extends Parent{
 	     
 	}
 	
+	/**
+	 * Creates the options menu. User Stories: Being able to choose difficulty, being able to turn on and off hi scores
+	 * @param window
+	 * @return
+	 */
 		private AnchorPane createOptionsMenu(Stage window) {
 			
 			AnchorPane root = new AnchorPane();
@@ -194,7 +213,8 @@ public class MenuBoard extends Parent{
 			});
 			
 			
-			//Edit location to save Hi Score File
+			//Edit location to save Hi Score File. Choose directory which you want this saved into and a file will
+			//be created within that folder
 			DirectoryChooser fileChoose = new DirectoryChooser();
 			HSthumbUp.setOnMouseClicked(e -> {
 			File file = fileChoose.showDialog(window);

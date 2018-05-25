@@ -36,7 +36,9 @@ import java.util.Random;
 
 /**
  * Main class for the GridLock application
- * 
+ * Holds creation of Gameboard, Exit Screen, Instructions and MenuBoard
+ * Creation of Sprites
+ * Manages all items within game
  *
  */
 public class GridLock extends Application {
@@ -44,8 +46,8 @@ public class GridLock extends Application {
 	 	static Rectangle2D primaryStagebounds = Screen.getPrimary().getVisualBounds();
 	 	public static final double CANVAS_HEIGHT = primaryStagebounds.getHeight()*0.8;
 	 	public static final double CANVAS_WIDTH = CANVAS_HEIGHT * 650/800; //Sets the proportion of the game to satisfy all screen sizes
-	 	public static final double heightScale = CANVAS_HEIGHT/800;
-	 	public static final double widthScale = CANVAS_WIDTH/650;
+	 	public static final double heightScale = CANVAS_HEIGHT/800; // scale of Y due to screen dimension
+	 	public static final double widthScale = CANVAS_WIDTH/650; //scale of X due to screen dimension
 	    public static final double SQUARE_SIZE = (double)CANVAS_HEIGHT/8*0.9; //Each square should be equivalent 100/800px height
 	    public static final int WIDTH = 6;
 	    public static final int HEIGHT = 6;
@@ -398,20 +400,28 @@ public class GridLock extends Application {
 	        undo.setScaleY(0.9);
 	        undo.removeTranslate(0);
 	        undo.setOnMouseClicked(e -> {
-	        	//if(prevState!=null) {
-	        		//Sprite s1 = prevState.getSprite();
-	        	if(!StackUndo.empty()) {
-		        	Sprite s1= StackUndo.pop();
-			        	if(s1!=null) {
-			        			grid.removeSpriteOnGrid(s1, (int) toGrid(s1.getXcoord()), (int)toGrid(s1.getYcoord()));
-			        			int newX=(int)toGrid( s1.getPrevX());
-			        			int newY=(int) toGrid(s1.getPrevY());
-			        				
-				        		s1.move(newX, newY);
-			        			grid.setSpriteOnGrid(s1, (int) toGrid(s1.getXcoord()), (int)toGrid(s1.getYcoord()));
-				        		//prevState = prevState.getPrevState();
-			        	}
+	        	if(prevState!=null) {
+	        		Sprite s1 = prevState.getSprite();
+	        		grid.removeSpriteOnGrid(s1, (int) toGrid(s1.getXcoord()), (int)toGrid(s1.getYcoord()));
+        			int newX=(int)toGrid( s1.getPrevX());
+        			int newY=(int) toGrid(s1.getPrevY());
+        			
+        			s1.move(newX,  newY);
+        			grid.setSpriteOnGrid(s1,  (int) toGrid(s1.getXcoord()), (int) toGrid(s1.getYcoord()));
+        			prevState = prevState.getPrevState();
 	        	}
+//	        	if(!StackUndo.empty()) {
+//		        	Sprite s1= StackUndo.pop();
+//			        	if(s1!=null) {
+//			        			grid.removeSpriteOnGrid(s1, (int) toGrid(s1.getXcoord()), (int)toGrid(s1.getYcoord()));
+//			        			int newX=(int)toGrid( s1.getPrevX());
+//			        			int newY=(int) toGrid(s1.getPrevY());
+//			        				
+//				        		s1.move(newX, newY);
+//			        			grid.setSpriteOnGrid(s1, (int) toGrid(s1.getXcoord()), (int)toGrid(s1.getYcoord()));
+//				        		//prevState = prevState.getPrevState();
+//			        	}
+//	        	}
 	        });
 	        
 	        //
@@ -787,7 +797,11 @@ public class GridLock extends Application {
 	                   s.move(newX, newY); 
 	                   grid.setSpriteOnGrid(s,newX, newY);
 	                   StackUndo.add(s);
-	                  
+	                 //Pertains to undo button
+	           		   State currState = new State(s, GridLock.prevState);
+	           		   stateList.add(currState);
+	           		   prevState = currState;
+	          
 		            }
 		           
 

@@ -14,8 +14,18 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+/**
+ * Scoreboard records the moves and time of a solve of the puzzle.
+ * This is only entered when the user inputs a name after completion of the puzzle
+ * Saves into a designated location
+ * @author leochen
+ *
+ */
 public class Scoreboard extends AnchorPane {
 	
+	/*
+	 * Creation of a tableview that has 3 columns for difficulty and anchorpanes which exist within these columns.
+	 */
 	TableView<Score> EasyTab = new TableView<Score>();
 	TableView<Score> MedTab = new TableView<Score>();
 	TableView<Score> HardTab = new TableView<Score>();
@@ -134,6 +144,10 @@ public class Scoreboard extends AnchorPane {
 		getChildren().addAll(scoreboard, back);
 	}
 	
+	/**
+	 * Method which refreshes the scores within the data table/hi score table.
+	 * Every time it reads input, it clears existing information in data table and adds it all again.
+	 */
 	public void populateScores() {
 		dataE.clear();
 		dataM.clear();
@@ -168,6 +182,12 @@ public class Scoreboard extends AnchorPane {
 		}
 	}
 	
+	/**
+	 * Score class, created to keep track of each individual entry.
+	 * Holds name, moves, time
+	 * @author leochen
+	 *
+	 */
 	public static class Score {
 		private final SimpleStringProperty name;
 		private final SimpleIntegerProperty moves;
@@ -204,6 +224,9 @@ public class Scoreboard extends AnchorPane {
         }
 	}
 	
+	/**
+	 * Method that calls populateScores() function.
+	 */
 	public void refresh() {
 		
 		populateScores();
