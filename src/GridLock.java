@@ -157,7 +157,7 @@ public class GridLock extends Application {
 
 	    		Pane root = new Pane();
 	        
-	        final Image titleScreen = new Image( "Title Page2.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false);
+	        final Image titleScreen = new Image( "file:sprites/Title Page2.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false);
 	        final ImageView menuScreen_node = new ImageView();
 		    menuScreen_node.setImage(titleScreen); //set the image of the title screen
 		    menuScreen_node.setPreserveRatio(true);
@@ -195,13 +195,13 @@ public class GridLock extends Application {
 	     * @return
 	     */
 	    private GridPane instructions(Stage window) {
-	    	final Image background = new Image( "file:src/instructions_scene.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false);
+	    	final Image background = new Image( "file:sprites/instructions_scene.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false);
 	    	
 	    	final ImageView flashScreen_node = new ImageView();
 		    flashScreen_node.setImage(background); //set the image of the title screen
 		    flashScreen_node.setPreserveRatio(true);
 		    
-		    final Image menuImage = new Image("file:src/home-button-round-blue.png", 100*widthScale, 100*heightScale, false, false);
+		    final Image menuImage = new Image("file:sprites/home-button-round-blue.png", 100*widthScale, 100*heightScale, false, false);
 		    final Button menuButton  = new Button();
 		    final ImageView menuButtonNode = new ImageView(); 
 		    menuButtonNode.setImage(menuImage);
@@ -240,23 +240,23 @@ public class GridLock extends Application {
 	     */
 	    private AnchorPane exitScreen(Stage window, int seconds, int minutes, int c) {
 
-	    	 final Image titleScreen = new Image( "file:src/exitScreen2.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false); //title screen image
+	    	 final Image titleScreen = new Image( "file:sprites/exitScreen2.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false); //title screen image
 
 		     final ImageView flashScreen_node = new ImageView();
 		     flashScreen_node.setImage(titleScreen); //set the image of the title screen
 		     flashScreen_node.setPreserveRatio(true);
 		     
-		     clock = new TimerPane("file:src/goldseal.png");
+		     clock = new TimerPane("file:sprites/goldseal.png");
 			 clock.setTranslateX(40);
 			 clock.setTranslateY(60);
 			 clock.printLabel(seconds, minutes);
-			 Counter counter2 = new Counter("file:src/goldseal.png");
+			 Counter counter2 = new Counter("file:sprites/goldseal.png");
 			 counter2.setTranslateX(-30);
 			 counter2.setTranslateY(60);
 			 counter2.setCount(c);
 			 
-			 MenuButton play_button = new MenuButton("Play Again", "file:src/StoneButton.png"); //not really replay since can get a different puzzle every time you press it..
-			 MenuButton score_button = new MenuButton("Return Home", "file:src/StoneButton.png");
+			 MenuButton play_button = new MenuButton("Play Again", "file:sprites/StoneButton.png"); //not really replay since can get a different puzzle every time you press it..
+			 MenuButton score_button = new MenuButton("Return Home", "file:sprites/StoneButton.png");
 			 play_button.setScaleX(0.8);
 			 play_button.setScaleY(0.9);
 			 score_button.setScaleX(0.8);
@@ -274,7 +274,7 @@ public class GridLock extends Application {
 			 nameEnter.setOpacity(80);
 
 			 
-			 MenuButton submit = new MenuButton("", "file:src/arrow.png", 50*widthScale, 40*heightScale);
+			 MenuButton submit = new MenuButton("", "file:sprites/arrow.png", 50*widthScale, 40*heightScale);
 		     
 		     play_button.setOnMouseClicked(e -> window.setScene(new Scene(createGameBoard(window), CANVAS_HEIGHT, CANVAS_WIDTH))); //replay
 		     
@@ -384,19 +384,19 @@ public class GridLock extends Application {
 	    	t.resetTimer();
 	    	System.out.println("Difficulty is: " + Difficulty);
 	        Pane root = new Pane();
-	        final Image gameScreen = new Image( "GameCanvas2.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false); //title screen image
+	        final Image gameScreen = new Image( "file:sprites/GameCanvas2.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false); //title screen image
 	        root.setPrefSize(WIDTH * SQUARE_SIZE +CANVAS_WIDTH, HEIGHT * SQUARE_SIZE + CANVAS_HEIGHT);
 	        
 	        final ImageView gameScreen_node = new ImageView();
 		    gameScreen_node.setImage(gameScreen); //set the image of the title screen
 		    gameScreen_node.setPreserveRatio(true);
 		    
-		    counter = new Counter("file:src/bluebubble.png");
+		    counter = new Counter("file:sprites/bluebubble.png");
 		    counter.setTranslateX(0);
 		    counter.setTranslateY(0);
 		    
 		    		    
-		    liveClock = new TimerPane("file:src/bluebubble.png");
+		    liveClock = new TimerPane("file:sprites/bluebubble.png");
 		    Thread t1 = new Thread(liveClock);
 		    t1.start();
 		    
@@ -416,7 +416,7 @@ public class GridLock extends Application {
 	        spriteGroup.setLayoutY(CANVAS_HEIGHT*150/800+left_offset);
 	        
 	        //Pertains to Undo Button
-	        MenuButton undo = new MenuButton("Undo", "StoneButton.png");
+	        MenuButton undo = new MenuButton("Undo", "file:sprites/StoneButton.png");
 	        undo.setScaleX(0.8);
 	        undo.setScaleY(0.9);
 	        undo.removeTranslate(0);
@@ -436,12 +436,12 @@ public class GridLock extends Application {
 	        
 	        
 	        
-	        final MenuButton reset = new MenuButton("Reset", "StoneButton.png");
+	        final MenuButton reset = new MenuButton("Reset", "file:sprites/StoneButton.png");
 	        reset.setScaleX(0.8);
 	        reset.setScaleY(0.9);
 	        reset.removeTranslate(0);
 	        reset.setOnMouseClicked(e -> resetGameBoard(window));
-	        final MenuButton menuButton = new MenuButton("Back to Menu", "StoneButton.png");
+	        final MenuButton menuButton = new MenuButton("Back to Menu", "file:sprites/StoneButton.png");
 	        menuButton.setScaleX(0.8);
 	        menuButton.setScaleY(0.9);
 	        menuButton.removeTranslate(0);
@@ -959,7 +959,7 @@ public class GridLock extends Application {
 
 	    		AnchorPane root = new AnchorPane();
 		        
-		        final Image titleScreen = new Image( "HiScoreMenu2.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false);
+		        final Image titleScreen = new Image( "file:sprites/HiScoreMenu2.png", CANVAS_WIDTH, CANVAS_HEIGHT, false, false);
 		        final ImageView scoreScreen_node = new ImageView();
 			    scoreScreen_node.setImage(titleScreen); //set the image of the title screen
 			    scoreScreen_node.setPreserveRatio(true);

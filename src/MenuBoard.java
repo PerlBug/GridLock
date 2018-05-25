@@ -73,11 +73,11 @@ public class MenuBoard extends Parent{
 	 */
 	public MenuBoard (Stage window, GridLock g) {
 	     
-	     MenuButton play_button = new MenuButton("Play", "StoneButton.png");
-	     MenuButton score_button = new MenuButton("Score", "StoneButton.png");
-	     MenuButton option_button = new MenuButton("Options", "StoneButton.png");
-	     MenuButton exit_button = new MenuButton("Exit", "StoneButton.png");
-	     MenuButton instruction_button = new MenuButton("Instructions", "StoneButton.png");
+	     MenuButton play_button = new MenuButton("Play", "file:sprites/StoneButton.png");
+	     MenuButton score_button = new MenuButton("Score", "file:sprites/StoneButton.png");
+	     MenuButton option_button = new MenuButton("Options", "file:sprites/StoneButton.png");
+	     MenuButton exit_button = new MenuButton("Exit", "file:sprites/StoneButton.png");
+	     MenuButton instruction_button = new MenuButton("Instructions", "file:sprites/StoneButton.png");
 	     
 	     /*
 	      * Set up Options Menu
@@ -171,7 +171,7 @@ public class MenuBoard extends Parent{
 			
 			diffB.getChildren().addAll(difficultyLbl, diffMenu);
 			
-			MenuButton confirm = new MenuButton("OK", "StoneButton.png");
+			MenuButton confirm = new MenuButton("OK", "file:sprites/StoneButton.png");
 			confirm.setScaleX(0.5);
 			confirm.setScaleY(0.7);
 			confirm.removeTranslate(0);
@@ -182,7 +182,7 @@ public class MenuBoard extends Parent{
 			
 			});
 			
-			MenuButton b1 = new MenuButton("Back", "StoneButton.png");
+			MenuButton b1 = new MenuButton("Back", "file:sprites/StoneButton.png");
 			b1.setScaleX(0.5);
 			b1.setScaleY(0.7);
 			b1.removeTranslate(0);
@@ -204,8 +204,8 @@ public class MenuBoard extends Parent{
 			Label enableLbl = new Label("Enable Hi Scores:  ");
 			enableLbl.setFont(new Font(20));
 			
-			Image thumbUp = new Image("thumbUp.png", 30*GridLock.widthScale, 30*GridLock.heightScale, false, false);
-			Image thumbDown = new Image("thumbDown.png", 30*GridLock.widthScale, 30*GridLock.heightScale, false, false);
+			Image thumbUp = new Image("file:sprites/thumbUp.png", 30*GridLock.widthScale, 30*GridLock.heightScale, false, false);
+			Image thumbDown = new Image("file:sprites/thumbDown.png", 30*GridLock.widthScale, 30*GridLock.heightScale, false, false);
 			
 			ImageView HSthumbUp = new ImageView(thumbUp);
 			ImageView HSthumbDown = new ImageView(thumbDown);

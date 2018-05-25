@@ -127,7 +127,7 @@ public class Scoreboard extends AnchorPane {
 		
 		scoreboard.getTabs().addAll(easy, medium, hard);
 		
-		MenuButton back = new MenuButton("Back", "StoneButton.png");
+		MenuButton back = new MenuButton("Back", "file:sprites/StoneButton.png");
 		back.setScaleX(0.5);
 		back.setScaleY(0.5);
 		back.setLayoutX(GridLock.CANVAS_WIDTH * 0.67);
