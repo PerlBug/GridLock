@@ -350,7 +350,11 @@ public class GridLock extends Application {
 		}
 	    
 	    
-	    
+	    /**
+	     * Method for creating the gameboard
+	     * @param window 
+	     * @return
+	     */
 	    private Parent createGameBoard(Stage window) {
 	    	//ALL RESET LOGIC IS HERE
 	    	spriteGroup.getChildren().clear();
@@ -795,23 +799,22 @@ public class GridLock extends Application {
 	        return s;
 	    }
 	    
-	    /*private void initPosition() {
-	    	LinkedList<member> initPos = new LinkedList<member>();
-
-	    	initPos.add(Sprite.v);
-	    }	
-	    */
 	    
-	    
+	    /**
+	     * Constructor to make the redcar
+	     * @param dir the orientation of the sprite (horizontal/vertical)
+	     * @param size determines the size of the sprite, could be 2 spaces or 3 spaces large
+	     * @param url location of the image file
+	     * @param window used to change scene to exit scene when game is won
+	     * @return
+	     */
 	    private UserSprite makeUserSprite(Sprite.Direction dir, int size, String url, Stage window) {
         	 UserSprite s = new UserSprite(dir, url);
         	 grid.setSpriteOnGrid(s,0,2);
         	 s.setOnMouseDragged(new DragHandler(grid,s));
-        	s.setOnMouseReleased(e -> {
+        	 s.setOnMouseReleased(e -> {
 	            int newX = (int) toGrid(s.getLayoutX());
 	            int newY = (int) toGrid(s.getLayoutY());
-	           // System.out.println("new x is " + newX + "new y is "+newY);
-
 	            int xCoord = (int) toGrid(s.getXcoord());
 	            int yCoord = (int) toGrid(s.getYcoord());
 	            boolean result;
@@ -859,11 +862,19 @@ public class GridLock extends Application {
 
         return s;
     }
-	    
+	    /**
+	     * setter for difficulty
+	     * @param d Difficulty string
+	     */
 	    public static void setDifficulty(String d) {
 	    		Difficulty = d;
 	    }
 	    
+	    /**
+	     * Creating scoreboard menu
+	     * @param window scene for the scoreboard
+	     * @return root
+	     */
 	    public AnchorPane ScoreMenu(Stage window) {
 
 	    		AnchorPane root = new AnchorPane();
@@ -890,18 +901,5 @@ public class GridLock extends Application {
 	    public void resetGameBoard(Stage window) {
 	    		replay=true; //signal want to use the curr_i as the level and not a new random level.
 	    	 	window.setScene(new Scene(createGameBoard(window), CANVAS_HEIGHT, CANVAS_WIDTH));
-	    	 	
-	    	 	
-	    		/*for(Sprite s1 : StackUndo) {
-	    			
-	    			int x=(int)toGrid(s1.getXcoord());
-	    			int y=(int)toGrid(s1.getYcoord());
-	    			grid.removeSpriteOnGrid(s1,  x,  y) ;
-	    			s1.resetSprite();
-	    			 x=(int)toGrid(s1.getXcoord());
-	    			 y=(int)toGrid(s1.getYcoord());
-	    			grid.setSpriteOnGrid(s1, x, y);
-	    		}*/
-	    		
 	    }
 }

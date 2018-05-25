@@ -1,5 +1,5 @@
 /**
- * State class to track moves of sprites
+ * State class to track moves of spritesi
  * @author leochen
  *
  */
