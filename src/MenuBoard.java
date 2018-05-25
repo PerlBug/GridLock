@@ -179,7 +179,7 @@ public class MenuBoard extends Parent{
 			
 			Label clearHS = new Label("Clear Hi Scores?  ");
 			clearHS.setFont(new Font(20));
-			Button clearHiScores = new Button("Remove");
+			Button clearHiScores = new Button("Clear");
 			
 			HSclearB.getChildren().addAll(clearHS, clearHiScores);
 			
