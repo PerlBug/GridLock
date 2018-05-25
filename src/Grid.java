@@ -75,7 +75,7 @@ public class Grid {
 	/**
 	 * Reserves s.getSize() adjacent grid squares for the sprite @param s, starting from the grid
 	 * square ( @param x, @param y).
-	 * @precondition checkSpriteOnGrid(x,y)==true
+	 * @precondition checkSpriteOnGrid(x,y)==true, s!=null
 	 * @postcondition: all squares occupied by  the sprite object have s.getID() as their spriteID field
 	 */
 	public void setSpriteOnGrid(Sprite s, int x, int y) {
@@ -210,6 +210,7 @@ public class Grid {
 
 	/**
 	 * Checks if it is valid to set the sprite on the grid square with coordinates( @param x, @param y)
+	 * @precondition: x,y are >=0 and valid indexes for the grid array
 	 * @return true if no sprite is at those coordinates already, false else.
 	 */
 	public boolean checkSetSpriteOnGrid(int x, int y) {
@@ -226,6 +227,7 @@ public class Grid {
 	 * @param oldX is the starting X position of the sprite before the drag event
 	 * @param oldY is the starting Y position of the sprite before the drag event
 	 * @param forwards: is the sprite moving to the right(forwards) or left/backwards?
+	 * @precondition: s!=null
 	 * @return return the horizontal grid square index that is the last square we can relocate the start of the sprite 
 	 *  to before collision
 	**/
@@ -283,6 +285,7 @@ public class Grid {
 	 * @param oldY is its current Y coordinate
 	 * @param oldX is its current X coordinate
 	 * @param upwards - is the sprite moving up or down?
+	 * @precondition: s!=null
 	 * @return the vertical grid square coordinate of the farthest position the sprite can relocate to without collision.
 	 */
 	public double furthestMoveYdirection(Sprite s, int oldX,int oldY, boolean upwards ) {

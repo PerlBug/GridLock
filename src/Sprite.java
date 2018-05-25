@@ -52,12 +52,11 @@ public class Sprite extends StackPane {
     
     private int initialGX;
     private int initialGY;
-    private double prevXC;
+  //the previous x,y coordinates of the sprite from its last move
+    private double prevXC; 
     private double prevYC;
     
-    
-    Stack StackX = new Stack();
-    Stack StackY = new Stack();
+   
     
     /**
      * Constructor for Sprite object.
@@ -68,7 +67,7 @@ public class Sprite extends StackPane {
      * @param direction is the direction of movement of the Sprite.
      */
     public Sprite( Direction dir, int x, int y, int size, String imageURL) {
-    	//StackPane p= new StackPane();
+    	
     	
     	Image image = new Image(imageURL, width, height, false, false); 
     	this.id=classId++;
@@ -76,13 +75,15 @@ public class Sprite extends StackPane {
     	this.direction=dir;
     	this.initialGX = x;
     	this.initialGY = y;
-    	//Initialise previous values.
+    	
+    	//Initialize coordinates
     	this.Xcoord = x * GridLock.SQUARE_SIZE;
         this.Ycoord = y * GridLock.SQUARE_SIZE;
         move(x, y); //sets up xCoord, yCoord, and prevXC, prevYC
     	this.width=size*GridLock.SQUARE_SIZE; 
     	this.height=GridLock.SQUARE_SIZE;
     	this.size=size;
+    	//create bounding rectangle
         this.r = new Rectangle(width,height);
         if(dir==Direction.VERTICAL) {
           	 this.r = new Rectangle(height,width); //rotate sprite
@@ -126,9 +127,7 @@ public class Sprite extends StackPane {
      * @postcondition: The Xcoord and Ycoord fields of this sprite object become x * GridLock.SQUARE_SIZE, y * GridLock.SQUARE_SIZE
      */
     public void move(int x, int y) {
-    	
-	    //creating stack
-    	
+
     	//Pertains to undo button
 		this.prevXC = Xcoord;
 		this.prevYC = Ycoord;
@@ -137,8 +136,6 @@ public class Sprite extends StackPane {
         Xcoord = x * GridLock.SQUARE_SIZE;
         Ycoord = y * GridLock.SQUARE_SIZE;
         
-        StackX.push(Xcoord);
-        StackY.push(Ycoord);
         relocate(Xcoord, Ycoord);
     }
 

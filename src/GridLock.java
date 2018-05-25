@@ -474,7 +474,8 @@ public class GridLock extends Application {
 		    int i=0;
 		    Sprite e0 = null, e1 = null, e2 = null, e3 = null, e4 = null, e5 = null, e6 = null, e7 = null, e8 = null, e9 = null, e10 = null, e11 = null, redCar = null;
 		    if (Difficulty == "Easy") {
-		    	if(replay) {
+		    	if(replay) { //if the user has selected to reset a board, repplay=true and we must generate the same board as last time
+		    		//the number of which is stored in curr_i
 		    		
 		    		i=curr_i;
 		    	}else {
@@ -763,8 +764,8 @@ public class GridLock extends Application {
 		
             root.getChildren().addAll(gameScreen_node, counter, ((TimerPane) liveClock), buttonContainer, squareGroup, spriteGroup);
             root.setStyle("-fx-border-color: black");
-            curr_i=i; //update
-            replay=false;//reset replay if it changed.
+            curr_i=i; //update the current board number
+            replay=false;//reset replay if it changed to true.
             
 	        return root;
 	    }
@@ -789,7 +790,7 @@ public class GridLock extends Application {
 	    * @param size is the length of the sprite (2 for cars, 3 for trucks)
 	    * @return a new Sprite object with the above properties.
 	    * 
-	    *  @precondition dir != null
+	    * @precondition dir != null
 	    * @precondition size = 2 or 3 ONLY
 	    * @precondition url != null and is a valid string to an image
 	    * @precondition window != null
@@ -850,7 +851,7 @@ public class GridLock extends Application {
 	     * @param size determines the size of the sprite, could be 2 spaces or 3 spaces large
 	     * @param url location of the image file
 	     * @param window used to change scene to exit scene when game is won
-	     * @return
+	     * @return a new UserSprite object
 	     */
 	    private UserSprite makeUserSprite(Sprite.Direction dir, int size, String url, Stage window) {
         	 UserSprite s = new UserSprite(dir, url);
@@ -896,7 +897,7 @@ public class GridLock extends Application {
                 	   
                 		System.out.println("move ctr is " + grid.getMovectr());
                    }
-                   StackUndo.clear(); //so only undos the last move
+                   StackUndo.clear(); //clear stack so it only contains the last move that will be undone 
                    StackUndo.add(s);
                  //Pertains to undo button
            		   State currState = new State(s, GridLock.prevState);

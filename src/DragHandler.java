@@ -42,10 +42,10 @@ public class DragHandler implements EventHandler<MouseEvent>{
 	 */
 	@Override
 	public void handle(MouseEvent e) {
-		//have to add the new offset...
+		//horizontal offset of the grid on the main canvass
 		double leftOffset = (GridLock.CANVAS_WIDTH - (GridLock.WIDTH*GridLock.SQUARE_SIZE)-65*GridLock.widthScale*0.9)/2; 
 		double newX= e.getSceneX()- leftOffset;
-		double newY=e.getSceneY();//- GridLock.CANVAS_HEIGHT*150/800+leftOffset;
+		double newY=e.getSceneY();
 		
 		//The coordinates of the sprite within the grid
 		double Xcoord=sprite.getXcoord(); 
@@ -59,7 +59,7 @@ public class DragHandler implements EventHandler<MouseEvent>{
 	
     	if(sprite.getDirection()==Sprite.Direction.HORIZONTAL) {
     		
-    			double dist= newX-mouseX +Xcoord; //the distance we want to travel, with no restrictions
+    			double dist= newX-mouseX +Xcoord; //the new position we want to travel to with no restrictions
     			
     			//Maximum distance the sprite can move to the right
     			//(note that the coordinates of the sprite are for the first grid square
