@@ -81,6 +81,8 @@ public class GridLock extends Application {
 	    
 	    Scene scene1, scene, scene2, instructionScene;
 	    private Timer t;
+		private boolean replay=false;
+		private static int curr_i=1; //current i value for the preset game
 	    
 	    public static void main(String[] args) {
 	        launch(args);
@@ -407,8 +409,8 @@ public class GridLock extends Application {
 	        reset.setScaleX(0.8);
 	        reset.setScaleY(0.9);
 	        reset.removeTranslate(0);
-	        reset.setOnMouseClicked(e -> window.setScene(new Scene(createGameBoard(window), CANVAS_HEIGHT, CANVAS_WIDTH))); //replay
-	      //  reset.setOnMouseClicked(e -> resetGameBoard());
+	     //   reset.setOnMouseClicked(e ->); //replay
+	        reset.setOnMouseClicked(e -> resetGameBoard(window));
 	        final MenuButton menuButton = new MenuButton("Back to Menu", "StoneButton.png");
 	        menuButton.setScaleX(0.8);
 	        menuButton.setScaleY(0.9);
@@ -431,9 +433,15 @@ public class GridLock extends Application {
 	        //creating 4 different boards
 		    Random rand = new Random();
 		    StackUndo.clear();
+		    int i=0;
 		    Sprite e0 = null, e1 = null, e2 = null, e3 = null, e4 = null, e5 = null, e6 = null, e7 = null, e8 = null, e9 = null, e10 = null, e11 = null, redCar = null;
 		    if (Difficulty == "Easy") {
-		    	int i = rand.nextInt(4) + 0;
+		    	if(replay) {
+		    		
+		    		i=curr_i;
+		    	}else {
+		    		i = rand.nextInt(4) + 0;
+		    	}
 		    	System.out.println(i);
 	            switch (i) {
 	            	case 0: e1 = makeSprite(Sprite.Direction.VERTICAL,1,3,CAR_SIZE, "file:sprites/gurgle.png");
@@ -519,8 +527,13 @@ public class GridLock extends Application {
 					    	break; 
 	            }
 		    } else if (Difficulty == "Medium") {
-	
-		    		int i = rand.nextInt(3) + 0;
+		    	if(replay) {
+		    		 i=curr_i;
+		    	}else {
+		    		 i = rand.nextInt(3) + 0;
+		    	}
+		    		
+		    		
 	            switch (i) {
 	            	case 0: e1= makeSprite(Sprite.Direction.VERTICAL,2,3,CAR_SIZE, "file:sprites/gurgle.png");
 		            		spriteGroup.getChildren().add(e1);
@@ -616,8 +629,14 @@ public class GridLock extends Application {
 					    	break; 
 	            	} 
 		    	} else if (Difficulty == "Hard") {
-
-	            	int i = rand.nextInt(1) + 0;
+		    		
+	            	
+	            	if(replay) {
+			    		
+			    		 i=curr_i;
+			    	}else {
+			    		 i = rand.nextInt(1) + 0;
+			    	}
 	            	switch (i) {
 	            		case 0: e1= makeSprite(Sprite.Direction.VERTICAL,1,3,CAR_SIZE, "file:sprites/gurgle.png");
 				    			spriteGroup.getChildren().add(e1); 
@@ -684,7 +703,8 @@ public class GridLock extends Application {
             
             root.getChildren().addAll(gameScreen_node, counter, ((TimerPane) liveClock), buttonContainer, squareGroup, spriteGroup);
             root.setStyle("-fx-border-color: black");
-            
+            curr_i=i; //update
+            replay=false;//reset replay if it changed.
             
 	        return root;
 	    }
@@ -836,9 +856,12 @@ public class GridLock extends Application {
 	 * Resets the gameboard to original position
 	 * @author leochen    
 	 */
-	    public void resetGameBoard() {
-	    	
-	    		for(Sprite s1 : StackUndo) {
+	    public void resetGameBoard(Stage window) {
+	    		replay=true; //signal want to use the curr_i as the level.
+	    	 	window.setScene(new Scene(createGameBoard(window), CANVAS_HEIGHT, CANVAS_WIDTH));
+	    	 	
+	    	 	
+	    		/*for(Sprite s1 : StackUndo) {
 	    			
 	    			int x=(int)toGrid(s1.getXcoord());
 	    			int y=(int)toGrid(s1.getYcoord());
@@ -847,7 +870,7 @@ public class GridLock extends Application {
 	    			 x=(int)toGrid(s1.getXcoord());
 	    			 y=(int)toGrid(s1.getYcoord());
 	    			grid.setSpriteOnGrid(s1, x, y);
-	    		}
+	    		}*/
 	    		
 	    }
 }
