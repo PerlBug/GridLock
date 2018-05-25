@@ -20,13 +20,14 @@ import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.Stack;
 /**
- * A  class to represent Sprites (cars and trucks).
- * A car has size 2, truck size 3.
+ * A  class to represent Sprites (we chose images of fish to represent our sprites instead of cars)
+ *  A  small fish takes up 2 grid squares,a large fish takes up 3.
+ *  @author becca
  * 
  */
 public class Sprite extends StackPane {
-    private double mouseX, mouseY;
-    private double Xcoord, Ycoord; //pixel not grid square values
+    private double mouseX, mouseY;  //where the user clicked on the sprite
+    private double Xcoord, Ycoord; //this is a pixel value (not a grid square coordinate)
 	public enum Direction {
 		HORIZONTAL,VERTICAL
 	}
@@ -36,8 +37,8 @@ public class Sprite extends StackPane {
     private double width;
     private double height;
     private static int classId=0; 
-    private int id; //unique for every sprite created first sprite created has id 0
-    private int size; //length of the block (width if horizontal movement, height if vertical)
+    private int id; 	//unique for every sprite created. The first sprite created has id 0
+    private int size; 	//length of the block (width if horizontal movement, height if vertical)
     private Rectangle r;
     
     private int initialGX;
@@ -67,55 +68,48 @@ public class Sprite extends StackPane {
     	this.initialGX = x;
     	this.initialGY = y;
         move(x, y); //sets up xCoord, yCoord
-    	this.width=size*GridLock.SQUARE_SIZE; // 2 for cars, 3 for truck
+    	this.width=size*GridLock.SQUARE_SIZE; 
     	this.height=GridLock.SQUARE_SIZE;
     	this.size=size;
         this.r = new Rectangle(width,height);
         if(dir==Direction.VERTICAL) {
           	 this.r = new Rectangle(height,width); //rotate sprite
         }
-       // r.setStroke(Color.BLACK);
+       
         r.setStrokeWidth(GridLock.SQUARE_SIZE * 0.03);
         r.setFill(Color.GREEN);
         r.setFill(new ImagePattern(image));
-       // p.add(r);
         getChildren().addAll(r);
 
-        
+        //record where the sprite was clicked by the mouse. This information is used later by the DragHandler class.
         setOnMousePressed(e -> {
             mouseX = e.getSceneX();
             mouseY = e.getSceneY();
         });
-        //STRATEGY PATTERN: ?? 
-      /*  setOnMouseDragged(e -> {
-        	
-        	if(direction==Direction.HORIZONTAL) {
-        		
-        			relocate(e.getSceneX() - mouseX + Xcoord,+ Ycoord);
-        		
-        	}else {
-        		relocate( Xcoord, e.getSceneY() - mouseY + Ycoord);
-        	}
-        });*/
-       
         
 	}
     
  
-/**
-     * Getter method for the rectangle
+    /**
+     * Getter method for the rectangle bounding the sprite
+     * @return r
      */
     public Rectangle getRectangle() {
     		return this.r;
     }
     
-    
+    /**
+     * Getter method for the unique identifier of the sprite
+     * @return id
+     */
     public int getID() {
     	
     	return this.id;
     }
     
+    
     /**
+     * 
      * Updates the position of the Sprite object to the grid square ( @param x, @param y).
      * @postcondition: The Xcoord and Ycoord fields of this sprite object become x * GridLock.SQUARE_SIZE, y * GridLock.SQUARE_SIZE
      */
@@ -124,9 +118,10 @@ public class Sprite extends StackPane {
 	    //creating stack
     	
     	//Pertains to undo button
-    		this.prevXC = Xcoord;
-    		this.prevYC = Ycoord;
+		this.prevXC = Xcoord;
+		this.prevYC = Ycoord;
     		
+		//place the sprite at pixel coordinates corresponding to the provided x,y, grid square coordinates
         Xcoord = x * GridLock.SQUARE_SIZE;
         Ycoord = y * GridLock.SQUARE_SIZE;
         
@@ -153,6 +148,7 @@ public class Sprite extends StackPane {
     		double ycord = this.initialGY * GridLock.SQUARE_SIZE;
     		relocate(xcord, ycord);
     }
+    
     /**
      * Gets the position of the sprite
      */
@@ -170,41 +166,73 @@ public class Sprite extends StackPane {
     		return this.size;
     }
 
+    /**
+     * Getter method for the direction the sprite travels in
+     * @return direction
+     */
     public Direction getDirection() {
         return direction;
     }
-
+    /**
+     * Getter method for the (pixel)x coordinate of the sprite on the grid.
+     * @return Xcoord
+     */
     public double getXcoord() {
         return this.Xcoord;
     }
-
+    /**
+     * Getter method for the (pixel)y coordinate of the sprite on the grid.
+     * @return Ycoord
+     */
     public double getYcoord() {
         return this.Ycoord;
     }
     /**
-     * Getter method for the x coordinate of the last mouse click on the scene
-     * @return
+     * Getter method for the x coordinate of the last mouse click on the sprite
+     * @return mouseX
      */
     public double getMouseX() {
     	return mouseX;
     	
     }
+    /**
+     * Getter method for the y coordinate of the last mouse click on the sprite
+     * @return mouseY
+     */
     public double getMouseY() {
     	return mouseY;
     }
-
+    
+    
+  /**
+   * set the previous X coordinate of the sprite to @param X
+   *  * @postcondition:  this.prevX = X;
+   */
     public void setPrevX(double X) {
     		this.prevXC = X;
     }
-    
+    /**
+     * set the previous X coordinate of the sprite to @param Y
+     * @postcondition:  this.prevYC = Y;
+     */
     public void setPrevY(double Y) {
     		this.prevYC = Y;
     }
     
+    /**
+     * Get the previous X coordinate of the sprite
+     * @return prevXC
+     */
+
     public double getPrevX() {
     		return this.prevXC;
     }
     
+    /**
+     * Get the previous X coordinate of the sprite
+     * @return prevXY
+     */
+
     public double getPrevY() {
     		return this.prevYC;
     }
