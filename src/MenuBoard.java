@@ -46,7 +46,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 /**
  * Menu board. Consists of Menu Buttons. Can revert to Options Menu and Scoreboard here too.
@@ -91,6 +93,21 @@ public class MenuBoard extends Parent{
 	    	 	if(flag != false) {
 	    	 		Scene scoreScene = new Scene(g.ScoreMenu(window), GridLock.CANVAS_HEIGHT, GridLock.CANVAS_WIDTH);
 	    	 		window.setScene(scoreScene);
+	    	 	}else {
+	    	 		
+	    	 		Stage popUp = new Stage();
+                	popUp.initModality(Modality.WINDOW_MODAL);
+				
+				
+				popUp.setX(200);
+				popUp.setY(200);
+				Text displayS = new Text();
+				
+				displayS = new Text("Hi scores currently not enabled, please go to options to enable");
+				VBox v1= new VBox(10);
+				v1.getChildren().addAll(displayS);
+				popUp.setScene(new Scene(v1));
+				popUp.show();
 	    	 	}
 	     });
 	     //Play Button
