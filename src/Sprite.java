@@ -128,8 +128,6 @@ public class Sprite extends StackPane {
         Xcoord = x * GridLock.SQUARE_SIZE;
         Ycoord = y * GridLock.SQUARE_SIZE;
         
-       /* System.out.println(Xcoord);
-    	System.out.println(Ycoord);*/
         StackX.push(Xcoord);
         StackY.push(Ycoord);
         relocate(Xcoord, Ycoord);
@@ -153,7 +151,8 @@ public class Sprite extends StackPane {
     }
     
     /**
-     * Gets the position of the sprite
+     * Gets the position of the sprite as a point
+     * @return p
      */
     public Point getPosition(Sprite v) {
     	Point p = null;
