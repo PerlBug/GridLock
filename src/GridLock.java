@@ -232,7 +232,7 @@ public class GridLock extends Application {
 			 counter2.setTranslateY(60);
 			 counter2.setCount(c);
 			 
-			 MenuButton play_button = new MenuButton("Replay", "file:src/StoneButton.png");
+			 MenuButton play_button = new MenuButton("Play Again", "file:src/StoneButton.png"); //not really replay since can get a different puzzle every time you press it..
 			 MenuButton score_button = new MenuButton("Return Home", "file:src/StoneButton.png");
 			 play_button.setScaleX(0.8);
 			 play_button.setScaleY(0.9);
@@ -394,8 +394,9 @@ public class GridLock extends Application {
 	        undo.setOnMouseClicked(e -> {
 	        	if(prevState!=null) {
 	        		Sprite s1 = prevState.getSprite();
-	        		
+	        		//	grid.removeSpriteOnGrid()
 		        		s1.relocate(s1.getPrevX(), s1.getPrevY());
+	        		//	grid.setSpriteOnGrid(s, x, y);
 		        		prevState = prevState.getPrevState();
 	        	}
 	        });
@@ -406,7 +407,8 @@ public class GridLock extends Application {
 	        reset.setScaleX(0.8);
 	        reset.setScaleY(0.9);
 	        reset.removeTranslate(0);
-	        reset.setOnMouseClicked(e -> resetGameBoard());
+	        reset.setOnMouseClicked(e -> window.setScene(new Scene(createGameBoard(window), CANVAS_HEIGHT, CANVAS_WIDTH))); //replay
+	      //  reset.setOnMouseClicked(e -> resetGameBoard());
 	        final MenuButton menuButton = new MenuButton("Back to Menu", "StoneButton.png");
 	        menuButton.setScaleX(0.8);
 	        menuButton.setScaleY(0.9);
@@ -835,6 +837,7 @@ public class GridLock extends Application {
 	 * @author leochen    
 	 */
 	    public void resetGameBoard() {
+	    	
 	    		for(Sprite s1 : StackUndo) {
 	    			
 	    			int x=(int)toGrid(s1.getXcoord());
