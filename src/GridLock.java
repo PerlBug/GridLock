@@ -642,7 +642,7 @@ public class GridLock extends Application {
 			    		
 			    		 i=curr_i;
 			    	}else {
-			    		 i = rand.nextInt(1) + 0;
+			    		 i = rand.nextInt(3) + 0;
 			    	}
 	            	switch (i) {
 	            		case 0: e1= makeSprite(Sprite.Direction.VERTICAL,1,3,CAR_SIZE, "file:sprites/gurgle.png");
@@ -688,6 +688,42 @@ public class GridLock extends Application {
 			            		spriteGroup.getChildren().add(e10);
 			            		e11= makeSprite(Sprite.Direction.VERTICAL,4,1,CAR_SIZE, "file:sprites/gurgle.png");
 			            		spriteGroup.getChildren().add(e11);
+			            		redCar = makeUserSprite(Sprite.Direction.HORIZONTAL,CAR_SIZE, "file:sprites/nemo.png", window);
+			            		spriteGroup.getChildren().add((Sprite)redCar);
+			            		break;
+	            		case 2: e1= makeSprite(Sprite.Direction.VERTICAL,2,0,TRUCK_SIZE, "file:sprites/gurgle.png");
+			            		spriteGroup.getChildren().add(e1);
+			            		e2= makeSprite(Sprite.Direction.VERTICAL,3,0,TRUCK_SIZE, "file:sprites/gurgle.png");
+			            		spriteGroup.getChildren().add(e2);
+			            		e3= makeSprite(Sprite.Direction.VERTICAL,4,0,CAR_SIZE, "file:sprites/gurgle.png");
+			            		spriteGroup.getChildren().add(e3);
+			            		e4= makeSprite(Sprite.Direction.HORIZONTAL,0,0,CAR_SIZE,"file:sprites/dory.png");
+			            		spriteGroup.getChildren().add(e4);
+			            		e5= makeSprite(Sprite.Direction.VERTICAL,4,2,CAR_SIZE, "file:sprites/gurgle.png");
+			            		spriteGroup.getChildren().add(e5);
+			            		e6= makeSprite(Sprite.Direction.HORIZONTAL,4,4,CAR_SIZE,"file:sprites/dory.png");
+			            		spriteGroup.getChildren().add(e6);
+			            		e7= makeSprite(Sprite.Direction.VERTICAL,1,4,CAR_SIZE, "file:sprites/gurgle.png");
+			            		spriteGroup.getChildren().add(e7);
+			            		redCar = makeUserSprite(Sprite.Direction.HORIZONTAL,CAR_SIZE, "file:sprites/nemo.png", window);
+			            		spriteGroup.getChildren().add((Sprite)redCar);
+			            		break;
+	            		case 3: e1= makeSprite(Sprite.Direction.VERTICAL,0,0,CAR_SIZE, "file:sprites/gurgle.png");
+			            		spriteGroup.getChildren().add(e1);
+			            		e2= makeSprite(Sprite.Direction.VERTICAL,1,4,CAR_SIZE, "file:sprites/gurgle.png");
+			            		spriteGroup.getChildren().add(e2);
+			            		e3= makeSprite(Sprite.Direction.VERTICAL,3,0,CAR_SIZE, "file:sprites/gurgle.png");
+			            		spriteGroup.getChildren().add(e3);
+			            		e4= makeSprite(Sprite.Direction.VERTICAL,3,2,CAR_SIZE,"file:sprites/gurgle.png");
+			            		spriteGroup.getChildren().add(e4);
+			            		e5= makeSprite(Sprite.Direction.HORIZONTAL,2,4,CAR_SIZE,"file:sprites/dory.png");
+			            		spriteGroup.getChildren().add(e5);
+			            		e6= makeSprite(Sprite.Direction.HORIZONTAL,2,5,CAR_SIZE,"file:sprites/dory.png");
+			            		spriteGroup.getChildren().add(e6);
+			            		e7= makeSprite(Sprite.Direction.HORIZONTAL,0,3,TRUCK_SIZE, "file:sprites/whale.png");
+			            		spriteGroup.getChildren().add(e7);
+			            		e8= makeSprite(Sprite.Direction.VERTICAL,5,0,TRUCK_SIZE, "file:sprites/gurgle.png");
+			            		spriteGroup.getChildren().add(e8);
 			            		redCar = makeUserSprite(Sprite.Direction.HORIZONTAL,CAR_SIZE, "file:sprites/nemo.png", window);
 			            		spriteGroup.getChildren().add((Sprite)redCar);
 			            		break;
