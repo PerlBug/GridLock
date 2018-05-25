@@ -34,11 +34,18 @@ public class Counter extends StackPane {
 		setAlignment(Pos.CENTER);
 		
 	}
-	
+	/**
+	 * method to get count
+	 * @return
+	 */
 	public int getCount() {
 		return this.count;
 	}
 	
+	/**
+	 * method to set count and uses toString to display the number of Moves counter records
+	 * @param count
+	 */
 	public void setCount(int count) {
 		this.count = count;
 		this.countShow.setText("Moves: " + Integer.toString(getCount()));
