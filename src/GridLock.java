@@ -246,7 +246,7 @@ public class GridLock extends Application {
 			 nameEnter.setPromptText("Enter your name to record your score!");
 			 nameEnter.setStyle(""+ "-fx-font-size: 10px;");
 			 nameEnter.setFocusTraversable(false); 
-			 nameEnter.setMinWidth(1.1*CANVAS_WIDTH/2*widthScale); //made wider to fit the message 
+			 nameEnter.setMinWidth(1.18*CANVAS_WIDTH/2*widthScale); //made wider to fit the message 
 			 nameEnter.setMinHeight(30*heightScale);
 			 nameEnter.setOpacity(80);
 
