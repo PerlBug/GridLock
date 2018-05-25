@@ -59,7 +59,7 @@ public class Scoreboard extends AnchorPane {
 		nameE.setPrefWidth(tableSize/3);
 		nameM.setPrefWidth(tableSize/3);
 		nameH.setPrefWidth(tableSize/3);
-		
+	
 		nameE.setCellValueFactory(
 				new PropertyValueFactory<Score, String>("name"));
 		nameM.setCellValueFactory(

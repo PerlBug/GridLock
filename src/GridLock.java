@@ -868,7 +868,12 @@ public class GridLock extends Application {
                 	   
                 		System.out.println("move ctr is " + grid.getMovectr());
                    }
+                 
                    StackUndo.add(s);
+                 //Pertains to undo button
+           		   State currState = new State(s, GridLock.prevState);
+           		   stateList.add(currState);
+           		   prevState = currState;
 	            }
 	        
 	            

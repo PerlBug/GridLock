@@ -215,18 +215,18 @@ public class MenuBoard extends Parent{
 			
 			//Edit location to save Hi Score File. Choose directory which you want this saved into and a file will
 			//be created within that folder
-			DirectoryChooser fileChoose = new DirectoryChooser();
+
 			HSthumbUp.setOnMouseClicked(e -> {
-			File file = fileChoose.showDialog(window);
-				if(file != null) {
-					setFileAccess(file.getPath()+"/HiScores");
-					System.out.println(file.getPath()+"/HiScores");
-				}
+				setFlag(true);
+				HSthumbUp.setEffect(drop);
+				HSthumbDown.setEffect(null);
+				Tooltip.install(HSthumbUp, t);
+				
 			});
 			
 			HSthumbDown.setOnMouseClicked(e -> {
 				setFlag(false);
-				HSthumbDown.setEffect(new Glow());
+				HSthumbDown.setEffect(drop);
 				HSthumbUp.setEffect(null);
 				Tooltip.uninstall(HSthumbUp, t);
 			});
