@@ -223,8 +223,9 @@ public class MenuBoard extends Parent{
 				}
 			});
 			
-			root.setTranslateX(200);
-			root.setTranslateY(300);
+			//These numbers work in windows
+			root.setTranslateX(125);
+			root.setTranslateY(250);
 			AnchorPane.setTopAnchor(diffB, 0.0*GridLock.heightScale);
 			AnchorPane.setTopAnchor(scoreB, 50.0*GridLock.heightScale);
 			AnchorPane.setTopAnchor(HSclearB, 100.0*GridLock.heightScale);
